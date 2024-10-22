@@ -1,52 +1,95 @@
 const Evento = require('../db/models/Evento');
 
-exports.crearEvento = async (data) => {
+/**
+ * Crea un nuevo evento
+ * @param {Object} data - Datos del evento a crear
+ * @returns {Promise<Object>} El evento creado
+ * @throws {Error} Si hay un error al crear el evento
+ */
+async function crearEvento(data) {
   try {
-    const nuevoEvento = new Evento(data); 
-    return await nuevoEvento.save();  
+    const nuevoEvento = new Evento(data);
+    return nuevoEvento.save();
   } catch (error) {
     throw new Error('Error al crear el evento: ' + error.message);
   }
-};
+}
 
-exports.obtenerEventos = async () => {
+/**
+ * Obtiene todos los eventos
+ * @returns {Promise<Array>} Lista de todos los eventos
+ * @throws {Error} Si hay un error al obtener los eventos
+ */
+async function obtenerEventos() {
   try {
-    return await Evento.find();
+    return Evento.find();
   } catch (error) {
-    throw new Error('Error al obtener los eventos: ' + error.message); 
+    throw new Error('Error al obtener los eventos: ' + error.message);
   }
-};
+}
 
-exports.actualizarEvento = async (id, data) => {
+/**
+ * Actualiza un evento existente
+ * @param {string} id - ID del evento a actualizar
+ * @param {Object} data - Nuevos datos del evento
+ * @returns {Promise<Object>} El evento actualizado
+ * @throws {Error} Si hay un error al actualizar el evento
+ */
+async function actualizarEvento(id, data) {
   try {
-    return await Evento.findByIdAndUpdate(id, data, { new: true, runValidators: true });
+    return Evento.findByIdAndUpdate(id, data, { new: true, runValidators: true });
   } catch (error) {
     throw new Error('Error al actualizar el evento: ' + error.message);
   }
-};
+}
 
-exports.obtenerEventosPorTema = async (theme) => {
+/**
+ * Obtiene eventos por tema
+ * @param {string} theme - Tema de los eventos a buscar
+ * @returns {Promise<Array>} Lista de eventos con el tema especificado
+ * @throws {Error} Si hay un error al obtener los eventos por tema
+ */
+async function obtenerEventosPorTema(theme) {
   try {
-
-    return await Evento.find({ theme });
+    return Evento.find({ theme });
   } catch (error) {
     throw new Error('Error al obtener los eventos por tema: ' + error.message);
   }
-};
+}
 
-exports.obtenerEventoPorId = async (id) => {
+/**
+ * Obtiene un evento por su ID
+ * @param {string} id - ID del evento a buscar
+ * @returns {Promise<Object>} El evento encontrado
+ * @throws {Error} Si hay un error al obtener el evento por ID
+ */
+async function obtenerEventoPorId(id) {
   try {
-
-    return await Evento.findById(id);
+    return Evento.findById(id);
   } catch (error) {
     throw new Error('Error al obtener el evento por ID: ' + error.message);
   }
-};
+}
 
-exports.eliminarEvento = async (id) => {
+/**
+ * Elimina un evento por su ID
+ * @param {string} id - ID del evento a eliminar
+ * @returns {Promise<Object>} El resultado de la operación de eliminación
+ * @throws {Error} Si hay un error al eliminar el evento
+ */
+async function eliminarEvento(id) {
   try {
-    return await Evento.deleteOne({ _id: id });
+    return Evento.findByIdAndDelete(id);
   } catch (error) {
     throw new Error('Error al eliminar el evento: ' + error.message);
   }
+}
+
+module.exports = {
+  crearEvento,
+  obtenerEventos,
+  actualizarEvento,
+  obtenerEventosPorTema,
+  obtenerEventoPorId,
+  eliminarEvento
 };
