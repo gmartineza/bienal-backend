@@ -19,5 +19,8 @@
   "bugs": {
     "url": "https://github.com/gmartineza/bienal-backend/issues"
   },
-  "homepage": "https://github.com/gmartineza/bienal-backend#readme"
+  "homepage": "https://github.com/gmartineza/bienal-backend#readme",
+  "dependencies": {
+    "serviciogestionesculturas": "file:"
+  }
 }
