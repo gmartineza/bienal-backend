@@ -1,0 +1,31 @@
+{
+  "name": "serviciogestioneventos",
+  "version": "1.0.0",
+  "description": "Servicio de Gestion de Eventos",
+  "main": "index.js",
+  "scripts": {
+    "test": "jest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/gmartineza/bienal-backend.git"
+  },
+  "keywords": [
+    "gestion",
+    "eventos"
+  ],
+  "author": "Gonzalo Mata",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/gmartineza/bienal-backend/issues"
+  },
+  "homepage": "https://github.com/gmartineza/bienal-backend#readme",
+  "dependencies": {
+    "celebrate": "^15.0.3",
+    "dotenv": "^16.4.5",
+    "express": "^4.21.1",
+    "joi": "^17.13.3",
+    "joi-objectid": "^4.0.2",
+    "mongoose": "^8.7.2"
+  }
+}
