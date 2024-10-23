@@ -1,0 +1,26 @@
+{
+  "name": "serviciogestionesculturas",
+  "version": "1.0.0",
+  "description": "Servicio de gestión de esculturas",
+  "main": "index.js",
+  "scripts": {
+    "test": "jest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/gmartineza/bienal-backend.git"
+  },
+  "keywords": [
+    "gestion",
+    "esculturas"
+  ],
+  "author": "Gonzalo Mata",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/gmartineza/bienal-backend/issues"
+  },
+  "homepage": "https://github.com/gmartineza/bienal-backend#readme",
+  "dependencies": {
+    "serviciogestionesculturas": "file:"
+  }
+}
