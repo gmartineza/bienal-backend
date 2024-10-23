@@ -6,6 +6,7 @@
 - [Proyect Backend Documentation](#proyect-backend-documentation)
 - [Technologies Used](#technologies-used)
 - [Contributing](#contributing)
+- [Docker](#docker)
 - [License](#license)
 - [Contact Information](#contact-information)
 
@@ -47,6 +48,14 @@ It includes the API for the web app developed to be deployed through microservic
 
 Only students from the 3rd year of 2024 in "Universidad de la Cuenca del Plata" or professors of these students are allowed to contribute to this code.
 
+## Docker
+
+To build the docker images, run the `build.ps1` script in the `docker` folder. for test porpuses only.
+This will build the images and run the containers in detached mode.
+
+### Docker Compose
+
+Note: The Docker Compose files will be implemented as time progresses. Right now no docker compose files are available.
 
 ## License
 
@@ -56,15 +65,3 @@ This project is licensed under the MIT License. See the [LICENSE](LICENSE) file 
 
 For any questions, please contact:
 - **University**: [Universidad de la Cuenca del Plata](https://www.ucp.edu.ar/)
-
-
-This is the backend for the Bienal project for 2024.
-
-## Docker
-
-To build the docker images, run the `build.ps1` script in the `docker` folder. for test porpuses only.
-this will build the images and run the containers in detached mode.
-
-### Docker Compose
-
-Note: The Docker Compose files will be implemented as time progresses. Right now no docker compose files are available.
