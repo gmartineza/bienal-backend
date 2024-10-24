@@ -1,0 +1,24 @@
+{
+  "name": "src",
+  "version": "1.0.0",
+  "main": "index.js",
+  "dependencies": {
+    "express": "^4.21.1",
+    "statuses": "^2.0.1",
+    "toidentifier": "^1.0.1",
+    "tr46": "^4.1.1",
+    "type-is": "^1.6.18",
+    "unpipe": "^1.0.0",
+    "utils-merge": "^1.0.1",
+    "vary": "^1.1.2",
+    "webidl-conversions": "^7.0.0",
+    "whatwg-url": "^13.0.0"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": ""
+}
