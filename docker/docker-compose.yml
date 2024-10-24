@@ -1,15 +1,6 @@
 services:
-  service1:
+  GestionEscultores:
     build:
-      context: ..
-      dockerfile: ./service1/Dockerfile
-    ports:
-      - "8000:8000"
-    environment:
-      - DEBUG=1
-  service2:
-    build:
-      context: ..
-      dockerfile: ./../service2/Dockerfile
-    ports:
-      - "8001:8001"
+      context: ./ModuloGestion/ServicioGestionEscultores
+      dockerfile: docker/Dockerfile
+
