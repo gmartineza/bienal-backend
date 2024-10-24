@@ -1,13 +1,10 @@
-class EsculturaController {
-    constructor(esculturaService) {
-      this.esculturaService = esculturaService;
-    }
+const esculturaService = require('../../services/eventoService');
   
     // Manejar la creación de una nueva
-    addEscultura(req, res) {
+    exports.addEscultura = async (req, res) => {
       try {
         const esculturaData = req.body; 
-        this.esculturaService.addEscultura(esculturaData);
+        await esculturaService.crearEscultura(esculturaData);
         res.status(201).json({ message: 'Escultura creada exitosamente.' });
       } catch (error) {
         res.status(500).json({ error: error.message });
@@ -15,10 +12,25 @@ class EsculturaController {
     }
   
     // Obtener una escultura por nombre
-    getEscultura(req, res) {
+    exports.getEsculturaName = async (req, res) => {
       try {
         const { name } = req.params; // El nombre se pasa como parámetro en la URL
-        const escultura = this.esculturaService.getEsculturas(name);
+        const escultura = await esculturaService.obtenerEsculturasPorNombre(name);
+        if (escultura) {
+          res.status(200).json(escultura);
+        } else {
+          res.status(404).json({ message: 'Escultura no encontrada.' });
+        }
+      } catch (error) {
+        res.status(500).json({ error: error.message });
+      }
+    }
+
+    // Obtener una escultura por id
+    exports.getEsculturaID = async (req, res) => {
+      try {
+        const { id } = req.params; // El id se pasa como parámetro en la URL
+        const escultura = await esculturaService.obtenerEsculturasPorId(id);
         if (escultura) {
           res.status(200).json(escultura);
         } else {
@@ -30,21 +42,21 @@ class EsculturaController {
     }
   
     // Obtener todas las esculturas
-    getAllEsculturas(req, res) {
+    exports.getAllEsculturas = async (req, res) => {
       try {
-        const escultura = this.esculturaService.getAllEsculturas();
-        res.status(200).json(escultura);
+        const esculturas = await esculturaService.obtenerEsculturas();
+        res.status(200).json(esculturas);
       } catch (error) {
         res.status(500).json({ error: error.message });
       }
     }
   
     // Actualizar el nombre de la escultura
-    updateNombreEscultura(req, res) {
+    exports.updateNombreEscultura = async (req, res) => {
       try {
         const { name } = req.params; // El nombre actual se pasa como parámetro en la URL
         const { newName } = req.body; // El nuevo nombre se envía en el cuerpo de la petición
-        this.esculturaService.updateNombreEscultura(name, newName);
+        await esculturaService.updateNombreEscultura(name, newName);
         res.status(200).json({ message: 'Nombre de la escultura actualizado exitosamente.' });
       } catch (error) {
         res.status(500).json({ error: error.message });
@@ -52,11 +64,11 @@ class EsculturaController {
     }
   
     // Actualizar la descripcion de la escultura
-    updateEsculturaDescripcion(req, res) {
+    exports.updateEsculturaDescripcion = async (req, res) => {
       try {
         const { name } = req.params;
         const { newDescription} = req.body;
-        this.esculturaService.updateEsculturaDescripcion(name, newDescription);
+        await esculturaService.updateEsculturaDescripcion(name, newDescription);
         res.status(200).json({ message: 'Descripcion de la escultura actualizada exitosamente.' });
       } catch (error) {
         res.status(500).json({ error: error.message });
@@ -64,11 +76,11 @@ class EsculturaController {
     }
   
     // Actualizar fecha Escultura
-    updateFechaEscultura(req, res) {
+    exports.updateFechaEscultura = async (req, res) => {
       try {
         const { name } = req.params;
         const { newFecha } = req.body;
-        this.sculptorService.updateFechaEscultura(name, newFecha);
+        await sculptorService.updateFechaEscultura(name, newFecha);
         res.status(200).json({ message: 'Fecha de la escultura actualizada exitosamente.' });
       } catch (error) {
         res.status(500).json({ error: error.message });
@@ -76,10 +88,10 @@ class EsculturaController {
     }
   
     // Eliminar un escultura
-    deleteEscultura(req, res) {
+    exports.deleteEscultura = async (req, res) => {
       try {
         const { name } = req.params;
-        const success = this.esculturaService.deleteEscultura(name);
+        const success = await esculturaService.deleteEscultura(name);
         if (success) {
           res.status(200).json({ message: 'Escultura eliminada exitosamente.' });
         } else {
@@ -89,6 +101,6 @@ class EsculturaController {
         res.status(500).json({ error: error.message });
       }
     }
-  }
+  
   
   module.exports = EsculturaController;

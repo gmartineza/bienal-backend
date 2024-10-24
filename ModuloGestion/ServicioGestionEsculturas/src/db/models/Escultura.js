@@ -1,22 +1,11 @@
-class Escultura {
-    constructor(name, descripcion, fecha, ) {
-      this.name = name;
-      this.descripcion = descripcion;
-      this.fecha = fecha;
-    }
+const mongoose = require('mongoose');
+
+const EsculturaSchema = new mongoose.Schema({
+  name: { type: String, required: true },
+  description: { type: String, required: true  },
+  date: { type: Date, required: true },
+  sculptor: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Escultor' , required: true }],
+  images: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Imagen' }],
+}, { timestamps: true }); 
   
-    // Métodos setters
-    setName(name) {
-      this.name = name;
-    }
-  
-    setDescripcion(descripcion) {
-      this.descripcion = descripcion;
-    }
-  
-    setFecha (fecha ) {
-      this.fecha  = fecha ;
-    }
-  }
-  
-  module.exports = Escultura;
+  module.exports = mongoose.model('Escultura', EsculturaSchema);
