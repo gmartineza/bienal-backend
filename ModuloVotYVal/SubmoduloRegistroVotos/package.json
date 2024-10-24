@@ -1,5 +1,5 @@
 {
-  "name": "src",
+  "name": "submoduloregistrovotos",
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
@@ -9,9 +9,6 @@
   "license": "ISC",
   "description": "",
   "dependencies": {
-    "express": "^4.21.1",
-    "install": "^0.13.0",
-    "mongoose": "^8.7.2",
-    "src": "file:"
+    "submoduloregistrovotos": "file:"
   }
 }
