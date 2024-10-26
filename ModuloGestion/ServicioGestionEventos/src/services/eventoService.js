@@ -1,4 +1,4 @@
-const Evento = require('../db/models/Evento');
+const Evento = require('../db/models/Event');
 
 /**
  * Crea un nuevo evento
@@ -6,14 +6,30 @@ const Evento = require('../db/models/Evento');
  * @returns {Promise<Object>} El evento creado
  * @throws {Error} Si hay un error al crear el evento
  */
-async function crearEvento(data) {
+async function crearEvento(data, imageUrl = null) {
   try {
-    const nuevoEvento = new Evento(data);
+    // Crear el objeto del evento con todos los campos requeridos
+    const eventoData = {
+      name: data.name,
+      description: data.description,
+      date: data.date,
+      location: data.location,
+      theme: data.theme || null,
+      sculptors: data.sculptors || [],
+      sculptures: data.sculptures || [],
+      images: imageUrl ? [imageUrl] : data.images || [],
+    };
+
+    // Crear una nueva instancia del modelo Evento
+    const nuevoEvento = new Evento(eventoData);
+
+    // Guardar el evento en la base de datos
     return await nuevoEvento.save();
   } catch (error) {
-    throw new Error('Error al crear el evento: ' + error.message);
+    throw new Error(`Error al crear el evento: ${error.message}`);
   }
 }
+
 
 /**
  * Obtiene todos los eventos

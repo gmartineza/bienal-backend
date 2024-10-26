@@ -8,13 +8,13 @@ const crearEventoSchema = {
     date: Joi.date().required(),
     location: Joi.string().required(),
     theme: Joi.string().optional(),
-    sculptors: Joi.array().items(Joi.objectId()),
-    sculptures: Joi.array().items(Joi.objectId()), 
-    images: Joi.array().items(Joi.objectId()),
+    sculptors: Joi.array().items(Joi.string().optional()),
+    sculptures: Joi.array().items(Joi.string().optional()),
+    images: Joi.array().items(Joi.string().optional()),
   }),
 };
 
-
+/*
 const actualizarEventoSchema = {
   [Segments.BODY]: Joi.object().keys({
     name: Joi.string().optional(),
@@ -48,11 +48,11 @@ const obtenerEventosPorTemaSchema = {
     theme: Joi.string().required(),
   }),
 };
-
+*/
 module.exports = {
   crearEventoSchema,
-  actualizarEventoSchema,
+ /* actualizarEventoSchema,
   obtenerEventoPorIDSchema,
   eliminarEventoSchema,
-  obtenerEventosPorTemaSchema,
+  obtenerEventosPorTemaSchema,*/
 };
