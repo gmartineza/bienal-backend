@@ -1,9 +1,33 @@
-const express = require('express');
+import express from 'express';
+import { generateToken, generateQRCode, validateQRToken, startTokenInterval } from '../controllers/qrController.js';
+
 const router = express.Router();
-const qrController = require('../controllers/QrController');
-const { verifyToken } = require('../../services/QrService');  // Middleware para verificar el token
 
-router.post('/generate-qr', verifyToken, qrController.generateQRToken);
-router.get('/validate', validateQRToken);
+// Iniciar el intervalo de regeneración de tokens al iniciar la aplicación
+startTokenInterval();
 
-module.exports = router;
+// Ruta para generar el QR
+router.get('/generate', async (req, res) => {
+  const token = generateToken();
+  try {
+    const qrCodeData = await generateQRCode(token);
+    res.json({ qrCode: qrCodeData, token });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
+
+// Ruta para validar el token QR
+router.get('/validate', async (req, res) => {
+  const { token } = req.query;
+
+  try {
+    const isValid = await validateQRToken(token);
+    res.json({ valid: isValid });
+  } catch (error) {
+    console.error('Error al validar el token:', error);
+    res.status(500).json({ valid: false });
+  }
+});
+
+export default router;

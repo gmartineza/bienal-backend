@@ -1,39 +1,36 @@
-const jwt = require('jsonwebtoken');
-const { SECRET_KEY } = require('../../config/QrConfig');
+import { generateQRCodeService, generateTokenService, validateTokenService } from '../../services/QrService.js';
+import { SECRET_KEY, TOKEN_EXPIRATION_TIME } from '../../config/QrConfig.js';
 
+let tokenIntervalId = null;
 
-exports.generateQRToken = (req, res) => {
-    // Generar el JWT con una duración de 2 minutos
-    const token = jwt.sign({}, SECRET_KEY, { expiresIn: '2m' });
+// Genera un token y lo devuelve
+export function generateToken() {
+  return generateTokenService();
+}
 
-    // URL de redirección personalizada
-    const redirectUrl = `https://articulo.mercadolibre.com.ar/MLA-1919073610-camiseta-remera-messi-retro-barcelona-champions-homenaje-lio-_JM?searchVariation=185103406657#polycard_client=search-nordic&searchVariation=185103406657&position=10&search_layout=stack&type=item&tracking_id=df5c39a6-983f-4631-8a04-9aa9820d9ebb&token=${token}`;
+// Genera el código QR usando el token
+export async function generateQRCode(token) {
+  return await generateQRCodeService(token);
+}
 
-    res.json({
-        message: 'Token QR generado exitosamente',
-        token: token,
-        redirectUrl // Enviar el enlace completo al frontend
-    });
-};
-exports.validateQRToken = (req, res) => {
-    const token = req.query.token; // Obtener el token de la URL
+// Valida el token
+export async function validateQRToken(token) {
+  return await validateTokenService(token);
+}
 
-    // Verificar el token
-    jwt.verify(token, SECRET_KEY, (err, decoded) => {
-        if (err) {
-            // Token inválido o expirado
-            return res.status(403).send(`
-                <html>
-                    <body>
-                        <h1>QR Expirado</h1>
-                        <p>El código QR ha expirado o no es válido. Por favor, solicita uno nuevo.</p>
-                    </body>
-                </html>
-            `);
-        }
+// Inicia el intervalo de regeneración de tokens
+export function startTokenInterval() {
+  tokenIntervalId = setInterval(() => {
+    const newToken = generateToken();
+    console.log(`Nuevo token generado: ${newToken}`);
+  }, TOKEN_EXPIRATION_TIME * 1000);
+}
 
-        // Redirigir a la URL de destino si el token es válido
-        const redirectUrl = 'https://articulo.mercadolibre.com.ar/MLA-1919073610-camiseta-remera-messi-retro-barcelona-champions-homenaje-lio-_JM?searchVariation=185103406657#polycard_client=search-nordic&searchVariation=185103406657&position=10&search_layout=stack&type=item&tracking_id=df5c39a6-983f-4631-8a04-9aa9820d9ebb';
-        res.redirect(redirectUrl);
-    });
-};
+// Detiene el intervalo de regeneración de tokens
+export function stopTokenInterval() {
+  if (tokenIntervalId) {
+    clearInterval(tokenIntervalId);
+    tokenIntervalId = null;
+    console.log('Intervalo de regeneración de tokens detenido');
+  }
+}
