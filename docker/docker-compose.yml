@@ -1,5 +1,5 @@
 services:
-  GestionEscultores:
+  gestion_escultores:
     build:
       context: ./ModuloGestion/ServicioGestionEscultores
       dockerfile: docker/Dockerfile
@@ -7,7 +7,7 @@ services:
         external-port: 8001
     ports:
       - "8001:80"
-  GestionEsculturas:
+  gestion_esculturas:
     build:
       context: ./ModuloGestion/ServicioGestionEsculturas
       dockerfile: docker/Dockerfile
@@ -15,7 +15,7 @@ services:
         external-port: 8002
     ports:
       - "8002:80"
-  GestionEventos:
+  gestion_eventos:
     build:
       context: ./ModuloGestion/ServicioGestionEventos
       dockerfile: docker/Dockerfile
@@ -23,7 +23,7 @@ services:
         external-port: 8003
     ports:
       - "8003:80"
-  Autenticacion:
+  autenticacion:
     build:
       context: ./ModuloVotYVal/SubmoduloAuth
       dockerfile: docker/Dockerfile
@@ -31,7 +31,7 @@ services:
         external-port: 8004
     ports:
       - "8004:80"
-  RegistroVotos:
+  registro_votos:
     build:
       context: ./ModuloVotYVal/SubmoduloRegistroVotos
       dockerfile: docker/Dockerfile
@@ -39,7 +39,7 @@ services:
         external-port: 8005
     ports:
       - "8005:80"
-  ValidacionVotos:
+  validacion_votos:
     build:
       context: ./ModuloVotYVal/SubmoduloValidacionVotos
       dockerfile: docker/Dockerfile
@@ -47,7 +47,7 @@ services:
         external-port: 8006
     ports:
       - "8006:80"
-  VisualizacionEscultores:
+  visualizacion_escultores:
     build:
       context: ./VisualizacionEscultores
       dockerfile: docker/Dockerfile
@@ -55,7 +55,7 @@ services:
         external-port: 8007
     ports:
       - "8007:80"
-  VisualizacionEsculturas:
+  visualizacion_esculturas:
     build:
       context: ./VisualizacionEsculturas
       dockerfile: docker/Dockerfile
@@ -63,7 +63,7 @@ services:
         external-port: 8008
     ports:
       - "8008:80"
-  VisualizacionEventos:
+  visualizacion_eventos:
     build:
       context: ./VisualizacionEventos
       dockerfile: docker/Dockerfile
