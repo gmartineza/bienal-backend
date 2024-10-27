@@ -4,6 +4,8 @@
   "description": "Servicio de Gestion de Eventos",
   "main": "index.js",
   "scripts": {
+    "start": "node serverBuild.js",
+    "build": "npx babel src/index.js -o serverBuild.js",
     "test": "jest"
   },
   "repository": {
@@ -31,5 +33,10 @@
     "mongoose": "^8.7.2",
     "multer": "^1.4.5-lts.1",
     "serviciogestioneventos": "file:"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.25.9",
+    "@babel/core": "^7.26.0",
+    "@babel/preset-env": "^7.26.0"
   }
 }
