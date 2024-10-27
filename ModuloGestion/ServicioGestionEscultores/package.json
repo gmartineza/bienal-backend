@@ -4,6 +4,8 @@
   "description": "Servicio de gestión de escultores",
   "main": "index.js",
   "scripts": {
+    "start": "node serverBuild.js",
+    "build": "babel src/index.js -o serverBuild.js",
     "test": "jest"
   },
   "repository": {
@@ -21,6 +23,14 @@
   },
   "homepage": "https://github.com/gmartineza/bienal-backend#readme",
   "dependencies": {
+    "dotenv": "^16.4.5",
+    "express": "^4.21.1",
     "serviciogestionescultores": "file:"
+  },
+  "type": "module",
+  "devDependencies": {
+    "@babel/cli": "^7.25.9",
+    "@babel/core": "^7.26.0",
+    "@babel/preset-env": "^7.26.0"
   }
 }
