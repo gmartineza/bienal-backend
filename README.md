@@ -50,10 +50,9 @@ Only students from the 3rd year of 2024 in "Universidad de la Cuenca del Plata" 
 
 ## License
 
-This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
+This project is licensed under the MIT License. See the [LICENSE](License) file for details.
 
 ## Contact Information
 
 For any questions, please contact:
 - **University**: [Universidad de la Cuenca del Plata](https://www.ucp.edu.ar/)
-
