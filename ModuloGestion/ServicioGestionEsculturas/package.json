@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "node serverBuild.js",
-    "build": "babel src/index.js -o serverBuild.js",
+    "build": "npx babel src/index.js -o serverBuild.js",
     "test": "jest"
   },
   "repository": {
