@@ -13,13 +13,16 @@ RUN npm install
 # Copy the rest of your app's source code
 COPY . .
 
+# build the server file
+RUN npm run build
+
 # Define a build argument for the external port
-ARG EXTERNAL_PORT=8000
+ARG EXPRESS_PORT=80
 # Set an environment variable for the external port
-ENV EXTERNAL_PORT=${EXTERNAL_PORT}
+ENV EXPRESS_PORT=${PORT}
 
 # Expose the port your app runs on
-EXPOSE ${EXTERNAL_PORT}
+EXPOSE ${EXPRESS_PORT}
 
 # Start the application
-CMD ["node", "./src/index.js"]
+CMD ["npm", "run", "start"]
