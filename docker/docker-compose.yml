@@ -71,3 +71,11 @@ services:
         external-port: 8009
     ports:
       - "8009:80"
+  votacion:
+    build:
+      context: ./votaciones
+      dockerfile: docker/Dockerfile
+      args:
+        external-port: 8010
+    ports:
+      - "8010:80"
