@@ -4,6 +4,8 @@
   "description": "Servicio de Gestion de Eventos",
   "main": "index.js",
   "scripts": {
+    "start": "node serverBuild.js",
+    "build": "babel src/index.js -o serverBuild.js",
     "test": "jest"
   },
   "repository": {
@@ -28,5 +30,10 @@
     "joi-objectid": "^4.0.2",
     "mongoose": "^8.7.2",
     "serviciogestioneventos": "file:"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.25.9",
+    "@babel/core": "^7.26.0",
+    "@babel/preset-env": "^7.26.0"
   }
 }
