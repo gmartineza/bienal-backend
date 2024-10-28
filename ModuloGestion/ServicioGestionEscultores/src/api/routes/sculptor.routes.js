@@ -13,8 +13,18 @@ router.get('/getAllSculptors',
     SculptorController.getAllSculptors
 );
 
-router.get('/:id', 
-    SculptorController.getSculptorById
+// router.get('/:id', 
+//     SculptorController.getSculptorById
+// );
+
+router.put('/update/:id',
+    SculptorValidation.updateSculptorValidation,
+    SculptorController.updateSculptorById
+);
+
+router.delete('/delete/:id',
+    SculptorValidation.deleteSculptorValidation, 
+    SculptorController.deleteSculptorById
 );
 
 module.exports = router;

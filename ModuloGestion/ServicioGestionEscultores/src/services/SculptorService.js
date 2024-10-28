@@ -28,8 +28,28 @@ const getSculptorById = async (id) => {
   }
 };
 
+const updateSculptorById = async (id, sculptorData) => {
+  try {
+    const updatedSculptor = await Sculptor.findByIdAndUpdate(id, sculptorData, { new: true });
+    return updatedSculptor;
+  } catch (error) {
+    throw error;
+  }
+};
+
+const deleteSculptorById = async (id) => {
+  try {
+    const deletedSculptor = await Sculptor.findByIdAndDelete(id);
+    return deletedSculptor;
+  } catch (error) {
+    throw error;
+  }
+};
+
 module.exports = {
   createSculptor,
   getAllSculptors,
   getSculptorById,
+  updateSculptorById,
+  deleteSculptorById,
 };
