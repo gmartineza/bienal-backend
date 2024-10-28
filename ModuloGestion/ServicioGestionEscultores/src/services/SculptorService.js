@@ -1,68 +1,35 @@
-class SculptorUseCase {
-    constructor(sculptorRepository) {
-      this.sculptorRepository = sculptorRepository;
-    }
-  
-    addSculptor(sculptor) {
-      this.sculptorRepository.add(sculptor);
-    }
-  
-    getSculptor(name) {
-      return this.sculptorRepository.getAll().find(sculptor => sculptor.name === name) || null;
-    }
-  
-    getAllSculptors() {
-      return this.sculptorRepository.getAll();
-    }
+const Sculptor  = require('../db/models/sculptureModel');
 
-    updateSculptorName(name, newName) {
-      const updatedSculptor = this.sculptorRepository.getAll().find(sculptor => sculptor.name == name);
-      if (updatedSculptor) {
-        updatedSculptor.setName(newName); // Cambiar el nombre del escultor
-        this.sculptorRepository.update(name, updatedSculptor); // Actualizar el escultor en el repositorio
-      } else {
-        throw new Error('Escultor no encontrado');
-      }
-    }
-  
-    updateSculptorBiography(name, newBiography) {
-      const updatedSculptor = this.sculptorRepository.getAll().find(sculptor => sculptor.name == name);
-      if (updatedSculptor) {
-        updatedSculptor.setBiography(newBiography);
-        this.sculptorRepository.update(name, updatedSculptor);
-      } else {
-        throw new Error('Escultor no encontrado');
-      }
-    }
-  
-    updateSculptorContact(name, newContact) {
-      const updatedSculptor = this.sculptorRepository.getAll().find(sculptor => sculptor.name == name);
-      if (updatedSculptor) {
-        updatedSculptor.setContact(newContact);
-        this.sculptorRepository.update(name, updatedSculptor);
-      } else {
-        throw new Error('Escultor no encontrado');
-      }
-    }
-  
-    updateSculptorWorks(name, newWorks) {
-      const updatedSculptor = this.sculptorRepository.getAll().find(sculptor => sculptor.name == name);
-      if (updatedSculptor) {
-        updatedSculptor.setWorks(newWorks);
-        this.sculptorRepository.update(name, updatedSculptor);
-      } else {
-        throw new Error('Escultor no encontrado');
-      }
-    }  
-
-    deleteSculptor(name) {
-      const sculptor = this.sculptorRepository.getAll().find(sculptor => sculptor.name == name);
-      if (sculptor) {
-        this.sculptorRepository.delete(name);
-        return true;
-      }
-      return false;
-    }
+const createSculptor = async (sculptorData) => {
+  try {
+    const sculptor = new Sculptor(sculptorData);
+    await sculptor.save();
+    return sculptor;
+  } catch (error) {
+    throw error;
   }
-  
-  module.exports = SculptorUseCase;
+};
+
+const getAllSculptors = async () => {
+  try {
+    const sculptors = await Sculptor.find(); 
+    return sculptors;
+  } catch (error) {
+    throw error;
+  }
+};
+
+const getSculptorById = async (id) => {
+  try {
+    const sculptor = await Sculptor.findById(id).populate('works');
+    return sculptor;
+  } catch (error) {
+    throw error;
+  }
+};
+
+module.exports = {
+  createSculptor,
+  getAllSculptors,
+  getSculptorById,
+};
