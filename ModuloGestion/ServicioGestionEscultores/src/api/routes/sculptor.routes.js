@@ -2,9 +2,12 @@ const express = require('express');
 const router = express.Router();
 const SculptorController = require('../controllers/sculptorController');
 const SculptorValidation = require('../validations/escultores.validations');
+const upload = require('../../middleware/multer');
+
 
 // Ruta para crear una escultura
 router.post('/createSculptor',
+    upload.single('profileImage'),
     SculptorValidation.createSculptorValidation, 
     SculptorController.createSculptor
 );

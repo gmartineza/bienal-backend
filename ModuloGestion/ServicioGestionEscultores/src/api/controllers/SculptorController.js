@@ -2,7 +2,15 @@ const sculptorService = require('../../services/sculptorService');
 
 const createSculptor = async (req, res) => {
   try {
-    const sculptor = await sculptorService.createSculptor(req.body);
+    const sculptorData = {
+      name: req.body.name,
+      biography: req.body.biography,
+      contactInfo: req.body.contactInfo,
+      profileImage: req.file ? req.file.path : null,  // Guardar la URL de Cloudinary
+      works: req.body.works
+    };
+
+    const sculptor = await sculptorService.createSculptor(sculptorData);
     res.status(201).json(sculptor);
   } catch (error) {
     throw error;
