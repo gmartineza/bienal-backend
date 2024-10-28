@@ -6,7 +6,7 @@ const createSculptor = async (req, res) => {
       name: req.body.name,
       biography: req.body.biography,
       contactInfo: req.body.contactInfo,
-      profileImage: req.file ? req.file.path : null,  // Guardar la URL de Cloudinary
+      profileImage: req.file ? req.file.path : null, 
       works: req.body.works
     };
 
@@ -40,11 +40,26 @@ const getSculptorById = async (req, res) => {
 
 const updateSculptorById = async (req, res) => {
   try {
-    const sculptor = await sculptorService.updateSculptorById(req.params.id, req.body);
-    if (!sculptor) {
+    const { id } = req.params;
+    
+    const updateData = {
+      name: req.body.name,
+      biography: req.body.biography,
+      contactInfo: req.body.contactInfo,
+      works: req.body.works,
+    };
+
+    if (req.file) {
+      updateData.profileImage = req.file.path; 
+    }
+
+    const updatedSculptor = await sculptorService.updateSculptorById(id, updateData);
+
+    if (!updatedSculptor) {
       return res.status(404).json({ message: 'Escultor no encontrado' });
     }
-    res.status(200).json(sculptor);
+
+    res.status(200).json(updatedSculptor);
   } catch (error) {
     throw error;
   }

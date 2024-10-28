@@ -21,6 +21,7 @@ router.get('/getAllSculptors',
 // );
 
 router.put('/update/:id',
+    upload.single('profileImage'),
     SculptorValidation.updateSculptorValidation,
     SculptorController.updateSculptorById
 );
