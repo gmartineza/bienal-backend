@@ -23,6 +23,7 @@
   },
   "homepage": "https://github.com/gmartineza/bienal-backend#readme",
   "dependencies": {
+    "body-parser": "^1.20.3",
     "celebrate": "^15.0.3",
     "cloudinary": "^2.5.1",
     "cors": "^2.8.5",

@@ -8,15 +8,24 @@ const {
 const upload = require('../../middleware/multer');
 
 router.post('/', upload.single('imagen'), celebrate(crearEventoSchema), eventoController.crearEvento);
-/*
-router.get('/', eventoController.obtenerEventos);
 
-router.get('/:id', celebrate(obtenerEventoSchema), eventoController.obtenerEventoPorId);
+router.get('/', eventoController.obtenerTodosLosEventos);
 
-router.post('/obtenerPorTema', celebrate(obtenerEventosPorTemaSchema), eventoController.obtenerEventosPorTema);
+router.get('/filtrar', eventoController.obtenerEventosPorRango);
 
-router.put('/:id', celebrate(actualizarEventoSchema), eventoController.actualizarEvento);
+router.delete('/:id', eventoController.eliminarEvento);
 
-router.delete('/:id', celebrate(eliminarEventoSchema), eventoController.eliminarEvento);*/
+// Ruta para obtener eventos pasados
+router.get('/pasados', eventoController.obtenerEventosPasados);
+
+// Ruta para obtener el evento actual
+router.get('/actual', eventoController.obtenerEventoActual);
+
+router.get('/futuros', eventoController.obtenerEventosFuturos);
+// Ruta para obtener eventos futuros
+
+router.get('/:id', eventoController.obtenerEventoPorId);
+
+router.put('/:id', upload.array('imagenes'), eventoController.actualizarEvento);
 
 module.exports = router;

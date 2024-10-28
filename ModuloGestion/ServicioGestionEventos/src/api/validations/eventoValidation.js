@@ -5,11 +5,11 @@ const crearEventoSchema = {
   [Segments.BODY]: Joi.object().keys({
     name: Joi.string().required(),
     description: Joi.string().optional(),
-    date: Joi.date().required(),
+    date_inicio: Joi.date().required(),
+    date_fin: Joi.date().required(),
     location: Joi.string().required(),
     theme: Joi.string().optional(),
     sculptors: Joi.array().items(Joi.string().optional()),
-    sculptures: Joi.array().items(Joi.string().optional()),
     images: Joi.array().items(Joi.string().optional()),
   }),
 };
