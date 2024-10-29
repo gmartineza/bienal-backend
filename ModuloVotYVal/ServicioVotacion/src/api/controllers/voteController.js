@@ -1,42 +1,25 @@
-const Vote = require('./voteModel');  // Importar el modelo de votos
-const Sculpture = require('./sculptureModel');  // Importar el modelo de esculturas
-const { findVoteByUserAndSculpture, createVote } = require('../../db/repository/voteRepository');
-const mongoose = require('mongoose');
+// src/api/controllers/voteController.js
+const Vote = require('../models/voteModels');
 
-// Controlador para manejar el voto de un usuario
-exports.castVote = async (req, res) => {
-  const { sculptureId, score } = req.body;
-  const userId = req.user.id;
+// Función para crear una nueva votación
+const createVote = async (req, res) => {
+    try {
+        const { userId, sculptureId, score } = req.body;
 
-  if (score < 1 || score > 5) {
-    return res.status(400).json({ error: 'Score must be between 1 and 5' });
-  }
+        // Verifica que el voto esté dentro del rango permitido (1-5)
+        if (score < 1 || score > 5) {
+            return res.status(400).json({ error: "La puntuación debe estar entre 1 y 5" });
+        }
 
-  if (!mongoose.Types.ObjectId.isValid(sculptureId)) {
-    return res.status(400).json({ error: 'Invalid sculpture ID' });
-  }
+        // Crea y guarda el voto
+        const newVote = new Vote({ userId, sculptureId, score });
+        await newVote.save();
 
-  try {
-    const existingVote = await findVoteByUserAndSculpture(userId, sculptureId);
-
-    if (existingVote) {
-      return res.status(400).json({ error: 'You have already voted for this sculpture' });
+        res.status(201).json({ message: "Voto registrado con éxito", vote: newVote });
+    } catch (error) {
+        console.error("Error al registrar el voto:", error);
+        res.status(500).json({ error: "Error al registrar el voto", details: error.message });
     }
-
-    await createVote(userId, sculptureId, score);
-
-    const sculpture = await Sculpture.findById(sculptureId);
-    if (!sculpture) {
-      return res.status(404).json({ error: 'Sculpture not found' });
-    }
-
-    sculpture.totalVotes += 1;
-    sculpture.totalScore += score;
-    await sculpture.save();
-
-    res.status(201).json({ message: 'Vote cast successfully' });
-  } catch (error) {
-    console.error(error);
-    res.status(500).json({ error: 'An error occurred while casting the vote' });
-  }
 };
+
+module.exports = { createVote };

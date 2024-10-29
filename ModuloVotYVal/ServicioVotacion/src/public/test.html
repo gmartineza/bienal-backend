@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Prueba de API de Votación</title>
+</head>
+<body>
+    <h1>Formulario de Votación</h1>
+    <form action="http://localhost:3000/api/vote" method="POST">
+        <label for="userId">User ID:</label><br>
+        <input type="number" id="userId" name="userId" required><br><br>
+
+        <label for="sculptureId">Sculpture ID:</label><br>
+        <input type="number" id="sculptureId" name="sculptureId" required><br><br>
+
+        <label for="score">Score (1-5):</label><br>
+        <input type="number" id="score" name="score" min="1" max="5" required><br><br>
+
+        <button type="submit">Enviar Voto</button>
+    </form>
+</body>
+</html>
