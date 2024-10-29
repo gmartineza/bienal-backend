@@ -25,7 +25,7 @@ services:
       - "8003:80"
   autenticacion:
     build:
-      context: ./../ModuloVotYVal/SubmoduloAuth
+      context: ./../ModuloVotYVal/ServicioAuth
       dockerfile: docker/Dockerfile
       args:
         external-port: 8004
@@ -33,7 +33,7 @@ services:
       - "8004:80"
   registro_votos:
     build:
-      context: ./../ModuloVotYVal/SubmoduloRegistroVotos
+      context: ./../ModuloVotYVal/ServicioVotacion
       dockerfile: docker/Dockerfile
       args:
         external-port: 8005
@@ -41,7 +41,7 @@ services:
       - "8005:80"
   validacion_votos:
     build:
-      context: ./../ModuloVotYVal/SubModuloValidVotos
+      context: ./../ModuloVotYVal/ServicioValidacion
       dockerfile: docker/Dockerfile
       args:
         external-port: 8006
