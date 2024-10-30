@@ -4,20 +4,85 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Prueba de API de Votación</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        h1 {
+            color: #333;
+        }
+        label {
+            display: block;
+            margin-top: 10px;
+        }
+        input {
+            padding: 5px;
+            width: 200px;
+            margin-bottom: 10px;
+        }
+        button {
+            padding: 10px 15px;
+            background-color: #28a745;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #218838;
+        }
+        #result {
+            margin-top: 20px;
+            border: 1px solid #ccc;
+            padding: 10px;
+            background-color: #f8f9fa;
+        }
+    </style>
 </head>
 <body>
     <h1>Formulario de Votación</h1>
-    <form action="http://localhost:3000/api/vote" method="POST">
-        <label for="userId">User ID:</label><br>
-        <input type="number" id="userId" name="userId" required><br><br>
+    <form id="voteForm">
+        <label for="userId">User ID:</label>
+        <input type="number" id="userId" name="userId" required>
 
-        <label for="sculptureId">Sculpture ID:</label><br>
-        <input type="number" id="sculptureId" name="sculptureId" required><br><br>
+        <label for="sculptureId">Sculpture ID:</label>
+        <input type="number" id="sculptureId" name="sculptureId" required>
 
-        <label for="score">Score (1-5):</label><br>
-        <input type="number" id="score" name="score" min="1" max="5" required><br><br>
+        <label for="score">Score (1-5):</label>
+        <input type="number" id="score" name="score" min="1" max="5" required>
 
         <button type="submit">Enviar Voto</button>
     </form>
+
+    <div id="result"></div>
+
+    <script>
+        document.getElementById('voteForm').addEventListener('submit', async function(event) {
+            event.preventDefault(); // Evitar que el formulario se envíe de forma tradicional
+
+            const userId = document.getElementById('userId').value;
+            const sculptureId = document.getElementById('sculptureId').value;
+            const score = document.getElementById('score').value;
+
+            // Enviar la solicitud POST al servidor
+            const response = await fetch('http://localhost:3000/api/votes/vote', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ userId: parseInt(userId), sculptureId: parseInt(sculptureId), score: parseInt(score) }),
+            });
+
+            const resultDiv = document.getElementById('result');
+
+            if (response.ok) {
+                const data = await response.json();
+                resultDiv.innerHTML = `<p>${data.message}</p><pre>${JSON.stringify(data.vote, null, 2)}</pre>`;
+            } else {
+                const errorData = await response.json();
+                resultDiv.innerHTML = `<p style="color: red;">Error: ${errorData.error}</p>`;
+            }
+        });
+    </script>
 </body>
 </html>
