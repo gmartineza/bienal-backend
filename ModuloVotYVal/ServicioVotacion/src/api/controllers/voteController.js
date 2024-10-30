@@ -1,5 +1,5 @@
 // src/api/controllers/voteController.js
-const Vote = require('../models/voteModels');
+const Vote = require('../db/models/voteModels'); // Asegúrate de que la ruta sea correcta
 
 // Función para crear una nueva votación
 const createVote = async (req, res) => {
@@ -17,8 +17,7 @@ const createVote = async (req, res) => {
 
         res.status(201).json({ message: "Voto registrado con éxito", vote: newVote });
     } catch (error) {
-        console.error("Error al registrar el voto:", error);
-        res.status(500).json({ error: "Error al registrar el voto", details: error.message });
+        res.status(500).json({ error: "Error al registrar el voto" });
     }
 };
 

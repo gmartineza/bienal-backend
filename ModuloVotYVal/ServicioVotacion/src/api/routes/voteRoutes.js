@@ -1,17 +1,10 @@
+// src/api/routes/voteRoutes.js
 const express = require('express');
-const { castVote } = require('../controllers/voteController');
-const { voteValidationRules } = require('../validations/voteValidations');
-const { isAuthenticated } = require('../middlewares/authMiddleware');
-const { validationResult } = require('express-validator');
+const { createVote } = require('../controllers/voteController');
 
 const router = express.Router();
 
-router.post('/vote', isAuthenticated, voteValidationRules(), (req, res, next) => {
-  const errors = validationResult(req);
-  if (!errors.isEmpty()) {
-    return res.status(400).json({ errors: errors.array() });
-  }
-  next();
-}, castVote);
+// Ruta para registrar un voto
+router.post('/vote', createVote);
 
 module.exports = router;
