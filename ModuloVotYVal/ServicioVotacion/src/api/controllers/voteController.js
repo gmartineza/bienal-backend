@@ -1,5 +1,5 @@
 // src/api/controllers/voteController.js
-const Vote = require('../db/models/voteModels'); // Asegúrate de que la ruta sea correcta
+const Vote = require('../models/voteModels'); // Asegúrate de que la ruta sea correcta
 
 // Función para crear una nueva votación
 const createVote = async (req, res) => {

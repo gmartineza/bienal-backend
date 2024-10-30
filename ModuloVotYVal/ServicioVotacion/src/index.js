@@ -1,28 +1,36 @@
-// src/index.js
-require('dotenv').config();
+// Importaciones
 const express = require('express');
 const mongoose = require('mongoose');
+const dotenv = require('dotenv');
 const voteRoutes = require('./api/routes/voteRoutes');
 
-const app = express();
-app.use(express.json());
-app.use(express.urlencoded({ extended: true })); 
+// Configuración de variables de entorno
+dotenv.config();
 
-// Configuración de la conexión a MongoDB
+// Crear una instancia de Express
+const app = express();
+
+// Middleware para parsear JSON
+app.use(express.json());
+
+// Conexión a MongoDB
 const uri = process.env.MONGODB_URI;
-mongoose.connect(uri)
+if (!uri) {
+    console.error('Error: la variable MONGODB_URI no está definida en el archivo .env');
+    process.exit(1); // Finaliza la ejecución si la URI no está definida
+}
+
+mongoose.connect(uri, { useNewUrlParser: true, useUnifiedTopology: true })
     .then(() => console.log('Conectado a MongoDB'))
     .catch((error) => console.error('Error al conectar a MongoDB:', error));
 
-// Sirve la carpeta 'public' para archivos estáticos
-app.use(express.static('public'));
+// Rutas
+app.use('/api/votes', voteRoutes);
 
-// Usar las rutas de votación
-app.use('/api', voteRoutes);
+// Configuración del puerto
+const PORT = process.env.PORT || 3000;
 
 // Iniciar el servidor
-const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
     console.log(`Servidor escuchando en el puerto ${PORT}`);
-    console.log(`Accede al formulario en: http://localhost:${PORT}/test.html`);
 });
