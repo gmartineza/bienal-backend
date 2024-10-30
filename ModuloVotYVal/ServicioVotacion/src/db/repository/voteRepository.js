@@ -1,5 +1,6 @@
 // src/api/repository/voteRepository.js
-const Vote = require('../models/voteModels');
+const Vote = require('../../db/models/voteModels');
+
 
 const findVoteByUserAndSculpture = (userId, sculptureId) => {
   return Vote.findOne({ userId, sculptureId });

@@ -9,6 +9,7 @@
   "license": "ISC",
   "description": "",
   "dependencies": {
+    "servicio-auth": "file:",
     "submoduloauth": "file:"
   }
 }

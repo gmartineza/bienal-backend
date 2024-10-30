@@ -2,7 +2,7 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const dotenv = require('dotenv');
-const voteRoutes = require('./api/routes/voteRoutes');
+const voteRoutes = require('../api/routes/voteRoutes'); // Ruta relativa corregida
 
 // Configuración de variables de entorno
 dotenv.config();
