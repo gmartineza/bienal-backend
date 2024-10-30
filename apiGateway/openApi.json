@@ -1,0 +1,112 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+      "title": "API de Gestión de Bienal de Escultura",
+      "version": "1.0.0",
+      "description": "API para gestionar eventos, escultores y esculturas en la Bienal de Escultura."
+    },
+    "servers": [
+      {
+        "url": "http://localhost:8000",
+        "description": "Servidor local de desarrollo"
+      }
+    ],
+    "paths": {
+      "/eventos": {
+        "get": {
+          "summary": "Ver eventos",
+          "description": "Obtiene una lista de eventos.",
+          "responses": {
+            "200": {
+              "description": "Lista de eventos",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "array",
+                    "items": { "$ref": "#/components/schemas/Eventos" }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "/escultores": {
+        "get": {
+          "summary": "Ver escultores",
+          "description": "Obtiene una lista de escultores.",
+          "responses": {
+            "200": {
+              "description": "Lista de escultores",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "array",
+                    "items": { "$ref": "#/components/schemas/Escultores" }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "/esculturas": {
+        "get": {
+          "summary": "Ver esculturas",
+          "description": "Obtiene una lista de esculturas.",
+          "responses": {
+            "200": {
+              "description": "Lista de esculturas",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "array",
+                    "items": { "$ref": "#/components/schemas/Esculturas" }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "components": {
+      "schemas": {
+        "Eventos": {
+          "type": "object",
+          "properties": {
+            "id_evento": { "type": "integer" },
+            "nombre_evento": { "type": "string" },
+            "fecha": { "type": "string", "format": "date" },
+            "lugar": { "type": "string" },
+            "descripcion": { "type": "string" },
+            "tematica": { "type": "string" }
+          }
+        },
+        "Escultores": {
+          "type": "object",
+          "properties": {
+            "id_escultor": { "type": "integer" },
+            "nombre_escultor": { "type": "string" },
+            "apellido_escultor": { "type": "string" },
+            "biografia": { "type": "string" },
+            "contacto": { "type": "string" },
+            "obras_previas": { "type": "string" }
+          }
+        },
+        "Esculturas": {
+          "type": "object",
+          "properties": {
+            "id_escultura": { "type": "integer" },
+            "nombre_escultura": { "type": "string" },
+            "tematica": { "type": "string" },
+            "fecha_creacion": { "type": "string", "format": "date" },
+            "foto_antes": { "type": "string", "format": "url" },
+            "foto_durante": { "type": "string", "format": "url" },
+            "foto_despues": { "type": "string", "format": "url" }
+          }
+        }
+      }
+    }
+  }
+  

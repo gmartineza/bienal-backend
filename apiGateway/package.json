@@ -1,0 +1,12 @@
+{
+  "name": "bienal-api_gateway",
+  "description": "Express Gateway Instance Bootstraped from Command Line",
+  "repository": "https://github.com/gmartineza/bienal-backend.git",
+  "license": "MIT",
+  "version": "1.0.0",
+  "main": "server.js",
+  "dependencies": {
+    "express-gateway": "^1.16.11"
+  },
+  "type": "module"
+}
