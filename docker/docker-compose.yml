@@ -80,6 +80,15 @@ services:
     image: stefanomerinoderui/bienal-backend:visualizacion_eventos
     ports:
       - "80:80"
+#  generadorQR:
+#    build:
+#      context: ./../SevicioQr
+#      dockerfile: docker/Dockerfile
+#      args:
+#        external-port: 80
+#    image: stefanomerinoderui/bienal-backend:generadorQ
+#    ports:
+#      - "80:80"
   votaciones:
     build:
       context: ./../votaciones
@@ -89,12 +98,12 @@ services:
     image: stefanomerinoderui/bienal-backend:votaciones
     ports:
       - "80:80"
-  api_gateway:
-    build:
-      context: ./../apiGateway
-      dockerfile: docker/Dockerfile
-      args:
-          external-port: 80
-    image: stefanomerinoderui/bienal-backend:api_gateway
-    ports:
-      - "80:80"
+#  api_gateway:
+#    build:
+#      context: ./../apiGateway
+#      dockerfile: docker/Dockerfile
+#      args:
+#          external-port: 80
+#    image: stefanomerinoderui/bienal-backend:api_gateway
+#    ports:
+#      - "80:80"
