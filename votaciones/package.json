@@ -19,5 +19,8 @@
   },
   "dependencies": {
     "votaciones": "file:"
+  },
+  "engines": {
+    "node": "20.x"
   }
 }

@@ -19,5 +19,8 @@
   },
   "dependencies": {
     "visualizacioneventos": "file:"
+  },
+  "engines": {
+    "node": "20.x"
   }
 }

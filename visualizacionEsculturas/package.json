@@ -19,5 +19,8 @@
   },
   "dependencies": {
     "visualizacionesculturas": "file:"
+  },
+  "engines": {
+    "node": "20.x"
   }
 }

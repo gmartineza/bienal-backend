@@ -19,5 +19,8 @@
   },
   "dependencies": {
     "visualizacionescultores": "file:"
+  },
+  "engines": {
+    "node": "20.x"
   }
 }
