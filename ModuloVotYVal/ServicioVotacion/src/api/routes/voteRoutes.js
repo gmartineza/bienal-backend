@@ -1,7 +1,7 @@
 // src/api/routes/voteRoutes.js
 const express = require('express');
-const { createVote } = require('../../controllers/voteController');
-const { voteValidationRules } = require('../../validations/voteValidations');
+const { createVote } = require('../controllers/voteController');
+const { voteValidationRules } = require('../validations/voteValidations');
 
 const router = express.Router();
 
