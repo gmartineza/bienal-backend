@@ -20,9 +20,10 @@ if (!uri) {
     process.exit(1); // Finaliza la ejecución si la URI no está definida
 }
 
-mongoose.connect(uri, { useNewUrlParser: true, useUnifiedTopology: true })
+mongoose.connect(uri)
     .then(() => console.log('Conectado a MongoDB'))
     .catch((error) => console.error('Error al conectar a MongoDB:', error));
+
 
 // Rutas
 app.use('/api/votes', voteRoutes);
@@ -30,7 +31,7 @@ app.use('/api/votes', voteRoutes);
 // Configuración del puerto
 const PORT = process.env.PORT || 3000;
 
-// Iniciar el servidor
 app.listen(PORT, () => {
     console.log(`Servidor escuchando en el puerto ${PORT}`);
+    console.log(`Visita http://localhost:${PORT}/api/vote para registrar un voto`);
 });
