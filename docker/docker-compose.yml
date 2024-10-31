@@ -7,7 +7,7 @@ services:
         external-port: 80
     image: stefanomerinoderui/bienal-backend:gestion_escultores
     ports:
-      - "80:80"
+      - "8001:80"
   gestion_esculturas:
     build:
       context: ./../ModuloGestion/ServicioGestionEsculturas
@@ -16,7 +16,7 @@ services:
         external-port: 80
     image: stefanomerinoderui/bienal-backend:gestion_esculturas
     ports:
-      - "80:80"
+      - "8002:80"
   gestion_eventos:
     build:
       context: ./../ModuloGestion/ServicioGestionEventos
@@ -25,7 +25,7 @@ services:
         external-port: 80
     image: stefanomerinoderui/bienal-backend:gestion_eventos
     ports:
-      - "80:80"
+      - "8003:80"
   autenticacion:
     build:
       context: ./../ModuloVotYVal/SubmoduloAuth
@@ -34,7 +34,7 @@ services:
         external-port: 80
     image: stefanomerinoderui/bienal-backend:autenticacion
     ports:
-      - "80:80"
+      - "8004:80"
   registro_votos:
     build:
       context: ./../ModuloVotYVal/SubmoduloRegistroVotos
@@ -43,7 +43,7 @@ services:
         external-port: 80
     image: stefanomerinoderui/bienal-backend:registro_votos
     ports:
-      - "80:80"
+      - "8005:80"
   validacion_votos:
     build:
       context: ./../ModuloVotYVal/SubModuloValidVotos
@@ -52,7 +52,7 @@ services:
         external-port: 80
     image: stefanomerinoderui/bienal-backend:validacion_votos
     ports:
-      - "80:80"
+      - "8006:80"
   visualizacion_escultores:
     build:
       context: ./../visualizacionEscultores
@@ -61,7 +61,7 @@ services:
         external-port: 80
     image: stefanomerinoderui/bienal-backend:visualizacion_escultores
     ports:
-      - "80:80"
+      - "8007:80"
   visualizacion_esculturas:
     build:
       context: ./../visualizacionEsculturas
@@ -70,7 +70,7 @@ services:
         external-port: 80
     image: stefanomerinoderui/bienal-backend:visualizacion_esculturas
     ports:
-      - "80:80"
+      - "8008:80"
   visualizacion_eventos:
     build:
       context: ./../visualizacionEventos
@@ -79,16 +79,7 @@ services:
         external-port: 80
     image: stefanomerinoderui/bienal-backend:visualizacion_eventos
     ports:
-      - "80:80"
-#  generadorQR:
-#    build:
-#      context: ./../SevicioQr
-#      dockerfile: docker/Dockerfile
-#      args:
-#        external-port: 80
-#    image: stefanomerinoderui/bienal-backend:generadorQ
-#    ports:
-#      - "80:80"
+      - "8009:80"
   votaciones:
     build:
       context: ./../votaciones
@@ -97,7 +88,16 @@ services:
         external-port: 80
     image: stefanomerinoderui/bienal-backend:votaciones
     ports:
-      - "80:80"
+      - "8010:80"
+#  generadorQR:
+#    build:
+#      context: ./../SevicioQr
+#      dockerfile: docker/Dockerfile
+#      args:
+#        external-port: 80
+#    image: stefanomerinoderui/bienal-backend:generadorQ
+#    ports:
+#      - "8011:80"
 #  api_gateway:
 #    build:
 #      context: ./../apiGateway
@@ -106,4 +106,4 @@ services:
 #          external-port: 80
 #    image: stefanomerinoderui/bienal-backend:api_gateway
 #    ports:
-#      - "80:80"
+#      - "8012:80"
