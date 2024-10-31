@@ -4,7 +4,9 @@ function main() {
     const callback= () => {
         console.log("awakening services");
         services.forEach(service => {
-            fetch(service.url).catch((error) => {
+            fetch(service.url).then((result) => {
+                console.log(`service ${service.serviceName} on url ${service.url} awakened`);
+            }).catch((error) => {
                 console.error(`error while fetching service ${service.serviceName} on url ${service.url}`);
             })
         });
