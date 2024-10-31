@@ -4,9 +4,27 @@ admin:
   port: 9876
   host: localhost
 apiEndpoints:
-  api:
-    host: localhost
-    paths: '/ip'
+  escultores:
+    paths: "/api/escultores*"
+  esculturas:
+    paths: "/api/esculturas*"
+  eventos:
+    paths: "/api/eventos*"
+  autenticacion:
+    paths: "/api/autenticacion*"
+  registro_votos:
+    paths: "/api/registro_votos*"
+  validacion_votos:
+    paths: "/api/validacion_votos*"
+  visualizacion_escultores:
+    paths: "/api/visualizacion/escultores*"
+  visualizacion_esculturas:
+    paths: "/api/visualizacion/esculturas*"
+  visualizacion_eventos:
+    paths: "/api/visualizacion/eventos*"
+  votacion:
+    paths: "/api/votacion*"
+---
 serviceEndpoints:
   gestion_escultores:
     url: ${process.env.SERVICE_GESTION_ESCULTORES_URL}
@@ -28,15 +46,103 @@ serviceEndpoints:
     url: ${process.env.SERVICE_VISUALIZACION_EVENTOS_URL}
   votacion:
     url: ${process.env.SERVICE_VOTACION_URL}
+---
 policies:
-  - basic-auth
-  - cors
-  - expression
-  - key-auth
-  - log
-  - oauth2
-  - proxy
-  - rate-limit
+  - proxy:
+pipelines:
+  escultoresPipeline:
+    apiEndpoints:
+      - escultores
+    policies:
+      - proxy:
+          - action:
+              serviceEndpoint: gestion_escultores
+              changeOrigin: true
+#changeOrigin:
+# Si tu API Gateway recibe una solicitud a http://mi-gateway.com/api/escultores, y el serviceEndpoint para esta solicitud apunta a 
+# http://servicio-escultores.com, al usar changeOrigin: true, el encabezado Host de la solicitud será servicio-escultores.com
+# en lugar de mi-gateway.com. Esto permite que el backend interprete la solicitud como si estuviera directamente dirigida a él.
+  esculturasPipeline:
+    apiEndpoints:
+      - esculturas
+    policies:
+      - proxy:
+          - action:
+              serviceEndpoint: gestion_esculturas
+              changeOrigin: true
+
+  eventosPipeline:
+    apiEndpoints:
+      - eventos
+    policies:
+      - proxy:
+          - action:
+              serviceEndpoint: gestion_eventos
+              changeOrigin: true
+
+  autenticacionPipeline:
+    apiEndpoints:
+      - autenticacion
+    policies:
+      - proxy:
+          - action:
+              serviceEndpoint: autenticacion
+              changeOrigin: true
+
+  registroVotosPipeline:
+    apiEndpoints:
+      - registro_votos
+    policies:
+      - proxy:
+          - action:
+              serviceEndpoint: registro_votos
+              changeOrigin: true
+
+  validacionVotosPipeline:
+    apiEndpoints:
+      - validacion_votos
+    policies:
+      - proxy:
+          - action:
+              serviceEndpoint: validacion_votos
+              changeOrigin: true
+
+  visualizacionEscultoresPipeline:
+    apiEndpoints:
+      - visualizacion_escultores
+    policies:
+      - proxy:
+          - action:
+              serviceEndpoint: visualizacion_escultores
+              changeOrigin: true
+
+  visualizacionEsculturasPipeline:
+    apiEndpoints:
+      - visualizacion_esculturas
+    policies:
+      - proxy:
+          - action:
+              serviceEndpoint: visualizacion_esculturas
+              changeOrigin: true
+
+  visualizacionEventosPipeline:
+    apiEndpoints:
+      - visualizacion_eventos
+    policies:
+      - proxy:
+          - action:
+              serviceEndpoint: visualizacion_eventos
+              changeOrigin: true
+
+  votacionPipeline:
+    apiEndpoints:
+      - votacion
+    policies:
+      - proxy:
+          - action:
+              serviceEndpoint: votacion
+              changeOrigin: true
+---
 pipelines:
   default:
     apiEndpoints:
