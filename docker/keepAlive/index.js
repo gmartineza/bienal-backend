@@ -1,12 +1,8 @@
-const services= [
-    {serviceName: "votaciones",url:"https://bienal-backend-votaciones.onrender.com/"},
-    {serviceName: undefined,url:undefined},
-]
+import services from './services.json' assert { type: 'json' };
 
-async function main() {
+function main() {
     const callback= () => {
         console.log("awakening services");
-        
         services.forEach(service => {
             fetch(service.url).catch((error) => {
                 console.error(`error while fetching service ${service.serviceName} on url ${service.url}`);
