@@ -3,6 +3,7 @@ const { celebrate, Joi, Segments } = require('celebrate');
 const createSculptorValidation  = celebrate({
   [Segments.BODY]: Joi.object().keys({
     name: Joi.string().required(),
+    apellido: Joi.string().required(),
     biography: Joi.string().required(),
     contactInfo: Joi.object({
       email: Joi.string().email().required(),
@@ -16,6 +17,7 @@ const createSculptorValidation  = celebrate({
 const updateSculptorValidation = celebrate({
   [Segments.BODY]: Joi.object().keys({
     name: Joi.string().optional(),
+    apellido: Joi.string().required(),
     biography: Joi.string().optional(),
     contactInfo: Joi.object({
       email: Joi.string().email().optional(),

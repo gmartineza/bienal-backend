@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const SculptorController = require('../controllers/sculptorController');
+const SculptorController = require('../controllers/SculptorController');
 const SculptorValidation = require('../validations/escultores.validations');
 const upload = require('../../middleware/multer');
 
@@ -16,9 +16,7 @@ router.get('/getAllSculptors',
     SculptorController.getAllSculptors
 );
 
-// router.get('/:id', 
-//     SculptorController.getSculptorById
-// );
+router.get('/:id',     SculptorController.getSculptorById);
 
 router.put('/update/:id',
     upload.single('profileImage'),

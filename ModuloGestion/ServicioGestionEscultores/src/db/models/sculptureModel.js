@@ -5,6 +5,10 @@ const sculptorSchema = new mongoose.Schema({
     type: String,
     required: true
   },
+  apellido: {
+    type: String,
+    required: true
+  },
   biography: {
     type: String,
     required: true

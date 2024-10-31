@@ -1,11 +1,10 @@
+require('dotenv').config({ path: '../.env' });
 const express = require('express');
-const dotenv = require('dotenv');
 const { errors } = require('celebrate');
 const connectDB = require('../src/config/db');
 const routes = require('./api/routes');
 
 // Configuración del entorno
-dotenv.config();
 const app = express();
 const PORT = process.env.PORT || 5005;
 

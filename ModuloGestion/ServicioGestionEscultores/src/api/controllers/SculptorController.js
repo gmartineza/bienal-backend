@@ -4,6 +4,7 @@ const createSculptor = async (req, res) => {
   try {
     const sculptorData = {
       name: req.body.name,
+      apellido: req.body.apellido,
       biography: req.body.biography,
       contactInfo: req.body.contactInfo,
       profileImage: req.file ? req.file.path : null, 
@@ -44,6 +45,7 @@ const updateSculptorById = async (req, res) => {
     
     const updateData = {
       name: req.body.name,
+      apellido: req.body.apellido,
       biography: req.body.biography,
       contactInfo: req.body.contactInfo,
       works: req.body.works,
