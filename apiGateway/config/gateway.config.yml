@@ -8,8 +8,26 @@ apiEndpoints:
     host: localhost
     paths: '/ip'
 serviceEndpoints:
-  httpbin:
-    url: 'https://httpbin.org'
+  gestion_escultores:
+    url: ${process.env.SERVICE_GESTION_ESCULTORES_URL}
+  gestion_esculturas:
+    url: ${process.env.SERVICE_GESTION_ESCULTURAS_URL}
+  gestion_eventos:
+    url: ${process.env.SERVICE_GESTION_EVENTOS_URL}
+  autenticacion:
+    url: ${process.env.SERVICE_AUTENTICACION_URL}
+  registro_votos:
+    url: ${process.env.SERVICE_REGISTRO_VOTOS_URL}
+  validacion_votos:
+    url: ${process.env.SERVICE_VALIDACION_VOTOS_URL}
+  visualizacion_escultores:
+    url: ${process.env.SERVICE_VISUALIZACION_ESCULTORES_URL}
+  visualizacion_esculturas:
+    url: ${process.env.SERVICE_VISUALIZACION_ESCULTURAS_URL}
+  visualizacion_eventos:
+    url: ${process.env.SERVICE_VISUALIZACION_EVENTOS_URL}
+  votacion:
+    url: ${process.env.SERVICE_VOTACION_URL}
 policies:
   - basic-auth
   - cors
