@@ -1,11 +1,12 @@
 http:
-  port: 8080
-admin:
-  port: 9876
-  host: localhost
+  port: ${process.env.PORT:-80} # default port 80
+#admin:
+#  port: 9876
+#  host: localhost
 apiEndpoints:
   escultores:
     paths: "/api/escultores*"
+    #methods: ["PUT", "POST", "PATCH", "DELETE"]
   esculturas:
     paths: "/api/esculturas*"
   eventos:
