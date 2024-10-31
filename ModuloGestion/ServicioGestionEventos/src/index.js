@@ -1,11 +1,13 @@
-require('dotenv').config();
+require('dotenv').config({ path: '../.env' });
 const express = require('express');
 const app = express();
-const eventoRoutes = require('./src/api/routes/eventoRoutes');
-const { connectDB } = require('./config/db'); 
+const eventoRoutes = require('./api/routes/eventoRoutes');
+const cors = require('cors');
+const connectDB = require('./config/db'); 
 const { errors } = require('celebrate'); 
 
 connectDB();
+app.use(cors());
 
 // Middleware para analizar JSON
 app.use(express.json());
