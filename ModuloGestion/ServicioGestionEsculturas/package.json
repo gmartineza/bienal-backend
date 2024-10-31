@@ -23,6 +23,7 @@
   },
   "homepage": "https://github.com/gmartineza/bienal-backend#readme",
   "dependencies": {
+    "express": "^4.21.1",
     "serviciogestionesculturas": "file:"
   },
   "devDependencies": {
