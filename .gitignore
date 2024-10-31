@@ -1,2 +1,4 @@
 node_modules
 serverBuild.js
+# docker
+error.log
