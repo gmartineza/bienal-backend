@@ -3,10 +3,18 @@
   "description": "Express Gateway Instance Bootstraped from Command Line",
   "repository": "https://github.com/gmartineza/bienal-backend.git",
   "license": "MIT",
+  "scripts": {
+    "start": "eg gateway start",
+    "reload": "eg gateway reload",
+    "stop": "eg gateway stop",
+    "configure": "eg gateway create",
+    "lint": "eslint ."
+  },
   "version": "1.0.0",
   "main": "server.js",
   "dependencies": {
+    "dotenv": "^16.4.5",
     "express-gateway": "^1.16.11"
   },
-  "type": "module"
+  "type": "commonjs"
 }
