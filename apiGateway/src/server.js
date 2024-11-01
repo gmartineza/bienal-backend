@@ -1,7 +1,6 @@
-import { join } from 'path';
-import gateway from 'express-gateway';
-import { config } from "dotenv";
-config()
+const { join } = require('path');
+const gateway = require('express-gateway');
+require("dotenv").config()
 
 
 gateway()

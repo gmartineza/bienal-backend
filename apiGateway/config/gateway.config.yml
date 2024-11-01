@@ -4,13 +4,15 @@ http:
 #  port: 9876
 #  host: localhost
 apiEndpoints:
-  escultores:
+  gestion_escultores:
     paths: "/api/escultores*"
-    #methods: ["PUT", "POST", "PATCH", "DELETE"]
-  esculturas:
+    methods: ["PUT", "POST", "DELETE"]  
+  gestion_esculturas:
     paths: "/api/esculturas*"
-  eventos:
+    methods: ["PUT", "POST", "DELETE"]  
+  gestion_eventos:
     paths: "/api/eventos*"
+    methods: ["PUT", "POST", "DELETE"]  
   autenticacion:
     paths: "/api/autenticacion*"
   registro_votos:
@@ -18,11 +20,14 @@ apiEndpoints:
   validacion_votos:
     paths: "/api/validacion_votos*"
   visualizacion_escultores:
-    paths: "/api/visualizacion/escultores*"
+    paths: "/api/escultores"
+    methods: ["GET"]
   visualizacion_esculturas:
-    paths: "/api/visualizacion/esculturas*"
+    paths: "/api/esculturas"
+    methods: ["GET"]
   visualizacion_eventos:
-    paths: "/api/visualizacion/eventos*"
+    paths: "/api/eventos"
+    methods: ["GET"]
   votacion:
     paths: "/api/votacion*"
 ---
