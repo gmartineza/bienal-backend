@@ -4,7 +4,7 @@ services:
 #      context: ./../apiGateway
 #      dockerfile: docker/Dockerfile
 #      args:
-#          external-port: 80
+#          EXPRESS_PORT: 80
 #    image: stefanomerinoderui/bienal-backend:api_gateway
 #    ports:
 #      - "8001:80"
@@ -13,7 +13,7 @@ services:
       context: ./../ModuloGestion/ServicioGestionEscultores
       dockerfile: docker/Dockerfile
       args:
-        external-port: 80
+        EXPRESS_PORT: 80
     image: stefanomerinoderui/bienal-backend:gestion_escultores
     ports:
       - "8002:80"
@@ -22,7 +22,7 @@ services:
       context: ./../ModuloGestion/ServicioGestionEsculturas
       dockerfile: docker/Dockerfile
       args:
-        external-port: 80
+        EXPRESS_PORT: 80
     image: stefanomerinoderui/bienal-backend:gestion_esculturas
     ports:
       - "8003:80"
@@ -31,7 +31,7 @@ services:
       context: ./../ModuloGestion/ServicioGestionEventos
       dockerfile: docker/Dockerfile
       args:
-        external-port: 80
+        EXPRESS_PORT: 80
     image: stefanomerinoderui/bienal-backend:gestion_eventos
     ports:
       - "8004:80"
@@ -40,7 +40,7 @@ services:
       context: ./../ModuloVotYVal/SubmoduloAuth
       dockerfile: docker/Dockerfile
       args:
-        external-port: 80
+        EXPRESS_PORT: 80
     image: stefanomerinoderui/bienal-backend:autenticacion
     ports:
       - "8005:80"
@@ -49,7 +49,7 @@ services:
       context: ./../ModuloVotYVal/SubmoduloRegistroVotos
       dockerfile: docker/Dockerfile
       args:
-        external-port: 80
+        EXPRESS_PORT: 80
     image: stefanomerinoderui/bienal-backend:registro_votos
     ports:
       - "8006:80"
@@ -58,7 +58,7 @@ services:
       context: ./../ModuloVotYVal/SubModuloValidVotos
       dockerfile: docker/Dockerfile
       args:
-        external-port: 80
+        EXPRESS_PORT: 80
     image: stefanomerinoderui/bienal-backend:validacion_votos
     ports:
       - "8007:80"
@@ -67,7 +67,7 @@ services:
 #      context: ./../SevicioQr
 #      dockerfile: docker/Dockerfile
 #      args:
-#        external-port: 80
+#        EXPRESS_PORT: 80
 #    image: stefanomerinoderui/bienal-backend:generadorQ
 #    ports:
 #      - "8008:80"
