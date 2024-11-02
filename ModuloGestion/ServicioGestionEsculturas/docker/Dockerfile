@@ -11,22 +11,20 @@ COPY package*.json ./
 RUN cat package.json
 
 # Install dependencies
-RUN npm cache clean --force
-RUN npm install --verbose
+RUN npm install --verbose && npm cache clean --force
 
 # Copy the rest of your app's source code
 COPY . .
 
-# build the server file
+# Build the server file
 RUN npm run build
 
-# Define a build argument for the external port
+# Define a build argument for the port and set it as an environment variable
 ARG EXPRESS_PORT=80
-# Set an environment variable for the external port
 ENV PORT=${EXPRESS_PORT}
 
-# Expose the port your app runs on
-EXPOSE ${EXPRESS_PORT}
+# Expose a default port
+EXPOSE 80
 
 # Start the application
 CMD ["npm", "run", "start"]
