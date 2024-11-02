@@ -1,103 +1,4 @@
 services:
-  gestion_escultores:
-    build:
-      context: ./../ModuloGestion/ServicioGestionEscultores
-      dockerfile: docker/Dockerfile
-      args:
-        external-port: 80
-    image: stefanomerinoderui/bienal-backend:gestion_escultores
-    ports:
-      - "8001:80"
-  gestion_esculturas:
-    build:
-      context: ./../ModuloGestion/ServicioGestionEsculturas
-      dockerfile: docker/Dockerfile
-      args:
-        external-port: 80
-    image: stefanomerinoderui/bienal-backend:gestion_esculturas
-    ports:
-      - "8002:80"
-  gestion_eventos:
-    build:
-      context: ./../ModuloGestion/ServicioGestionEventos
-      dockerfile: docker/Dockerfile
-      args:
-        external-port: 80
-    image: stefanomerinoderui/bienal-backend:gestion_eventos
-    ports:
-      - "8003:80"
-  autenticacion:
-    build:
-      context: ./../ModuloVotYVal/SubmoduloAuth
-      dockerfile: docker/Dockerfile
-      args:
-        external-port: 80
-    image: stefanomerinoderui/bienal-backend:autenticacion
-    ports:
-      - "8004:80"
-  registro_votos:
-    build:
-      context: ./../ModuloVotYVal/SubmoduloRegistroVotos
-      dockerfile: docker/Dockerfile
-      args:
-        external-port: 80
-    image: stefanomerinoderui/bienal-backend:registro_votos
-    ports:
-      - "8005:80"
-  validacion_votos:
-    build:
-      context: ./../ModuloVotYVal/SubModuloValidVotos
-      dockerfile: docker/Dockerfile
-      args:
-        external-port: 80
-    image: stefanomerinoderui/bienal-backend:validacion_votos
-    ports:
-      - "8006:80"
-  visualizacion_escultores:
-    build:
-      context: ./../visualizacionEscultores
-      dockerfile: docker/Dockerfile
-      args:
-        external-port: 80
-    image: stefanomerinoderui/bienal-backend:visualizacion_escultores
-    ports:
-      - "8007:80"
-  visualizacion_esculturas:
-    build:
-      context: ./../visualizacionEsculturas
-      dockerfile: docker/Dockerfile
-      args:
-        external-port: 80
-    image: stefanomerinoderui/bienal-backend:visualizacion_esculturas
-    ports:
-      - "8008:80"
-  visualizacion_eventos:
-    build:
-      context: ./../visualizacionEventos
-      dockerfile: docker/Dockerfile
-      args:
-        external-port: 80
-    image: stefanomerinoderui/bienal-backend:visualizacion_eventos
-    ports:
-      - "8009:80"
-  votaciones:
-    build:
-      context: ./../votaciones
-      dockerfile: docker/Dockerfile
-      args:
-        external-port: 80
-    image: stefanomerinoderui/bienal-backend:votaciones
-    ports:
-      - "8010:80"
-#  generadorQR:
-#    build:
-#      context: ./../SevicioQr
-#      dockerfile: docker/Dockerfile
-#      args:
-#        external-port: 80
-#    image: stefanomerinoderui/bienal-backend:generadorQ
-#    ports:
-#      - "8011:80"
 #  api_gateway:
 #    build:
 #      context: ./../apiGateway
@@ -106,4 +7,67 @@ services:
 #          external-port: 80
 #    image: stefanomerinoderui/bienal-backend:api_gateway
 #    ports:
-#      - "8012:80"
+#      - "8001:80"
+  gestion_escultores:
+    build:
+      context: ./../ModuloGestion/ServicioGestionEscultores
+      dockerfile: docker/Dockerfile
+      args:
+        external-port: 80
+    image: stefanomerinoderui/bienal-backend:gestion_escultores
+    ports:
+      - "8002:80"
+  gestion_esculturas:
+    build:
+      context: ./../ModuloGestion/ServicioGestionEsculturas
+      dockerfile: docker/Dockerfile
+      args:
+        external-port: 80
+    image: stefanomerinoderui/bienal-backend:gestion_esculturas
+    ports:
+      - "8003:80"
+  gestion_eventos:
+    build:
+      context: ./../ModuloGestion/ServicioGestionEventos
+      dockerfile: docker/Dockerfile
+      args:
+        external-port: 80
+    image: stefanomerinoderui/bienal-backend:gestion_eventos
+    ports:
+      - "8004:80"
+  autenticacion:
+    build:
+      context: ./../ModuloVotYVal/SubmoduloAuth
+      dockerfile: docker/Dockerfile
+      args:
+        external-port: 80
+    image: stefanomerinoderui/bienal-backend:autenticacion
+    ports:
+      - "8005:80"
+  registro_votos:
+    build:
+      context: ./../ModuloVotYVal/SubmoduloRegistroVotos
+      dockerfile: docker/Dockerfile
+      args:
+        external-port: 80
+    image: stefanomerinoderui/bienal-backend:registro_votos
+    ports:
+      - "8006:80"
+  validacion_votos:
+    build:
+      context: ./../ModuloVotYVal/SubModuloValidVotos
+      dockerfile: docker/Dockerfile
+      args:
+        external-port: 80
+    image: stefanomerinoderui/bienal-backend:validacion_votos
+    ports:
+      - "8007:80"
+#  generadorQR:
+#    build:
+#      context: ./../SevicioQr
+#      dockerfile: docker/Dockerfile
+#      args:
+#        external-port: 80
+#    image: stefanomerinoderui/bienal-backend:generadorQ
+#    ports:
+#      - "8008:80"
