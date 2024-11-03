@@ -4,9 +4,9 @@
   "repository": "https://github.com/gmartineza/bienal-backend.git",
   "license": "MIT",
   "scripts": {
-    "start": "node ./src/server.js",
+    "start": "node ./server.js",
     "build": "npx babel src/index.js -o serverBuild.js",
-    "dev": "nodemon ./src/server.js"
+    "dev": "nodemon ./server.js"
   },
   "version": "1.0.0",
   "main": "server.js",
