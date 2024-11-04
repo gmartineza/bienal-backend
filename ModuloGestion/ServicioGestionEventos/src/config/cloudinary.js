@@ -1,4 +1,9 @@
-// src/config/cloudinary.js
+/**
+ * Configuración de Cloudinary para la gestión de archivos multimedia en la nube.
+ * 
+ * @module CloudinaryConfig
+ */
+
 const cloudinary = require('cloudinary').v2;
 
 cloudinary.config({

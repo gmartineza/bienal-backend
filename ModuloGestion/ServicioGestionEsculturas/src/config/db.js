@@ -3,7 +3,6 @@
  * 
  * @module DatabaseConnection
  */
-
 const mongoose = require('mongoose');
 
 const connectDB = async () => {

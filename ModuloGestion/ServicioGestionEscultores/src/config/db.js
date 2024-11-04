@@ -1,12 +1,18 @@
+/**
+ * Conexión a la base de datos de MongoDB.
+ * 
+ * @module DatabaseConnection
+ */
 const mongoose = require('mongoose');
 
 const connectDB = async () => {
   try {
     await mongoose.connect(process.env.MONGODB_URI);
-    console.log('MongoDB connected successfully');
+    console.log('Conectado a la base de datos de MongoDB');
+    require('../db/models/sculptureModelCopy');
   } catch (error) {
-    console.error('MongoDB connection error:', error.message);
-    process.exit(1); // Detener el proceso si hay un error de conexión
+    console.error('Error al conectar a la base de datos:', error.message);
+    process.exit(1);
   }
 };
 
