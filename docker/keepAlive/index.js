@@ -1,22 +1,19 @@
-import services from './services.json' assert { type: 'json' };
+const url = process.env.SERVICE_RENDER_URL; // Render URL to be set
+const interval = 1000 * 60 * process.env.RENDER_RELOAD_INTERVAL_MINUTES; // Interval to be set in minutes
 
-function main() {
-    const callback= () => {
-        console.log("awakening services");
-        services.forEach(service => {
-            fetch(service.url).then((result) => {
-                console.log(`service ${service.serviceName} on url ${service.url} awakened`);
-            }).catch((error) => {
-                console.error(`error while fetching service ${service.serviceName} on url ${service.url}`);
-            })
-        });
-        console.log("Services awakened:"
-            + new Date().toLocaleString(
-                "en-US", 
-                { timeZone: "America/Argentina/Buenos_Aires" }));
-    }
-    callback()
-    setInterval(callback, 1000*60*5)
+//Reloader Function
+function reloadWebsite() {
+  fetch(url)
+    .then(response => {
+      console.log(`Reloaded at 
+        ${new Date().toLocaleString("en-US", { timeZone: "America/Argentina/Buenos_Aires" })}
+        : Status Code ${response.status}`);
+    })
+    .catch(error => {
+      console.error(`Error reloading at 
+        ${new Date().toLocaleString("en-US", { timeZone: "America/Argentina/Buenos_Aires" })}
+        :`, error.message);
+    });
 }
 
-main()
+setInterval(reloadWebsite, interval);
