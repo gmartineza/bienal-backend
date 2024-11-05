@@ -27,7 +27,7 @@ router.get('/getAllSculptors', SculptorController.getAllSculptors);
  * @route GET /api/sculptors/search
  * @description Busca escultores por nombre y apellido. Realiza una búsqueda parcial e insensible a mayúsculas.
  */
-router.get('/search', SculptorController.searchSculptorByName);
+router.get('/searchSculptor', SculptorController.searchSculptorByName);
 
 /**
  * @route GET /api/sculptors/:id

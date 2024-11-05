@@ -21,7 +21,7 @@ const {
  * @middleware upload.fields(), celebrate(crearEsculturaSchema)
  * @access Público
  */
-router.post('/', upload.fields([{ name: 'imagenesPre' }, { name: 'imagenesDurante' }, { name: 'imagenesPost' }]),
+router.post('/createSculpture', upload.fields([{ name: 'imagenesPre' }, { name: 'imagenesDurante' }, { name: 'imagenesPost' }]),
   celebrate(crearEsculturaSchema), esculturaController.crearEscultura);
 
 /**
@@ -29,7 +29,7 @@ router.post('/', upload.fields([{ name: 'imagenesPre' }, { name: 'imagenesDurant
  * @description Obtiene todas las esculturas.
  * @access Público
  */
-router.get('/', esculturaController.obtenerEsculturas);
+router.get('/getAllSculptures', esculturaController.obtenerEsculturas);
 
 
 /**
@@ -38,7 +38,7 @@ router.get('/', esculturaController.obtenerEsculturas);
  * @middleware upload.fields(), celebrate(actualizarEsculturaSchema)
  * @access Público
 */
-router.put('/:id', upload.fields([{ name: 'imagenesPre' }, { name: 'imagenesDurante' }, { name: 'imagenesPost' }]), 
+router.put('/update/:id', upload.fields([{ name: 'imagenesPre' }, { name: 'imagenesDurante' }, { name: 'imagenesPost' }]), 
 celebrate(actualizarEsculturaSchema), esculturaController.actualizarEscultura);
 
 /**
@@ -47,14 +47,14 @@ celebrate(actualizarEsculturaSchema), esculturaController.actualizarEscultura);
  * @middleware celebrate(idSchema)
  * @access Público
 */
-router.delete('/:id', celebrate(idSchema), esculturaController.eliminarEscultura);
+router.delete('/delete/:id', celebrate(idSchema), esculturaController.eliminarEscultura);
 
 /**
  * @route GET /api/esculturas/buscar
  * @description Busca esculturas por nombre.
  * @access Público
 */
-router.get('/buscar', esculturaController.buscarEsculturaPorNombre);
+router.get('/searchSculpture', esculturaController.buscarEsculturaPorNombre);
 
 /**
  * @route GET /api/esculturas/:id

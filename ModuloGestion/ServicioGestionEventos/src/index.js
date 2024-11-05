@@ -6,7 +6,6 @@
  * 
  * @module Server
  */
-require('dotenv').config({ path: '../.env' });
 const connectDB = require('./config/db');
 const express = require('express');
 const app = express();
@@ -24,7 +23,7 @@ app.use(cors({
 
 app.use(express.json());
 
-app.use('/api/eventos', eventoRoutes);
+app.use('/api/events', eventoRoutes);
 
 app.use(errors());
 
