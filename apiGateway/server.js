@@ -1,6 +1,5 @@
 const { join } = require('path');
 const gateway = require('express-gateway');
-require("dotenv").config()
 
 
 gateway()
