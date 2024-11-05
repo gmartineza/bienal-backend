@@ -6,7 +6,6 @@
  * 
  * @module Server
  */
-require('dotenv').config({ path: '../.env' });
 const connectDB = require('./config/db');
 const express = require('express');
 const app = express();
