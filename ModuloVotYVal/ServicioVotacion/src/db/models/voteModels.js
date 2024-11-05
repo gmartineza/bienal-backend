@@ -10,6 +10,10 @@ const voteSchema = new mongoose.Schema({
     type: Number, 
     required: true 
   },
+  eventId: { 
+    type: Number, 
+    required: true 
+  },
   score: { 
     type: Number, 
     min: 1, 
@@ -21,5 +25,8 @@ const voteSchema = new mongoose.Schema({
     default: Date.now 
   }
 });
+
+// Para garantizar que un usuario pueda votar solo una vez por escultor en un evento específico
+voteSchema.index({ userId: 1, sculptureId: 1, eventId: 1 }, { unique: true });
 
 module.exports = mongoose.model('Vote', voteSchema);

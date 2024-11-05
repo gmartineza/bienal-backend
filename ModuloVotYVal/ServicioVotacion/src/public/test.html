@@ -48,6 +48,9 @@
         <label for="sculptureId">Sculpture ID:</label>
         <input type="number" id="sculptureId" name="sculptureId" required>
 
+        <label for="eventId">Event ID:</label>
+        <input type="number" id="eventId" name="eventId" required>
+
         <label for="score">Score (1-5):</label>
         <input type="number" id="score" name="score" min="1" max="5" required>
 
@@ -62,6 +65,7 @@
 
             const userId = document.getElementById('userId').value;
             const sculptureId = document.getElementById('sculptureId').value;
+            const eventId = document.getElementById('eventId').value;
             const score = document.getElementById('score').value;
 
             // Enviar la solicitud POST al servidor
@@ -70,7 +74,12 @@
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify({ userId: parseInt(userId), sculptureId: parseInt(sculptureId), score: parseInt(score) }),
+                body: JSON.stringify({ 
+                    userId: parseInt(userId), 
+                    sculptureId: parseInt(sculptureId), 
+                    eventId: parseInt(eventId), // Incluye el eventId en la solicitud
+                    score: parseInt(score) 
+                }),
             });
 
             const resultDiv = document.getElementById('result');
