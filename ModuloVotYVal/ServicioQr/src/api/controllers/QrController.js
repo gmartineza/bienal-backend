@@ -8,9 +8,9 @@ export function generateToken() {
   return generateTokenService();
 }
 
-// Genera el código QR usando el token
-export async function generateQRCode(token) {
-  return await generateQRCodeService(token);
+// Genera el código QR usando el token y datos adicionales
+export async function generateQRCode(token, eventNumber, sculptorNumber) {
+  return await generateQRCodeService(token, eventNumber, sculptorNumber);
 }
 
 // Valida el token

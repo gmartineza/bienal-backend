@@ -9,8 +9,11 @@ startTokenInterval();
 // Ruta para generar el QR
 router.get('/generate', async (req, res) => {
   const token = generateToken();
+  const eventNumber = req.query.eventNumber;
+  const sculptorNumber = req.query.sculptorNumber;
+
   try {
-    const qrCodeData = await generateQRCode(token);
+    const qrCodeData = await generateQRCode(token, eventNumber, sculptorNumber);
     res.json({ qrCode: qrCodeData, token });
   } catch (error) {
     res.status(500).json({ error: error.message });
