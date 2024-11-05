@@ -57,7 +57,7 @@ pipelines:
       - proxy:
           - action:
               serviceEndpoint: gestion_esculturas
-              changeOrigin: true
+              changeOrigin: false
 
   eventosPipeline:
     apiEndpoints:
@@ -66,7 +66,7 @@ pipelines:
       - proxy:
           - action:
               serviceEndpoint: gestion_eventos
-              changeOrigin: true
+              changeOrigin: false
 
   autenticacionPipeline:
     apiEndpoints:
@@ -75,7 +75,7 @@ pipelines:
       - proxy:
           - action:
               serviceEndpoint: autenticacion
-              changeOrigin: true
+              changeOrigin: false
 
   registroVotosPipeline:
     apiEndpoints:
@@ -84,7 +84,7 @@ pipelines:
       - proxy:
           - action:
               serviceEndpoint: registro_votos
-              changeOrigin: true
+              changeOrigin: false
 
   generadorQrPipeline:
     apiEndpoints:
@@ -93,7 +93,7 @@ pipelines:
       - proxy:
           - action:
               serviceEndpoint: generador_qr
-              changeOrigin: true
+              changeOrigin: false
 
 #  default:
 #    apiEndpoints:
@@ -102,4 +102,4 @@ pipelines:
 #      - proxy:
 #          - action:
 #              serviceEndpoint: httpbin
-#              changeOrigin: true
+#              changeOrigin: false
