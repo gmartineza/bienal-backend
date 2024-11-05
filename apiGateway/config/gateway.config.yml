@@ -6,16 +6,16 @@ http:
 #   port: 9876
 #   host: localhost
 
-apiEndpoints:
+apiEndpoints: # Endpoints are set by every services
   gestion_escultores:
     paths: "/api/sculptors*"
     methods: ["GET", "PUT", "POST", "DELETE"]
   gestion_esculturas:
     paths: "/api/sculptures*"
-    methods: ["PUT", "POST", "DELETE"]
+    methods: ["GET", "PUT", "POST", "DELETE"]
   gestion_eventos:
     paths: "/api/events*"
-    methods: ["PUT", "POST", "DELETE"]
+    methods: ["GET", "PUT", "POST", "DELETE"]
   autenticacion:
     paths: "/api/autenticacion*"
   registro_votos:
@@ -48,7 +48,7 @@ pipelines:
       - proxy:
           - action:
               serviceEndpoint: gestion_escultores
-              changeOrigin: false
+              changeOrigin: true
 
   esculturasPipeline:
     apiEndpoints:
@@ -57,7 +57,7 @@ pipelines:
       - proxy:
           - action:
               serviceEndpoint: gestion_esculturas
-              changeOrigin: false
+              changeOrigin: true
 
   eventosPipeline:
     apiEndpoints:
@@ -66,7 +66,7 @@ pipelines:
       - proxy:
           - action:
               serviceEndpoint: gestion_eventos
-              changeOrigin: false
+              changeOrigin: true
 
   autenticacionPipeline:
     apiEndpoints:
@@ -75,7 +75,7 @@ pipelines:
       - proxy:
           - action:
               serviceEndpoint: autenticacion
-              changeOrigin: false
+              changeOrigin: true
 
   registroVotosPipeline:
     apiEndpoints:
@@ -84,7 +84,7 @@ pipelines:
       - proxy:
           - action:
               serviceEndpoint: registro_votos
-              changeOrigin: false
+              changeOrigin: true
 
   generadorQrPipeline:
     apiEndpoints:
@@ -93,7 +93,7 @@ pipelines:
       - proxy:
           - action:
               serviceEndpoint: generador_qr
-              changeOrigin: false
+              changeOrigin: true
 
 #  default:
 #    apiEndpoints:
@@ -102,4 +102,4 @@ pipelines:
 #      - proxy:
 #          - action:
 #              serviceEndpoint: httpbin
-#              changeOrigin: false
+#              changeOrigin: true
