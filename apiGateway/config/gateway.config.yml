@@ -17,9 +17,9 @@ apiEndpoints: # Endpoints are set by every services
     paths: "/api/events*"
     methods: ["GET", "PUT", "POST", "DELETE"]
   autenticacion:
-    paths: "/api/autenticacion*"
+    paths: "/api/autentication*"
   registro_votos:
-    paths: "/api/registro_votos*"
+    paths: "/api/voting*"
   generador_qr:
     paths: "/api/qr*"
 
