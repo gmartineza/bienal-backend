@@ -24,7 +24,7 @@ app.use(cors({
 
 app.use(express.json());
 
-app.use('/api/eventos', eventoRoutes);
+app.use('/api/events', eventoRoutes);
 
 app.use(errors());
 
