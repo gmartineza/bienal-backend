@@ -1,0 +1,4 @@
+{
+    "watch": ["./","./config"],
+    "ext": "js,json,yml,env"
+}
