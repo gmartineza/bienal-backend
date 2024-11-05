@@ -1,45 +1,54 @@
+/**
+ * Controlador para la gestión de eventos.
+ * 
+ * Utiliza los servicios de eventos y la configuración de Cloudinary para manejar las 
+ * operaciones de creación, actualización, consulta y eliminación de eventos.
+ * 
+ * @module EventController
+ */
 const eventoService = require('../../services/eventoService');
 const cloudinary = require('../../config/cloudinary');
 
+/**
+ * Crea un nuevo evento en la base de datos, incluyendo una imagen opcional subida a Cloudinary.
+ * @param {Object} req - Objeto de solicitud HTTP.
+ * @param {Object} res - Objeto de respuesta HTTP.
+ */
 async function crearEvento(req, res) {
   try {
     const { body, file } = req;
-
     let imageUrl = null;
 
-    // Si hay una imagen, súbela a Cloudinary desde la memoria
     if (file) {
-      // Convertir el buffer de la imagen a un stream para subirlo a Cloudinary
       const streamUpload = (buffer) => {
         return new Promise((resolve, reject) => {
           const stream = cloudinary.uploader.upload_stream(
             { folder: 'eventos', format: 'webp' },
             (error, result) => {
-              if (result) {
-                resolve(result);
-              } else {
-                reject(error);
-              }
+              if (result) resolve(result);
+              else reject(error);
             }
           );
           stream.end(buffer);
         });
       };
-
-      // Subir la imagen usando el buffer
       const result = await streamUpload(file.buffer);
       imageUrl = result.secure_url;
     }
 
-    // Llama al servicio para guardar el evento con la imagen incluida
     const nuevoEvento = await eventoService.crearEvento(body, imageUrl);
-
     res.status(201).json(nuevoEvento);
   } catch (error) {
     res.status(500).json({ error: 'Error al crear el evento: ' + error.message });
   }
 }
 
+
+/**
+ * Obtiene todos los eventos de la base de datos.
+ * @param {Object} req - Objeto de solicitud HTTP.
+ * @param {Object} res - Objeto de respuesta HTTP.
+ */
 const obtenerTodosLosEventos = async (req, res) => {
   try {
     const eventos = await eventoService.obtenerTodosLosEventos();
@@ -49,10 +58,22 @@ const obtenerTodosLosEventos = async (req, res) => {
   }
 };
 
+
+/**
+ * Obtiene un evento específico por su ID, incluyendo los detalles de los escultores asociados.
+ * 
+ * @param {Object} req - Objeto de solicitud HTTP.
+ * @param {Object} res - Objeto de respuesta HTTP.
+ */
 const obtenerEventoPorId = async (req, res) => {
   try {
-    const { id } = req.params; // Obtener el ID de los parámetros de la ruta
-    const evento = await eventoService.obtenerEventoPorId(id); // Llamar al servicio para obtener el evento
+    const { id } = req.params;
+
+    if (!id) {
+      return res.status(400).json({ mensaje: 'El ID del evento es requerido' });
+    }
+
+    const evento = await eventoService.obtenerEventoPorId(id);
 
     if (!evento) {
       return res.status(404).json({ mensaje: 'Evento no encontrado' });
@@ -65,101 +86,111 @@ const obtenerEventoPorId = async (req, res) => {
   }
 };
 
+
+/**
+ * Elimina un evento de la base de datos por su ID.
+ * @param {Object} req - Objeto de solicitud HTTP.
+ * @param {Object} res - Objeto de respuesta HTTP.
+ */
 const eliminarEvento = async (req, res) => {
   try {
     const { id } = req.params;
     const eventoEliminado = await eventoService.eliminarEvento(id);
-
     if (!eventoEliminado) {
       return res.status(404).json({ error: 'Evento no encontrado' });
     }
-
-    return res.status(200).json({ mensaje: 'Evento eliminado correctamente' });
+    res.status(200).json({ mensaje: 'Evento eliminado correctamente' });
   } catch (error) {
-    return res.status(500).json({ error: 'Error al eliminar el evento' });
+    res.status(500).json({ error: 'Error al eliminar el evento' });
   }
 };
 
+
+/**
+ * Filtra eventos por un rango de fechas.
+ * @param {Object} req - Objeto de solicitud HTTP.
+ * @param {Object} res - Objeto de respuesta HTTP.
+ */
 const obtenerEventosPorRango = async (req, res) => {
   try {
     const { inicio, fin } = req.query;
-
-    // Validar que ambas fechas estén presentes
     if (!inicio || !fin) {
       return res.status(400).json({ error: 'Debes proporcionar una fecha de inicio y una de fin' });
     }
-
-    // Convertir las fechas a objetos Date
     const fechaInicio = new Date(inicio);
     const fechaFin = new Date(fin);
-
-    // Verificar si las fechas son válidas
-    if (!isNaN(fechaInicio.getTime()) && !isNaN(fechaFin.getTime())) {
-      fechaInicio.toISOString();
-      fechaFin.toISOString();
-    } else {
+    if (isNaN(fechaInicio) || isNaN(fechaFin)) {
       return res.status(400).json({ error: 'Formato de fecha no válido' });
     }
-
-    // Llamar al servicio con las fechas convertidas
     const eventos = await eventoService.obtenerEventosPorRango(fechaInicio, fechaFin);
-
-    // Devolver los eventos encontrados
-    return res.status(200).json(eventos);
+    res.status(200).json(eventos);
   } catch (error) {
-    console.error('Error al obtener eventos por rango:', error);
-    return res.status(500).json({ error: 'Error al obtener eventos por rango de fechas' });
+    res.status(500).json({ error: 'Error al obtener eventos por rango de fechas' });
   }
 };
 
+
+/**
+ * Actualiza un evento con nuevos datos, incluyendo imágenes y escultores opcionales.
+ * @param {Object} req - Objeto de solicitud HTTP.
+ * @param {Object} res - Objeto de respuesta HTTP.
+ */
 const actualizarEvento = async (req, res) => {
   try {
     const { id } = req.params;
     const { body, files } = req;
-    const { imagenesAEliminar } = body;
+    let { imagenesAEliminar, escultoresAAgregar, escultoresAEliminar } = body;
+    if (typeof imagenesAEliminar === 'string') imagenesAEliminar = imagenesAEliminar.split(",");
+    if (typeof escultoresAAgregar === 'string') escultoresAAgregar = escultoresAAgregar.split(",");
+    if (typeof escultoresAEliminar === 'string') escultoresAEliminar = escultoresAEliminar.split(",");
 
     let nuevasImagenes = [];
-
-    // Si hay imágenes nuevas, súbelas a Cloudinary
     if (files && files.length > 0) {
       const subirImagen = (file) => {
         return new Promise((resolve, reject) => {
           const stream = cloudinary.uploader.upload_stream(
             { folder: 'eventos', format: 'webp' },
             (error, result) => {
-              if (result) {
-                resolve(result.secure_url);
-              } else {
-                reject(error);
-              }
+              if (result) resolve(result.secure_url);
+              else reject(error);
             }
           );
           stream.end(file.buffer);
         });
       };
-
-      // Subir imágenes en paralelo
       nuevasImagenes = await Promise.all(files.map(subirImagen));
     }
 
-    // Llamar al servicio para actualizar el evento
     const eventoActualizado = await eventoService.actualizarEvento(
-      id,
-      body,
-      nuevasImagenes,
-      JSON.parse(imagenesAEliminar || '[]') // Parsear las imágenes a eliminar
+      id, body, nuevasImagenes, imagenesAEliminar, escultoresAAgregar, escultoresAEliminar
     );
-
     res.status(200).json(eventoActualizado);
   } catch (error) {
-    console.error('Error al actualizar el evento:', error);
     res.status(500).json({ mensaje: 'Error al actualizar el evento' });
   }
 };
+
+
 /**
- * Controlador para obtener eventos pasados
- * @param {Object} req - Solicitud HTTP
- * @param {Object} res - Respuesta HTTP
+ * Busca eventos por nombre.
+ * @param {Object} req - Objeto de solicitud HTTP.
+ * @param {Object} res - Objeto de respuesta HTTP.
+ */
+const buscarEventoPorNombre = async (req, res) => {
+  try {
+    const { q } = req.query;
+    const eventos = await eventoService.buscarEventoPorNombre(q);
+    res.status(200).json(eventos);
+  } catch (error) {
+    res.status(500).json({ mensaje: 'Error al buscar eventos por nombre' });
+  }
+};
+
+
+/**
+ * Obtiene todos los eventos pasados.
+ * @param {Object} req - Objeto de solicitud HTTP.
+ * @param {Object} res - Objeto de respuesta HTTP.
  */
 async function obtenerEventosPasados(req, res) {
   try {
@@ -170,10 +201,11 @@ async function obtenerEventosPasados(req, res) {
   }
 }
 
+
 /**
- * Controlador para obtener el evento actual
- * @param {Object} req - Solicitud HTTP
- * @param {Object} res - Respuesta HTTP
+ * Obtiene el evento actual.
+ * @param {Object} req - Objeto de solicitud HTTP.
+ * @param {Object} res - Objeto de respuesta HTTP.
  */
 async function obtenerEventoActual(req, res) {
   try {
@@ -181,17 +213,18 @@ async function obtenerEventoActual(req, res) {
     if (eventoActual) {
       res.status(200).json(eventoActual);
     } else {
-      res.status(404).json({ message: 'No hay un evento actual.' });
+      res.status(204).json({ message: 'No hay un evento actual.' });
     }
   } catch (error) {
     res.status(500).json({ error: 'Error al obtener el evento actual: ' + error.message });
   }
 }
 
+
 /**
- * Controlador para obtener eventos futuros
- * @param {Object} req - Solicitud HTTP
- * @param {Object} res - Respuesta HTTP
+ * Obtiene todos los eventos futuros.
+ * @param {Object} req - Objeto de solicitud HTTP.
+ * @param {Object} res - Objeto de respuesta HTTP.
  */
 async function obtenerEventosFuturos(req, res) {
   try {
@@ -202,7 +235,6 @@ async function obtenerEventosFuturos(req, res) {
   }
 }
 
-// Exporta todas las funciones como un módulo
 module.exports = {
   crearEvento,
   obtenerEventosPasados,
@@ -212,5 +244,6 @@ module.exports = {
   eliminarEvento,
   obtenerTodosLosEventos,
   obtenerEventosPorRango,
-  actualizarEvento
+  actualizarEvento,
+  buscarEventoPorNombre
 };
