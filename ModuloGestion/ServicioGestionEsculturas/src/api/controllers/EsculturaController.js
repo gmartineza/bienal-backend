@@ -189,8 +189,8 @@ const eliminarEscultura = async (req, res) => {
  */
 const buscarEsculturaPorNombre = async (req, res) => {
   try {
-    const { q } = req.query;
-    const esculturas = await esculturaService.obtenerEsculturasPorNombre(q);
+    const { name } = req.query;
+    const esculturas = await esculturaService.obtenerEsculturasPorNombre(name);
     res.status(200).json(esculturas);
   } catch (error) {
     res.status(500).json({ mensaje: 'Error al buscar esculturas por nombre' });

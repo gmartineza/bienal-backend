@@ -23,14 +23,14 @@ const {
  * @middleware upload.single('imagen'), celebrate(crearEventoSchema)
  * @access Público
  */
-router.post('/', upload.single('imagen'), celebrate(crearEventoSchema), eventoController.crearEvento);
+router.post('/createEvent', upload.single('images'), celebrate(crearEventoSchema), eventoController.crearEvento);
 
 /**
  * @route GET /api/eventos
  * @description Obtiene todos los eventos.
  * @access Público
  */
-router.get('/', eventoController.obtenerTodosLosEventos);
+router.get('/getAllEvents', eventoController.obtenerTodosLosEventos);
 
 /**
  * @route GET /api/eventos/filtrar
@@ -38,14 +38,14 @@ router.get('/', eventoController.obtenerTodosLosEventos);
  * @middleware celebrate(rangoFechasSchema)
  * @access Público
  */
-router.get('/filtrar', celebrate(rangoFechasSchema), eventoController.obtenerEventosPorRango);
+router.get('/filterEvents', celebrate(rangoFechasSchema), eventoController.obtenerEventosPorRango);
 
 /**
  * @route GET /api/eventos/buscar
  * @description Busca eventos por nombre.
  * @access Público
  */
-router.get('/buscar', eventoController.buscarEventoPorNombre);
+router.get('/searchEvent', eventoController.buscarEventoPorNombre);
 
 /**
  * @route DELETE /api/eventos/:id
@@ -53,28 +53,28 @@ router.get('/buscar', eventoController.buscarEventoPorNombre);
  * @middleware celebrate(idSchema)
  * @access Público
  */
-router.delete('/:id', celebrate(idSchema), eventoController.eliminarEvento);
+router.delete('/delete/:id', celebrate(idSchema), eventoController.eliminarEvento);
 
 /**
  * @route GET /api/eventos/pasados
  * @description Obtiene todos los eventos pasados.
  * @access Público
 */
-router.get('/pasados', eventoController.obtenerEventosPasados);
+router.get('/pastEvents', eventoController.obtenerEventosPasados);
 
 /**
  * @route GET /api/eventos/actual
  * @description Obtiene el evento actual (si existe).
  * @access Público
 */
-router.get('/actual', eventoController.obtenerEventoActual);
+router.get('/currentEvent', eventoController.obtenerEventoActual);
 
 /**
  * @route GET /api/eventos/futuros
  * @description Obtiene todos los eventos futuros.
  * @access Público
 */
-router.get('/futuros', eventoController.obtenerEventosFuturos);
+router.get('/futureEvents', eventoController.obtenerEventosFuturos);
 
 /**
  * @route GET /api/eventos/:id
@@ -90,6 +90,6 @@ router.get('/:id', celebrate(idSchema), eventoController.obtenerEventoPorId);
  * @middleware upload.array('imagenes'), celebrate(actualizarEventoSchema)
  * @access Público
  */
-router.put('/:id', upload.array('imagenes'), celebrate(actualizarEventoSchema), eventoController.actualizarEvento);
+router.put('/update/:id', upload.array('images'), celebrate(actualizarEventoSchema), eventoController.actualizarEvento);
 
 module.exports = router;

@@ -24,7 +24,7 @@ app.use(cors({
 
 app.use(express.json());
 
-app.use('/api/esculturas', esculturaRoutes);
+app.use('/api/sculptures', esculturaRoutes);
 
 app.use(errors());
 
