@@ -6,7 +6,6 @@
  * 
  * @module Server
  */
-require('dotenv').config();
 const express = require('express');
 const { errors } = require('celebrate');
 const connectDB = require('../src/config/db');
