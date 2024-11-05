@@ -1,54 +1,44 @@
 http:
   port: ${HTTP_PORT:-80} # default port 80
-#admin:
-#  port: 9876
-#  host: localhost
+
+# Uncomment admin section if you need to configure the admin interface
+# admin:
+#   port: 9876
+#   host: localhost
+
 apiEndpoints:
   gestion_escultores:
-    paths: "/api/escultores*"
-    methods: ["PUT", "POST", "DELETE"]
+    paths: "/api/sculptors*"
+    methods: ["GET", "PUT", "POST", "DELETE"]
   gestion_esculturas:
-    paths: "/api/esculturas*"
+    paths: "/api/sculptures*"
     methods: ["PUT", "POST", "DELETE"]
   gestion_eventos:
-    paths: "/api/eventos*"
+    paths: "/api/events*"
     methods: ["PUT", "POST", "DELETE"]
   autenticacion:
     paths: "/api/autenticacion*"
   registro_votos:
     paths: "/api/registro_votos*"
-  validacion_votos:
-    paths: "/api/validacion_votos*"
-  visualizacion_escultores:
-    paths: "/api/escultores"
-    methods: ["GET"]
-  visualizacion_esculturas:
-    paths: "/api/esculturas"
-    methods: ["GET"]
-  visualizacion_eventos:
-    paths: "/api/eventos"
-    methods: ["GET"]
-  votacion:
-    paths: "/api/votacion*"
+  generador_qr:
+    paths: "/api/qr*"
 
 serviceEndpoints:
   gestion_escultores:
-    url: ${process.env.SERVICE_GESTION_ESCULTORES_URL}
+    url: "${SERVICE_GESTION_ESCULTORES_URL}"
   gestion_esculturas:
-    url: ${process.env.SERVICE_GESTION_ESCULTURAS_URL}
+    url: ${SERVICE_GESTION_ESCULTURAS_URL}
   gestion_eventos:
-    url: ${process.env.SERVICE_GESTION_EVENTOS_URL}
+    url: ${SERVICE_GESTION_EVENTOS_URL}
   autenticacion:
-    url: ${process.env.SERVICE_AUTENTICACION_URL}
+    url: ${SERVICE_AUTENTICACION_URL}
   registro_votos:
-    url: ${process.env.SERVICE_REGISTRO_VOTOS_URL}
-  validacion_votos:
-    url: ${process.env.SERVICE_VALIDACION_VOTOS_URL}
+    url: ${SERVICE_REGISTRO_VOTOS_URL}
   generador_qr:
-    url: ${process.env.SERVICE_GENERADOR_QR_URL}
+    url: ${SERVICE_GENERADOR_QR_URL}
 
 policies:
-  - proxy:
+  - proxy
 
 pipelines:
   escultoresPipeline:
@@ -58,7 +48,7 @@ pipelines:
       - proxy:
           - action:
               serviceEndpoint: gestion_escultores
-              changeOrigin: true
+              changeOrigin: false
 
   esculturasPipeline:
     apiEndpoints:
@@ -96,15 +86,6 @@ pipelines:
               serviceEndpoint: registro_votos
               changeOrigin: true
 
-  validacionVotosPipeline:
-    apiEndpoints:
-      - validacion_votos
-    policies:
-      - proxy:
-          - action:
-              serviceEndpoint: validacion_votos
-              changeOrigin: true
-
   generadorQrPipeline:
     apiEndpoints:
       - generador_qr
@@ -114,11 +95,11 @@ pipelines:
               serviceEndpoint: generador_qr
               changeOrigin: true
 
-  default:
-    apiEndpoints:
-      - api
-    policies:
-      - proxy:
-          - action:
-              serviceEndpoint: httpbin
-              changeOrigin: true
+#  default:
+#    apiEndpoints:
+#      - api
+#    policies:
+#      - proxy:
+#          - action:
+#              serviceEndpoint: httpbin
+#              changeOrigin: true
