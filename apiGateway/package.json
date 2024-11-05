@@ -5,7 +5,7 @@
   "license": "MIT",
   "scripts": {
     "start": "node ./server.js",
-    "build": "npx babel src/index.js -o serverBuild.js",
+    "build": "npx babel server.js -o serverBuild.js",
     "dev": "nodemon --env-file=.env server.js"
   },
   "version": "1.0.0",
