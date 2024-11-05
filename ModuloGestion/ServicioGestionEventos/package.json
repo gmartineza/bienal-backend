@@ -6,7 +6,8 @@
   "scripts": {
     "start": "node serverBuild.js",
     "build": "npx babel src/index.js -o serverBuild.js",
-    "test": "jest"
+    "test": "jest",
+    "dev": "nodemon src/index.js"
   },
   "repository": {
     "type": "git",
@@ -38,6 +39,7 @@
   "devDependencies": {
     "@babel/cli": "^7.25.9",
     "@babel/core": "^7.26.0",
-    "@babel/preset-env": "^7.26.0"
+    "@babel/preset-env": "^7.26.0",
+    "nodemon": "^3.1.7"
   }
 }
