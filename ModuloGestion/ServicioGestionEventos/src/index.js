@@ -1,20 +1,31 @@
+/**
+ * Archivo principal del servidor para el servicio de gestión de eventos.
+ * 
+ * Configura la conexión a la base de datos, el middleware de Express, el middleware de CORS, el middleware
+ * de manejo de errores de Celebrate y las rutas de la API.
+ * 
+ * @module Server
+ */
 require('dotenv').config({ path: '../.env' });
+const connectDB = require('./config/db');
 const express = require('express');
 const app = express();
 const eventoRoutes = require('./api/routes/eventoRoutes');
 const cors = require('cors');
-const connectDB = require('./config/db'); 
-const { errors } = require('celebrate'); 
+const { errors } = require('celebrate');
 
 connectDB();
-app.use(cors());
 
-// Middleware para analizar JSON
+app.use(cors({
+  origin: 'http://localhost:5173', // URL FRONTEND
+  credentials: true // Permite cookies y headers de autenticación
+}));
+
+
 app.use(express.json());
 
 app.use('/api/eventos', eventoRoutes);
 
-// Manejo de errores de Celebrate
 app.use(errors());
 
 app.use((err, req, res, next) => {
