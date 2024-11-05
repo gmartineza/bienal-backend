@@ -4,8 +4,8 @@
   "description": "Servicio de gestión de esculturas",
   "main": "index.js",
   "scripts": {
-    "start": "node serverBuild.js",
-    "build": "npx babel src/index.js -o serverBuild.js",
+    "start": "node src/serverBuild.js",
+    "build": "npx babel src/index.js -o src/serverBuild.js",
     "test": "jest",
     "dev": "nodemon --env-file=.env src/index.js"
   },
