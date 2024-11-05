@@ -1,106 +1,174 @@
-class SculptorController {
-    constructor(sculptorService) {
-      this.sculptorService = sculptorService;
-    }
-  
-    // Manejar la creación de un nuevo escultor
-    addSculptor(req, res) {
-      try {
-        const sculptorData = req.body; // Datos del escultor enviados en el cuerpo de la petición
-        this.sculptorService.addSculptor(sculptorData);
-        res.status(201).json({ message: 'Escultor creado exitosamente.' });
-      } catch (error) {
-        res.status(500).json({ error: error.message });
-      }
-    }
-  
-    // Obtener un escultor por nombre
-    getSculptor(req, res) {
-      try {
-        const { name } = req.params; // El nombre se pasa como parámetro en la URL
-        const sculptor = this.sculptorService.getSculptor(name);
-        if (sculptor) {
-          res.status(200).json(sculptor);
-        } else {
-          res.status(404).json({ message: 'Escultor no encontrado.' });
-        }
-      } catch (error) {
-        res.status(500).json({ error: error.message });
-      }
-    }
-  
-    // Obtener todos los escultores
-    getAllSculptors(req, res) {
-      try {
-        const sculptors = this.sculptorService.getAllSculptors();
-        res.status(200).json(sculptors);
-      } catch (error) {
-        res.status(500).json({ error: error.message });
-      }
-    }
-  
-    // Actualizar el nombre de un escultor
-    updateSculptorName(req, res) {
-      try {
-        const { name } = req.params; // El nombre actual se pasa como parámetro en la URL
-        const { newName } = req.body; // El nuevo nombre se envía en el cuerpo de la petición
-        this.sculptorService.updateSculptorName(name, newName);
-        res.status(200).json({ message: 'Nombre del escultor actualizado exitosamente.' });
-      } catch (error) {
-        res.status(500).json({ error: error.message });
-      }
-    }
-  
-    // Actualizar la biografía de un escultor
-    updateSculptorBiography(req, res) {
-      try {
-        const { name } = req.params;
-        const { newBiography } = req.body;
-        this.sculptorService.updateSculptorBiography(name, newBiography);
-        res.status(200).json({ message: 'Biografía del escultor actualizada exitosamente.' });
-      } catch (error) {
-        res.status(500).json({ error: error.message });
-      }
-    }
-  
-    // Actualizar el contacto de un escultor
-    updateSculptorContact(req, res) {
-      try {
-        const { name } = req.params;
-        const { newContact } = req.body;
-        this.sculptorService.updateSculptorContact(name, newContact);
-        res.status(200).json({ message: 'Contacto del escultor actualizado exitosamente.' });
-      } catch (error) {
-        res.status(500).json({ error: error.message });
-      }
-    }
-  
-    // Actualizar las obras de un escultor
-    updateSculptorWorks(req, res) {
-      try {
-        const { name } = req.params;
-        const { newWorks } = req.body;
-        this.sculptorService.updateSculptorWorks(name, newWorks);
-        res.status(200).json({ message: 'Obras del escultor actualizadas exitosamente.' });
-      } catch (error) {
-        res.status(500).json({ error: error.message });
-      }
-    }
-  
-    // Eliminar un escultor
-    deleteSculptor(req, res) {
-      try {
-        const { name } = req.params;
-        const success = this.sculptorService.deleteSculptor(name);
-        if (success) {
-          res.status(200).json({ message: 'Escultor eliminado exitosamente.' });
-        } else {
-          res.status(404).json({ message: 'Escultor no encontrado.' });
-        }
-      } catch (error) {
-        res.status(500).json({ error: error.message });
-      }
-    }
+/**
+ * Controlador para la gestión de escultores.
+ * 
+ * Contiene las funciones que manejan las solicitudes HTTP para crear, actualizar, consultar y eliminar 
+ * esculturas. Utiliza el servicio de esculturas y Cloudinary para la gestión de imágenes.
+ * 
+ * @module SculptorController
+ */
+const sculptorService = require('../../services/sculptorService');
+
+/**
+ * Crea un nuevo escultor en la base de datos.
+ *
+ * @param {Object} req - Objeto de solicitud HTTP.
+ * @param {Object} res - Objeto de respuesta HTTP.
+ */
+const createSculptor = async (req, res) => {
+  try {
+    const sculptorData = {
+      name: `${req.body.name || ''} ${req.body.lastName || ''}`.trim(),
+      country: req.body.country,
+      biography: req.body.biography,
+      contactInfo: req.body.contactInfo,
+      profileImage: req.file ? req.file.path : null,
+      works: req.body.works,
+    };
+
+    const sculptor = await sculptorService.createSculptor(sculptorData);
+    res.status(201).json(sculptor);
+  } catch (error) {
+    console.error('Error al crear el escultor:', error);
+    res.status(500).json({ error: 'Error al crear el escultor' });
   }
-  
-  module.exports = SculptorController;
+};
+
+
+/**
+ * Obtiene todos los escultores de la base de datos.
+ * 
+ * @param {Object} req - Objeto de solicitud HTTP.
+ * @param {Object} res - Objeto de respuesta HTTP.
+ */
+const getAllSculptors = async (req, res) => {
+  try {
+    const sculptors = await sculptorService.getAllSculptors();
+    res.status(200).json(sculptors);
+  } catch (error) {
+    res.status(500).json({ error: 'Error al obtener los escultores: ' + error.message });
+  }
+};
+
+
+/**
+ * Obtiene un escultor específico por su ID, incluyendo las obras asociadas.
+ * 
+ * @param {Object} req - Objeto de solicitud HTTP.
+ * @param {Object} res - Objeto de respuesta HTTP.
+ */
+const getSculptorById = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const sculptor = await sculptorService.getSculptorById(id);
+    if (!sculptor) {
+      return res.status(404).json({ error: 'Escultor no encontrado' });
+    }
+    res.status(200).json(sculptor);
+  } catch (error) {
+    res.status(500).json({ error: 'Error al obtener el escultor: ' + error.message });
+  }
+};
+
+
+/**
+ * Actualiza un escultor específico por su ID en la base de datos.
+ * Permite agregar o eliminar esculturas del campo `works`.
+ * 
+ * @param {Object} req - Objeto de solicitud HTTP.
+ * @param {Object} res - Objeto de respuesta HTTP.
+ * @returns {Object} - Retorna el objeto del escultor actualizado o un mensaje de error.
+ */
+const updateSculptorById = async (req, res) => {
+  try {
+    const { id } = req.params;
+
+    const updateData = {
+      name: `${req.body.name || ''} ${req.body.lastName || ''}`.trim(),
+      country: req.body.country,
+      biography: req.body.biography,
+      contactInfo: req.body.contactInfo,
+    };
+
+    if (req.file) {
+      updateData.profileImage = req.file.path;
+    }
+
+    if (works) {
+      const { worksToAdd, worksToRemove } = works;
+
+      if (worksToAdd) {
+        updateData.$addToSet = { works: { $each: worksToAdd } };
+      }
+
+      if (worksToRemove) {
+        updateData.$pull = { works: { $in: worksToRemove } };
+      }
+    }
+
+    const updatedSculptor = await sculptorService.updateSculptorById(id, updateData);
+
+    if (!updatedSculptor) {
+      return res.status(404).json({ message: 'Escultor no encontrado' });
+    }
+
+    res.status(200).json(updatedSculptor);
+  } catch (error) {
+    res.status(500).json({ error: 'Error al actualizar el escultor: ' + error.message });
+  }
+};
+
+
+/**
+ * Elimina un escultor de la base de datos por su ID.
+ * 
+ * @param {Object} req - Objeto de solicitud HTTP.
+ * @param {Object} res - Objeto de respuesta HTTP.
+ */
+const deleteSculptorById = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const deletedSculptor = await sculptorService.deleteSculptorById(id);
+    if (!deletedSculptor) {
+      return res.status(404).json({ error: 'Escultor no encontrado' });
+    }
+    res.status(200).json({ message: 'Escultor eliminado correctamente' });
+  } catch (error) {
+    res.status(500).json({ error: 'Error al eliminar el escultor: ' + error.message });
+  }
+};
+
+
+/**
+ * Controlador para buscar escultores por nombre completo.
+ * 
+ * @param {Object} req - Objeto de solicitud HTTP.
+ * @param {Object} res - Objeto de respuesta HTTP.
+ */
+const searchSculptorByName = async (req, res) => {
+  try {
+    const { name } = req.query;
+
+    if (!name) {
+      return res.status(400).json({ mensaje: 'El nombre completo es requerido' });
+    }
+
+    const escultores = await sculptorService.searchSculptorByName(name);
+
+    if (escultores.length === 0) {
+      return res.status(404).json({ mensaje: 'No se encontraron escultores con ese nombre' });
+    }
+
+    res.status(200).json(escultores);
+  } catch (error) {
+    res.status(500).json({ error: 'Error al buscar escultores: ' + error.message });
+  }
+};
+
+module.exports = {
+  createSculptor,
+  getAllSculptors,
+  getSculptorById,
+  updateSculptorById,
+  deleteSculptorById,
+  searchSculptorByName
+};
