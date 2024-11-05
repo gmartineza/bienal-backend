@@ -178,8 +178,8 @@ const actualizarEvento = async (req, res) => {
  */
 const buscarEventoPorNombre = async (req, res) => {
   try {
-    const { q } = req.query;
-    const eventos = await eventoService.buscarEventoPorNombre(q);
+    const { name  } = req.query;
+    const eventos = await eventoService.buscarEventoPorNombre(name );
     res.status(200).json(eventos);
   } catch (error) {
     res.status(500).json({ mensaje: 'Error al buscar eventos por nombre' });
