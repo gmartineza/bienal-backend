@@ -81,6 +81,7 @@ const getSculptorById = async (req, res) => {
 const updateSculptorById = async (req, res) => {
   try {
     const { id } = req.params;
+    const { works } = req.body;
 
     const updateData = {
       name: `${req.body.name || ''} ${req.body.lastName || ''}`.trim(),
