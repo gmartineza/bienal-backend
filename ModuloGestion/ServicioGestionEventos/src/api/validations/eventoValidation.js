@@ -15,8 +15,7 @@ const crearEventoSchema = {
   [Segments.BODY]: Joi.object().keys({
     name: Joi.string().required(),
     description: Joi.string().optional(),
-    date_inicio: Joi.date().required(),
-    date_fin: Joi.date().required(),
+    date: Joi.date().required(),
     location: Joi.string().required(),
     theme: Joi.string().optional(),
     sculptors: Joi.array().items(Joi.objectId()).optional(),

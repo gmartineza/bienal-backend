@@ -37,7 +37,7 @@ services:
       - "8004:80"
   autenticacion:
     build:
-      context: ./../ModuloVotYVal/SubmoduloAuth
+      context: ./../ModuloVotYVal/ServicioAuth
       dockerfile: docker/Dockerfile
       args:
         EXPRESS_PORT: 80
@@ -46,7 +46,7 @@ services:
       - "8005:80"
   registro_votos:
     build:
-      context: ./../ModuloVotYVal/SubmoduloRegistroVotos
+      context: ./../ModuloVotYVal/ServicioVotacion
       dockerfile: docker/Dockerfile
       args:
         EXPRESS_PORT: 80
