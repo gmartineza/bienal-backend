@@ -1,0 +1,23 @@
+{
+  "name": "bienal-api_gateway",
+  "description": "Express Gateway Instance Bootstraped from Command Line",
+  "repository": "https://github.com/gmartineza/bienal-backend.git",
+  "license": "MIT",
+  "scripts": {
+    "start": "node ./server.js",
+    "build": "npx babel server.js -o serverBuild.js",
+    "dev": "nodemon --env-file=.env server.js"
+  },
+  "version": "1.0.0",
+  "main": "server.js",
+  "dependencies": {
+    "express-gateway": "^1.16.11"
+  },
+  "type": "commonjs",
+  "devDependencies": {
+    "@babel/cli": "^7.25.9",
+    "@babel/core": "^7.26.0",
+    "@babel/preset-env": "^7.26.0",
+    "nodemon": "^3.1.7"
+  }
+}

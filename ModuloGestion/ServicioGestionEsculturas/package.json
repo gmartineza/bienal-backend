@@ -4,7 +4,10 @@
   "description": "Servicio de gestión de esculturas",
   "main": "index.js",
   "scripts": {
-    "test": "jest"
+    "start": "node src/serverBuild.js",
+    "build": "npx babel src/index.js -o src/serverBuild.js",
+    "test": "jest",
+    "dev": "nodemon --env-file=.env src/index.js"
   },
   "repository": {
     "type": "git",
@@ -21,6 +24,24 @@
   },
   "homepage": "https://github.com/gmartineza/bienal-backend#readme",
   "dependencies": {
+    "celebrate": "^15.0.3",
+    "cloudinary": "^2.5.1",
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.5",
+    "express": "^4.21.1",
+    "joi": "^17.13.3",
+    "joi-objectid": "^4.0.2",
+    "mongoose": "^8.8.0",
+    "multer": "^1.4.5-lts.1",
     "serviciogestionesculturas": "file:"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.25.9",
+    "@babel/core": "^7.26.0",
+    "@babel/preset-env": "^7.26.0",
+    "nodemon": "^3.1.7"
+  },
+  "engines": {
+    "node": "20.x"
   }
 }

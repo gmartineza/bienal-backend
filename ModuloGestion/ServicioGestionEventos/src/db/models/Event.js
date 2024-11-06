@@ -1,3 +1,8 @@
+/**
+ * Esquema de Mongoose para el modelo de Evento.
+ * 
+ * @module EventoModel
+ */
 const mongoose = require('mongoose');
 
 const EventoSchema = new mongoose.Schema({
@@ -6,9 +11,8 @@ const EventoSchema = new mongoose.Schema({
   date: { type: Date, required: true },
   location: { type: String, required: true },
   theme: { type: String },
-  sculptors: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Escultor' }], 
-  sculptures: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Escultura' }], 
-  images: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Imagen' }], 
+  sculptors: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Sculptor' }],
+  images: [{ type: String }],
 }, { timestamps: true });
 
 module.exports = mongoose.model('Evento', EventoSchema);

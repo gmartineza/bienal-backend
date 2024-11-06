@@ -1,0 +1,105 @@
+http:
+  port: ${HTTP_PORT:-80} # default port 80
+
+# Uncomment admin section if you need to configure the admin interface
+# admin:
+#   port: 9876
+#   host: localhost
+
+apiEndpoints: # Endpoints are set by every services
+  gestion_escultores:
+    paths: "/api/sculptors*"
+    methods: ["GET", "PUT", "POST", "DELETE"]
+  gestion_esculturas:
+    paths: "/api/sculptures*"
+    methods: ["GET", "PUT", "POST", "DELETE"]
+  gestion_eventos:
+    paths: "/api/events*"
+    methods: ["GET", "PUT", "POST", "DELETE"]
+  autenticacion:
+    paths: "/api/autentication*"
+  registro_votos:
+    paths: "/api/voting*"
+  generador_qr:
+    paths: "/api/qr*"
+
+serviceEndpoints:
+  gestion_escultores:
+    url: "${SERVICE_GESTION_ESCULTORES_URL}"
+  gestion_esculturas:
+    url: ${SERVICE_GESTION_ESCULTURAS_URL}
+  gestion_eventos:
+    url: ${SERVICE_GESTION_EVENTOS_URL}
+  autenticacion:
+    url: ${SERVICE_AUTENTICACION_URL}
+  registro_votos:
+    url: ${SERVICE_REGISTRO_VOTOS_URL}
+  generador_qr:
+    url: ${SERVICE_GENERADOR_QR_URL}
+
+policies:
+  - proxy
+
+pipelines:
+  escultoresPipeline:
+    apiEndpoints:
+      - gestion_escultores
+    policies:
+      - proxy:
+          - action:
+              serviceEndpoint: gestion_escultores
+              changeOrigin: true
+
+  esculturasPipeline:
+    apiEndpoints:
+      - gestion_esculturas
+    policies:
+      - proxy:
+          - action:
+              serviceEndpoint: gestion_esculturas
+              changeOrigin: true
+
+  eventosPipeline:
+    apiEndpoints:
+      - gestion_eventos
+    policies:
+      - proxy:
+          - action:
+              serviceEndpoint: gestion_eventos
+              changeOrigin: true
+
+  autenticacionPipeline:
+    apiEndpoints:
+      - autenticacion
+    policies:
+      - proxy:
+          - action:
+              serviceEndpoint: autenticacion
+              changeOrigin: true
+
+  registroVotosPipeline:
+    apiEndpoints:
+      - registro_votos
+    policies:
+      - proxy:
+          - action:
+              serviceEndpoint: registro_votos
+              changeOrigin: true
+
+  generadorQrPipeline:
+    apiEndpoints:
+      - generador_qr
+    policies:
+      - proxy:
+          - action:
+              serviceEndpoint: generador_qr
+              changeOrigin: true
+
+#  default:
+#    apiEndpoints:
+#      - api
+#    policies:
+#      - proxy:
+#          - action:
+#              serviceEndpoint: httpbin
+#              changeOrigin: true
