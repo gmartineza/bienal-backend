@@ -39,9 +39,9 @@ async function crearEvento(req, res) {
     const nuevoEvento = await eventoService.crearEvento(body, imageUrl);
     res.status(201).json(nuevoEvento);
   } catch (error) {
-    res.status(500).json({ error: 'Error al crear el evento' });
+    res.status(500).json({ error: 'Error al crear el evento: ' + error.message });
   }
-};
+}
 
 
 /**
@@ -51,10 +51,10 @@ async function crearEvento(req, res) {
  */
 const obtenerTodosLosEventos = async (req, res) => {
   try {
-    const eventos = await eventoService.obtenerEventos();
+    const eventos = await eventoService.obtenerTodosLosEventos();
     res.status(200).json(eventos);
   } catch (error) {
-    res.status(500).json({ error: 'Error al obtener los eventos' });
+    res.status(500).json({ error: error.message });
   }
 };
 
@@ -76,12 +76,13 @@ const obtenerEventoPorId = async (req, res) => {
     const evento = await eventoService.obtenerEventoPorId(id);
 
     if (!evento) {
-      return res.status(404).json({ error: 'No se encontró un evento con ese ID' });
+      return res.status(404).json({ mensaje: 'Evento no encontrado' });
     }
 
     res.status(200).json(evento);
   } catch (error) {
-    res.status(500).json({ error: 'Error al obtener el evento por ID' });
+    console.error('Error al obtener el evento:', error);
+    res.status(500).json({ mensaje: 'Error al obtener el evento' });
   }
 };
 
@@ -230,7 +231,7 @@ async function obtenerEventosFuturos(req, res) {
     const eventosFuturos = await eventoService.obtenerEventosFuturos();
     res.status(200).json(eventosFuturos);
   } catch (error) {
-    res.status(500).json({ error: 'Error al eliminar el evento' });
+    res.status(500).json({ error: 'Error al obtener los eventos futuros: ' + error.message });
   }
 }
 

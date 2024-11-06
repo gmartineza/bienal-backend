@@ -16,7 +16,7 @@ const Evento = require('../db/models/Event');
  * @returns {Promise<Object>} - Retorna el objeto del evento creado.
  * @throws {Error} - Lanza un error si ocurre un problema al crear el evento en la base de datos.
  */
-async function crearEvento(data) {
+async function crearEvento(data, imageUrl = null) {
   try {
     const eventoData = {
       name: data.name,
@@ -33,7 +33,7 @@ async function crearEvento(data) {
 
     return await nuevoEvento.save();
   } catch (error) {
-    throw new Error('Error al crear el evento: ' + error.message);
+    throw new Error(`Error al crear el evento: ${error.message}`);
   }
 }
 
@@ -49,7 +49,7 @@ async function obtenerTodosLosEventos() {
     const eventos = await Evento.find().select('name date_inicio date_fin location');
     return eventos;
   } catch (error) {
-    throw new Error('Error al obtener los eventos: ' + error.message);
+    throw new Error('Error al obtener todos los eventos: ' + error.message);
   }
 }
 
@@ -66,7 +66,7 @@ const obtenerEventoPorId = async (id) => {
     const evento = await Evento.findById(id).populate('sculptors');
     return evento;
   } catch (error) {
-    throw new Error('Error al actualizar el evento: ' + error.message);
+    throw new Error(`Error al obtener el evento por ID: ${error.message}`);
   }
 };
 
@@ -206,7 +206,7 @@ async function obtenerEventoActual() {
     
     return eventoActual;
   } catch (error) {
-    throw new Error('Error al obtener los eventos por tema: ' + error.message);
+    throw new Error('Error al obtener el evento actual: ' + error.message);
   }
 }
 
@@ -230,7 +230,7 @@ async function obtenerEventosPasados() {
 
     return eventosPasados;
   } catch (error) {
-    throw new Error('Error al obtener el evento por ID: ' + error.message);
+    throw new Error('Error al obtener los eventos pasados: ' + error.message);
   }
 }
 
@@ -254,15 +254,15 @@ async function obtenerEventosFuturos() {
 
     return eventosFuturos;
   } catch (error) {
-    throw new Error('Error al eliminar el evento: ' + error.message);
+    throw new Error('Error al obtener los eventos futuros: ' + error.message);
   }
 }
 
 module.exports = {
   crearEvento,
-  obtenerEventos,
-  actualizarEvento,
-  obtenerEventosPorTema,
+  obtenerEventosPasados,
+  obtenerEventoActual,
+  obtenerEventosFuturos,
   obtenerEventoPorId,
   eliminarEvento,
   obtenerTodosLosEventos,
