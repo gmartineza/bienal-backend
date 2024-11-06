@@ -53,12 +53,12 @@ services:
     image: stefanomerinoderui/bienal-backend:registro_votos
     ports:
       - "8006:80"
-#  generadorQR:
-#    build:
-#      context: ./../ModuloVotYVal/ServicioQr
-#      dockerfile: docker/Dockerfile
-#      args:
-#        EXPRESS_PORT: 80
-#    image: stefanomerinoderui/bienal-backend:generadorQ
-#    ports:
-#      - "8007:80"
+  generadorQR:
+    build:
+      context: ./../ModuloVotYVal/ServicioQr
+      dockerfile: docker/Dockerfile
+      args:
+        EXPRESS_PORT: 80
+    image: stefanomerinoderui/bienal-backend:generadorQr
+    ports:
+      - "8007:80"
