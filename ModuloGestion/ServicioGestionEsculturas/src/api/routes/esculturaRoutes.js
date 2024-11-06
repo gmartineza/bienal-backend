@@ -8,7 +8,7 @@ const express = require('express');
 const router = express.Router();
 const { celebrate } = require('celebrate');
 const upload = require('../../middleware/multer');
-const esculturaController = require('../controllers/esculturaController');
+const esculturaController = require('../controllers/EsculturaController');
 const {
   crearEsculturaSchema,
   actualizarEsculturaSchema,

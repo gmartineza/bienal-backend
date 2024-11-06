@@ -51,7 +51,10 @@ const crearEscultura = async (req, res) => {
         }
       }
     }
-
+    const nombreEscultura = await esculturaService.obtenerEsculturasPorNombre(body.name);
+    if (nombreEscultura.length > 0) {
+      return res.status(500).json({ error: 'Error al crear la Escultura: Nombre Repetido de la escultura' });
+    }
     const nuevaEscultura = await esculturaService.crearEscultura(body, imagenesPre, imagenesDurante, imagenesPost);
     res.status(201).json(nuevaEscultura);
   } catch (error) {
