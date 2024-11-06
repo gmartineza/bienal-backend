@@ -4,8 +4,8 @@
   "description": "Servicio de gestión de escultores",
   "main": "index.js",
   "scripts": {
-    "start": "node serverBuild.js",
-    "build": "npx babel src/index.js -o serverBuild.js",
+    "start": "node src/serverBuild.js",
+    "build": "npx babel src/index.js -o src/serverBuild.js",
     "test": "jest",
     "dev": "nodemon --env-file=.env src/index.js"
   },
@@ -42,5 +42,8 @@
     "@babel/preset-env": "^7.26.0",
     "jsdoc": "^4.0.4",
     "nodemon": "^3.1.7"
+  },
+  "engines": {
+    "node": "20.x"
   }
 }

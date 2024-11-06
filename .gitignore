@@ -1,3 +1,5 @@
 node_modules
 serverBuild.js
 .env
+# docker
+error.log

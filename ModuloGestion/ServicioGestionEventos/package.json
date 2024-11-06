@@ -4,8 +4,8 @@
   "description": "Servicio de Gestion de Eventos",
   "main": "index.js",
   "scripts": {
-    "start": "node serverBuild.js",
-    "build": "npx babel src/index.js -o serverBuild.js",
+    "start": "node src/serverBuild.js",
+    "build": "npx babel src/index.js -o src/serverBuild.js",
     "test": "jest",
     "dev": "nodemon --env-file=.env src/index.js"
   },
@@ -40,5 +40,8 @@
     "@babel/core": "^7.26.0",
     "@babel/preset-env": "^7.26.0",
     "nodemon": "^3.1.7"
+  },
+  "engines": {
+    "node": "20.x"
   }
 }
