@@ -10,13 +10,19 @@ const express = require('express');
 const { errors } = require('celebrate');
 const connectDB = require('../src/config/db');
 const routes = require('./api/routes');
+const cors = require('cors');
 
 const app = express();
 const PORT = process.env.PORT || 5005;
 
-app.use(express.json());
-
 connectDB();
+
+app.use(cors({
+  origin: '*', // URL FRONT
+  credentials: true // Permitir cookies y encabezados de autenticación
+}));
+
+app.use(express.json());
 
 app.use('/api', routes);
 
