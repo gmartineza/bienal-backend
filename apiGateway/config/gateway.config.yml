@@ -23,6 +23,7 @@ apiEndpoints: # Endpoints are set by every services
     methods: ["POST"]
   generador_qr:
     paths: "/api/qr*"
+    methods: ["GET"]
 
 serviceEndpoints:
   gestion_escultores:
