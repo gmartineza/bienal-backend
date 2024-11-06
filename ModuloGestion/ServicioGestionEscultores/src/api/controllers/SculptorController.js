@@ -6,7 +6,7 @@
  * 
  * @module SculptorController
  */
-const sculptorService = require('../../services/sculptorService');
+const sculptorService = require('../../services/SculptorService');
 
 /**
  * Crea un nuevo escultor en la base de datos.

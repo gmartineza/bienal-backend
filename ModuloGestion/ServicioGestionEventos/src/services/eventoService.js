@@ -6,7 +6,7 @@
  * @module EventService
  */
 
-const Evento = require('../db/models/event');
+const Evento = require('../db/models/Event');
 
 /**
  * Crea un nuevo evento en la base de datos.
