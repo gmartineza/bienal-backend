@@ -18,7 +18,7 @@ const PORT = process.env.PORT || 5005;
 connectDB();
 
 app.use(cors({
-  origin: FRONTEND_URL, // URL FRONT
+  origin: process.env.FRONTEND_URL, // URL FRONT
   credentials: true // Permitir cookies y encabezados de autenticación
 }));
 
