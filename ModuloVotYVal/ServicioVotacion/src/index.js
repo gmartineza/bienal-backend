@@ -5,7 +5,7 @@ const dotenv = require('dotenv');
 const path = require('path');
 const voteRoutes = require('./api/routes/voteRoutes');
 
-// Configuración de variables de entorno
+// Configuración de variables de entorno.
 dotenv.config();
 
 // Crear una instancia de Express
