@@ -1,3 +1,12 @@
-kubectl rollout restart deployment <nombre-del-deploy> # reiniciar deploy para que use imagen nueva
-kubectl get deploy # obtener nombres de deploys
+kubectl get services --all-namespaces -o wide
+kubectl get namespace                                                   # obtener namespaces
+kubectl config set-context --current --namespace=<nombre-del-namespace> # cambiar namespace
+kubectl get pods                                                        # obtener nombre de pods
+kubectl get deploy                                                      # obtener nombres de deploys
+kubectl rollout restart deployment <nombre-del-deploy>                  # reiniciar deploy para que use imagen nueva
 kubectl delete deploy votaciones
+
+kubectl create configmap <nombre-configmap> --from-literal=DB_HOST=localhost --from-literal=API_KEY=123456 # crear configmap
+kubectl create secret generic <nombre-secret> --from-literal=DB_PASSWORD=mipasswordseguro                  # crear secret
+
+kubectl exec -it <nombre-del-pod> -- printenv | grep MONGODB_URI # ejecutar en el pod y hacer print de variable de entorno
