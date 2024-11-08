@@ -50,7 +50,7 @@ pipelines:
     policies:
       - cors:
           - action:
-              origin: ["${FRONTEND_URL}", "http://localhost:5173"] # localhost de prueba
+              origin: "${FRONTEND_URL}"
               methods: ["GET", "PUT", "POST", "DELETE", "OPTIONS"]
               headers: ["Content-Type", "Authorization"]
       - proxy:
@@ -64,7 +64,7 @@ pipelines:
     policies:
       - cors:
           - action:
-              origin: ["${FRONTEND_URL}", "http://localhost:5173"] # localhost de prueba
+              origin: "${FRONTEND_URL}"
               methods: ["GET", "PUT", "POST", "DELETE", "OPTIONS"]
               headers: ["Content-Type", "Authorization"]
       - proxy:
@@ -78,7 +78,7 @@ pipelines:
     policies:
       - cors:
           - action:
-              origin: ["${FRONTEND_URL}", "http://localhost:5173"] # localhost de prueba
+              origin: "${FRONTEND_URL}"
               methods: ["GET", "PUT", "POST", "DELETE", "OPTIONS"]
               headers: ["Content-Type", "Authorization"]
       - proxy:
@@ -92,7 +92,7 @@ pipelines:
     policies:
       - cors:
           - action:
-              origin: ["${FRONTEND_URL}", "http://localhost:5173"] # localhost de prueba
+              origin: "${FRONTEND_URL}"
               methods: ["GET", "PUT", "POST", "DELETE", "OPTIONS"]
               headers: ["Content-Type", "Authorization"]
       - proxy:
@@ -107,7 +107,7 @@ pipelines:
       - proxy:
       - cors:
           - action:
-              origin: ["${FRONTEND_URL}", "http://localhost:5173"] # localhost de prueba
+              origin: "${FRONTEND_URL}"
               methods: ["GET", "PUT", "POST", "DELETE", "OPTIONS"]
               headers: ["Content-Type", "Authorization"]
           - action:
@@ -120,7 +120,7 @@ pipelines:
     policies:
       - cors:
           - action:
-              origin: ["${FRONTEND_URL}", "http://localhost:5173"] # localhost de prueba
+              origin: "${FRONTEND_URL}"
               methods: ["GET", "PUT", "POST", "DELETE", "OPTIONS"]
               headers: ["Content-Type", "Authorization"]
       - proxy:
