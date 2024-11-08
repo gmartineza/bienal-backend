@@ -1,0 +1,3 @@
+kubectl rollout restart deployment <nombre-del-deploy> # reiniciar deploy para que use imagen nueva
+kubectl get deploy # obtener nombres de deploys
+kubectl delete deploy votaciones
