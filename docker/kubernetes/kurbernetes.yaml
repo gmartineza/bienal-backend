@@ -1,257 +1,23 @@
-apiVersion: apps/v1
-kind: Deployment
+apiVersion: v1
+kind: ConfigMap
 metadata:
-  name: gestion-escultores
-spec:
-  replicas: 1
-  selector:
-    matchLabels:
-      app: gestion-escultores
-  template:
-    metadata:
-      labels:
-        app: gestion-escultores
-    spec:
-      containers:
-      - name: gestion-escultores
-        image: stefanomerinoderui/bienal-backend:gestion_escultores
-        resources:
-          requests:
-            memory: "128Mi"
-            cpu: "500m"
-          limits:
-            memory: "256Mi"
-            cpu: "1"
----
-apiVersion: apps/v1
-kind: Deployment
-metadata:
-  name: gestion-esculturas
-spec:
-  replicas: 1
-  selector:
-    matchLabels:
-      app: gestion-esculturas
-  template:
-    metadata:
-      labels:
-        app: gestion-esculturas
-    spec:
-      containers:
-      - name: gestion-escultores
-        image: stefanomerinoderui/bienal-backend:gestion_esculturas
-        resources:
-          requests:
-            memory: "128Mi"
-            cpu: "500m"
-          limits:
-            memory: "256Mi"
-            cpu: "1"
----
-apiVersion: apps/v1
-kind: Deployment
-metadata:
-  name: gestion-eventos
-spec:
-  replicas: 1
-  selector:
-    matchLabels:
-      app: gestion-eventos
-  template:
-    metadata:
-      labels:
-        app: gestion-eventos
-    spec:
-      containers:
-      - name: gestion-escultores
-        image: stefanomerinoderui/bienal-backend:gestion_eventos
-        resources:
-          requests:
-            memory: "128Mi"
-            cpu: "500m"
-          limits:
-            memory: "256Mi"
-            cpu: "1"
----
-apiVersion: apps/v1
-kind: Deployment
-metadata:
-  name: autenticacion
-spec:
-  replicas: 1
-  selector:
-    matchLabels:
-      app: autenticacion
-  template:
-    metadata:
-      labels:
-        app: autenticacion
-    spec:
-      containers:
-      - name: gestion-escultores
-        image: stefanomerinoderui/bienal-backend:autenticacion
-        resources:
-          requests:
-            memory: "128Mi"
-            cpu: "500m"
-          limits:
-            memory: "256Mi"
-            cpu: "1"
----
-apiVersion: apps/v1
-kind: Deployment
-metadata:
-  name: registro-votos
-spec:
-  replicas: 1
-  selector:
-    matchLabels:
-      app: registro-votos
-  template:
-    metadata:
-      labels:
-        app: registro-votos
-    spec:
-      containers:
-      - name: gestion-escultores
-        image: stefanomerinoderui/bienal-backend:registro_votos
-        resources:
-          requests:
-            memory: "128Mi"
-            cpu: "500m"
-          limits:
-            memory: "256Mi"
-            cpu: "1"
----
-apiVersion: apps/v1
-kind: Deployment
-metadata:
-  name: validacion-votos
-spec:
-  replicas: 1
-  selector:
-    matchLabels:
-      app: validacion-votos
-  template:
-    metadata:
-      labels:
-        app: validacion-votos
-    spec:
-      containers:
-      - name: gestion-escultores
-        image: stefanomerinoderui/bienal-backend:validacion_votos
-        resources:
-          requests:
-            memory: "128Mi"
-            cpu: "500m"
-          limits:
-            memory: "256Mi"
-            cpu: "1"
----
-apiVersion: apps/v1
-kind: Deployment
-metadata:
-  name: visualizacion-escultores
-spec:
-  replicas: 1
-  selector:
-    matchLabels:
-      app: visualizacion-escultores
-  template:
-    metadata:
-      labels:
-        app: visualizacion-escultores
-    spec:
-      containers:
-      - name: gestion-escultores
-        image: stefanomerinoderui/bienal-backend:visualizacion_escultores
-        resources:
-          requests:
-            memory: "128Mi"
-            cpu: "500m"
-          limits:
-            memory: "256Mi"
-            cpu: "1"
----
-apiVersion: apps/v1
-kind: Deployment
-metadata:
-  name: visualizacion-esculturas
-spec:
-  replicas: 1
-  selector:
-    matchLabels:
-      app: visualizacion-esculturas
-  template:
-    metadata:
-      labels:
-        app: visualizacion-esculturas
-    spec:
-      containers:
-      - name: gestion-escultores
-        image: stefanomerinoderui/bienal-backend:visualizacion_esculturas
-        resources:
-          requests:
-            memory: "128Mi"
-            cpu: "500m"
-          limits:
-            memory: "256Mi"
-            cpu: "1"
----
-apiVersion: apps/v1
-kind: Deployment
-metadata:
-  name: visualizacion-eventos
-spec:
-  replicas: 1
-  selector:
-    matchLabels:
-      app: visualizacion-eventos
-  template:
-    metadata:
-      labels:
-        app: visualizacion-eventos
-    spec:
-      containers:
-      - name: gestion-escultores
-        image: stefanomerinoderui/bienal-backend:visualizacion_eventos
-        resources:
-          requests:
-            memory: "128Mi"
-            cpu: "500m"
-          limits:
-            memory: "256Mi"
-            cpu: "1"
----
-apiVersion: apps/v1
-kind: Deployment
-metadata:
-  name: votaciones
-spec:
-  replicas: 1
-  selector:
-    matchLabels:
-      app: votaciones
-  template:
-    metadata:
-      labels:
-        app: votaciones
-    spec:
-      containers:
-      - name: gestion-escultores
-        image: stefanomerinoderui/bienal-backend:votaciones
-        resources:
-          requests:
-            memory: "128Mi"
-            cpu: "500m"
-          limits:
-            memory: "256Mi"
-            cpu: "1"
+  name: urls-internas
+  namespace: bienal-backend
+data:
+  FRONTEND_URL: "http://frontend.example.com"
+  API_GATEWAY_URL: "http://api-gateway.example.com"
+  SERVICE_GESTION_ESCULTORES_URL: "http://gestion-escultores.bienal-backend.svc.cluster.local"
+  SERVICE_GESTION_ESCULTURAS_URL: "http://gestion-esculturas.example.com"
+  SERVICE_GESTION_EVENTOS_URL: "http://gestion-eventos.example.com"
+  SERVICE_REGISTRO_VOTOS_URL: "http://registro-votos.example.com"
+  SERVICE_GENERADOR_QR_URL: "http://generador-qr.example.com"
+  SERVICE_AUTENTICACION_URL: "http://autenticacion.example.com"
 ---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: api-gateway
+  namespace: bienal-backend
 spec:
   replicas: 1
   selector:
@@ -263,13 +29,117 @@ spec:
         app: api-gateway
     spec:
       containers:
-      - name: gestion-escultores
+      - name: api-gateway-container
         image: stefanomerinoderui/bienal-backend:api_gateway
         resources:
           requests:
             memory: "128Mi"
-            cpu: "500m"
+            cpu: "100m"
           limits:
             memory: "256Mi"
-            cpu: "1"
+            cpu: "500m"
+        env:
+        - name: NODE_ENV
+          value: "production"
+        - name: FRONTEND_URL
+          valueFrom:
+            configMapKeyRef:
+              name: urls-internas
+              key: FRONTEND_URL
+        - name: API_GATEWAY_URL
+          valueFrom:
+            configMapKeyRef:
+              name: urls-internas
+              key: API_GATEWAY_URL
+        - name: SERVICE_GESTION_ESCULTORES_URL
+          valueFrom:
+            configMapKeyRef:
+              name: urls-internas
+              key: SERVICE_GESTION_ESCULTORES_URL
+        - name: SERVICE_GESTION_ESCULTURAS_URL
+          valueFrom:
+            configMapKeyRef:
+              name: urls-internas
+              key: SERVICE_GESTION_ESCULTURAS_URL
+        - name: SERVICE_GESTION_EVENTOS_URL
+          valueFrom:
+            configMapKeyRef:
+              name: urls-internas
+              key: SERVICE_GESTION_EVENTOS_URL
+        - name: SERVICE_REGISTRO_VOTOS_URL
+          valueFrom:
+            configMapKeyRef:
+              name: urls-internas
+              key: SERVICE_REGISTRO_VOTOS_URL
+        - name: SERVICE_GENERADOR_QR_URL
+          valueFrom:
+            configMapKeyRef:
+              name: urls-internas
+              key: SERVICE_GENERADOR_QR_URL
+        - name: SERVICE_AUTENTICACION_URL
+          valueFrom:
+            configMapKeyRef:
+              name: urls-internas
+              key: SERVICE_AUTENTICACION_URL
 ---
+apiVersion: v1
+kind: Service
+metadata:
+  name: api-gateway
+  namespace: bienal-backend
+spec:
+  selector:
+    app: api-gateway
+  ports:
+  - protocol: TCP
+    port: 80
+    targetPort: 80
+  type: LoadBalancer  # Permite que el tráfico de salida sea accesible desde Internet
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: gestion-escultores
+  namespace: bienal-backend
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: gestion-escultores
+  template:
+    metadata:
+      labels:
+        app: gestion-escultores
+    spec:
+      containers:
+      - name: gestion-escultores-container
+        image: stefanomerinoderui/bienal-backend:gestion_escultores
+        resources:
+          requests:
+            memory: "128Mi"
+            cpu: "100m"
+          limits:
+            memory: "256Mi"
+            cpu: "500m"
+        env:
+        - name: NODE_ENV
+          value: "production"
+        - name: MONGODB_URI
+          valueFrom:
+            secretKeyRef:
+              name: mongodb-uri    # Nombre del Secret
+              key: MONGODB_URI   # Clave en el Secret
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: gestion-escultores
+  namespace: bienal-backend
+spec:
+  selector:
+    app: gestion-escultores
+  ports:
+  - protocol: TCP
+    port: 80
+    targetPort: 80
+  type: ClusterIP  # Permite que el tráfico de salida sea accesible desde el cluster
