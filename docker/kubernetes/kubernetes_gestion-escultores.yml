@@ -1,0 +1,49 @@
+--- # Gestion escultores
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: gestion-escultores
+  namespace: bienal-backend
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: gestion-escultores
+  template:
+    metadata:
+      labels:
+        app: gestion-escultores
+    spec:
+      containers:
+      - name: gestion-escultores-container
+        image: stefanomerinoderui/bienal-backend:gestion_escultores
+        imagePullPolicy: Always
+        resources:
+          requests:
+            memory: "128Mi"
+            cpu: "100m"
+          limits:
+            memory: "256Mi"
+            cpu: "500m"
+        env:
+        - name: NODE_ENV
+          value: "production"
+        - name: MONGODB_URI
+          valueFrom:
+            secretKeyRef:
+              name: mongodb-uri    # Nombre del Secret
+              key: MONGODB_URI   # Clave en el Secret
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: gestion-escultores
+  namespace: bienal-backend
+spec:
+  selector:
+    app: gestion-escultores
+  ports:
+  - protocol: TCP
+    port: 80
+    targetPort: 80
+  type: ClusterIP  # Permite que el tráfico de salida sea accesible desde el cluster

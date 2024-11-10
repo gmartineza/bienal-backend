@@ -1,0 +1,49 @@
+--- # Registro de votos
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: registro-votos
+  namespace: bienal-backend
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: registro-votos
+  template:
+    metadata:
+      labels:
+        app: registro-votos
+    spec:
+      containers:
+      - name: registro-votos-container
+        image: stefanomerinoderui/bienal-backend:registro_votos
+        imagePullPolicy: Always
+        resources:
+          requests:
+            memory: "128Mi"
+            cpu: "100m"
+          limits:
+            memory: "256Mi"
+            cpu: "500m"
+        env:
+        - name: NODE_ENV
+          value: "production"
+        - name: MONGODB_URI
+          valueFrom:
+            secretKeyRef:
+              name: mongodb-uri    # Nombre del Secret
+              key: MONGODB_URI   # Clave en el Secret
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: registro-votos
+  namespace: bienal-backend
+spec:
+  selector:
+    app: registro-votos
+  ports:
+  - protocol: TCP
+    port: 80
+    targetPort: 80
+  type: ClusterIP  # Permite que el tráfico de salida sea accesible desde el cluster

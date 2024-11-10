@@ -4,7 +4,11 @@ In this directory, you will find the configuration for the Kubernetes deployment
 
 ## Sercrets and configmaps
 ### List of secrets:
-- mongodb-uri: uri para acceder a la base de datos
+- mongodb-uri: 
+    - MONGODB_URI: uri para acceder a la base de datos
+- api-gateway-cert: certificados
+    - ssl-cert.pem
+    - ssl-key.pem
 
 ### List of configmaps
 - urls-internas:

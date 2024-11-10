@@ -1,0 +1,93 @@
+--- # Api gateway
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: api-gateway
+  namespace: bienal-backend
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: api-gateway
+  template:
+    metadata:
+      labels:
+        app: api-gateway
+    spec:
+      containers:
+      - name: api-gateway-container
+        image: stefanomerinoderui/bienal-backend:api_gateway
+        imagePullPolicy: Always
+        volumeMounts:
+          - name: ssl-certificates
+            mountPath: "/etc/ssl/certs"  # Donde se montarán los certificados
+        resources:
+          requests:
+            memory: "128Mi"
+            cpu: "100m"
+          limits:
+            memory: "256Mi"
+            cpu: "500m"
+        env:
+        - name: DEPLOY_ENV
+          value: "aws"
+        - name: NODE_ENV
+          value: "production"
+        - name: FRONTEND_URL
+          valueFrom:
+            configMapKeyRef:
+              name: urls-internas
+              key: FRONTEND_URL
+        - name: API_GATEWAY_URL
+          valueFrom:
+            configMapKeyRef:
+              name: urls-internas
+              key: API_GATEWAY_URL
+        - name: SERVICE_GESTION_ESCULTORES_URL
+          valueFrom:
+            configMapKeyRef:
+              name: urls-internas
+              key: SERVICE_GESTION_ESCULTORES_URL
+        - name: SERVICE_GESTION_ESCULTURAS_URL
+          valueFrom:
+            configMapKeyRef:
+              name: urls-internas
+              key: SERVICE_GESTION_ESCULTURAS_URL
+        - name: SERVICE_GESTION_EVENTOS_URL
+          valueFrom:
+            configMapKeyRef:
+              name: urls-internas
+              key: SERVICE_GESTION_EVENTOS_URL
+        - name: SERVICE_REGISTRO_VOTOS_URL
+          valueFrom:
+            configMapKeyRef:
+              name: urls-internas
+              key: SERVICE_REGISTRO_VOTOS_URL
+        - name: SERVICE_GENERADOR_QR_URL
+          valueFrom:
+            configMapKeyRef:
+              name: urls-internas
+              key: SERVICE_GENERADOR_QR_URL
+        - name: SERVICE_AUTENTICACION_URL
+          valueFrom:
+            configMapKeyRef:
+              name: urls-internas
+              key: SERVICE_AUTENTICACION_URL
+      volumes:
+        - name: ssl-certificates
+          secret:
+            secretName: api-gateway-cert
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: api-gateway
+  namespace: bienal-backend
+spec:
+  selector:
+    app: api-gateway
+  ports:
+  - protocol: TCP
+    port: 80
+    targetPort: 80
+  type: LoadBalancer  # Permite que el tráfico de salida sea accesible desde Internet
