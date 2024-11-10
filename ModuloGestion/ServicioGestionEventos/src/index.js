@@ -16,7 +16,7 @@ const { errors } = require('celebrate');
 connectDB();
 
 app.use(cors({
-  origin: process.env.FRONTEND_URL, // URL FRONTEND
+  origin: ['http://localhost:5173', process.env.FRONTEND_URL], // URL FRONTEND
   credentials: true // Permite cookies y headers de autenticación
 }));
 
