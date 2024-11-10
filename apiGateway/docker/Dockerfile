@@ -23,6 +23,7 @@ ENV API_PORT=${PORT}
 
 # Expose the port your app runs on
 EXPOSE 80
+EXPOSE 443
 
 # Start the application
 CMD ["npm", "run", "start"]
