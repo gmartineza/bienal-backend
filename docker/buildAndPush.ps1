@@ -1,4 +1,6 @@
 $deleteBuildCache = Read-Host "Do you want to delete the docker build cache? (y/N)"
+# Ask the user if they want to push the images
+$pushImages = Read-Host "Do you want to push all the built images to Docker Hub? (y/N)"
 if ($deleteBuildCache -eq 'y') {
     Write-Progress -Status "Deleting Docker build cache" -PercentComplete 0 -Activity "Deleting cache"
     docker builder prune --all --force | Out-Null
@@ -9,8 +11,6 @@ if ($deleteBuildCache -eq 'y') {
 
 docker compose -f "./docker/docker-compose.yml" build
 
-# Ask the user if they want to push the images
-$pushImages = Read-Host "Do you want to push all the built images? (y/N)"
 if ($pushImages -eq 'y') {
     Write-Progress -Status "Uploading images to Docker Hub" -PercentComplete 0 -Activity "Uploading images"
     
