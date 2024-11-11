@@ -5,10 +5,26 @@ In this directory, you will find the configuration for the Kubernetes deployment
 ## Sercrets and configmaps
 ### List of secrets:
 - mongodb-uri: 
-    - MONGODB_URI: uri para acceder a la base de datos
-- api-gateway-cert: certificados
+    - MONGODB_URI: Database URI
+- api-gateway-cert: Ssl certificates
     - ssl-cert.pem
     - ssl-key.pem
+- cloudinary-apikeys-escultores:
+    - CLOUDINARY_CLOUD_NAME
+    - CLOUDINARY_API_KEY
+    - CLOUDINARY_API_SECRET
+- cloudinary-apikeys-esculturas:
+    - CLOUDINARY_CLOUD_NAME
+    - CLOUDINARY_API_KEY
+    - CLOUDINARY_API_SECRET
+- cloudinary-apikeys-eventos:
+    - CLOUDINARY_CLOUD_NAME
+    - CLOUDINARY_API_KEY
+    - CLOUDINARY_API_SECRET
+
+- noip-auth: Auth to update dns
+    - NOIP_USER
+    - NOIP_PASSWORD
 
 ### List of configmaps
 - urls-internas:
