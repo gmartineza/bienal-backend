@@ -32,7 +32,22 @@ spec:
           valueFrom:
             secretKeyRef:
               name: mongodb-uri    # Nombre del Secret
-              key: MONGODB_URI   # Clave en el Secret
+              key: MONGODB_URI     # Clave en el Secret
+        - name: CLOUDINARY_CLOUD_NAME
+          valueFrom:
+            secretKeyRef:
+              name: cloudinary-apikeys-escultores  # Nombre del Secret
+              key: CLOUDINARY_CLOUD_NAME           # Clave en el Secret
+        - name: CLOUDINARY_API_KEY
+          valueFrom:
+            secretKeyRef:
+              name: cloudinary-apikeys-escultores  # Nombre del Secret
+              key: CLOUDINARY_API_KEY           # Clave en el Secret
+        - name: CLOUDINARY_API_SECRET
+          valueFrom:
+            secretKeyRef:
+              name: cloudinary-apikeys-escultores  # Nombre del Secret
+              key: CLOUDINARY_API_SECRET           # Clave en el Secret
 ---
 apiVersion: v1
 kind: Service
