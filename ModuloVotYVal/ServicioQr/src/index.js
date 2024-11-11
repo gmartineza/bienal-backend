@@ -1,6 +1,6 @@
 import express from 'express';
 import cors from 'cors';
-import qrRoutes from './src/api/routes/QrRoutes.js';
+import qrRoutes from './api/routes/QrRoutes.js';
 
 const app = express();
 const PORT = process.env.PORT || 3000;

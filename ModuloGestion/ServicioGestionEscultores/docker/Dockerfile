@@ -7,23 +7,24 @@ WORKDIR /usr/src/app
 # Copy package.json and package-lock.json (if available)
 COPY package*.json ./
 
+# Print package.json (for debugging)
+RUN cat package.json
+
 # Install dependencies
-RUN npm install
+RUN npm install --verbose && npm cache clean --force
 
 # Copy the rest of your app's source code
 COPY . .
 
-# build the server file
+# Build the server file
 RUN npm run build
 
-# Define a build argument for the external port
-ARG API_PORT=80
-# Set an environment variable for the external port
-ENV API_PORT=${PORT}
+# Define a build argument for the port and set it as an environment variable
+ARG EXPRESS_PORT=80
+ENV PORT=${EXPRESS_PORT}
 
-# Expose the port your app runs on
+# Expose a default port
 EXPOSE 80
-EXPOSE 443
 
 # Start the application
 CMD ["npm", "run", "start"]
