@@ -33,6 +33,16 @@ spec:
           value: "aws"
         - name: NODE_ENV
           value: "production"
+        - name: NOIP_USER
+          valueFrom:
+            secretKeyRef:
+              name: noip-auth    # Nombre del Secret
+              key: NOIP_USER   # Clave en el Secret
+        - name: NOIP_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: noip-auth    # Nombre del Secret
+              key: NOIP_PASSWORD   # Clave en el Secret
         - name: FRONTEND_URL
           valueFrom:
             configMapKeyRef:
@@ -73,6 +83,11 @@ spec:
             configMapKeyRef:
               name: urls-internas
               key: SERVICE_AUTENTICACION_URL
+        - name: SSL_KEY_PATH
+          value: "/etc/ssl/certs/private.key"
+        - name: SSL_CERTIFICATE_PATH
+          value: "/etc/ssl/certs/ssl-cert.pem"
+
       volumes:
         - name: ssl-certificates
           secret:
@@ -87,7 +102,12 @@ spec:
   selector:
     app: api-gateway
   ports:
-  - protocol: TCP
+  - name: http
+    protocol: TCP
     port: 80
-    targetPort: 80
+    targetPort: 80  # Para HTTP
+  - name: https
+    protocol: TCP
+    port: 443
+    targetPort: 443  # Para HTTPS
   type: LoadBalancer  # Permite que el tráfico de salida sea accesible desde Internet
