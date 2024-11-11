@@ -1,0 +1,9 @@
+node_modules
+serverBuild.js
+.env
+# docker
+error.log
+# ssl certificates
+*.crt
+*.key
+*.pem

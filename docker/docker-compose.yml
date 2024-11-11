@@ -1,0 +1,64 @@
+services:
+  api_gateway:
+    build:
+      context: ./../apiGateway
+      dockerfile: docker/Dockerfile
+      args:
+          EXPRESS_PORT: 80
+    image: stefanomerinoderui/bienal-backend:api_gateway
+    ports:
+      - "8001:80"
+  gestion_escultores:
+    build:
+      context: ./../ModuloGestion/ServicioGestionEscultores
+      dockerfile: docker/Dockerfile
+      args:
+        EXPRESS_PORT: 80
+    image: stefanomerinoderui/bienal-backend:gestion_escultores
+    ports:
+      - "8002:80"
+  gestion_esculturas:
+    build:
+      context: ./../ModuloGestion/ServicioGestionEsculturas
+      dockerfile: docker/Dockerfile
+      args:
+        EXPRESS_PORT: 80
+    image: stefanomerinoderui/bienal-backend:gestion_esculturas
+    ports:
+      - "8003:80"
+  gestion_eventos:
+    build:
+      context: ./../ModuloGestion/ServicioGestionEventos
+      dockerfile: docker/Dockerfile
+      args:
+        EXPRESS_PORT: 80
+    image: stefanomerinoderui/bienal-backend:gestion_eventos
+    ports:
+      - "8004:80"
+  autenticacion:
+    build:
+      context: ./../ModuloVotYVal/ServicioAuth
+      dockerfile: docker/Dockerfile
+      args:
+        EXPRESS_PORT: 80
+    image: stefanomerinoderui/bienal-backend:autenticacion
+    ports:
+      - "8005:80"
+  registro_votos:
+    build:
+      context: ./../ModuloVotYVal/ServicioVotacion
+      dockerfile: docker/Dockerfile
+      args:
+        EXPRESS_PORT: 80
+    image: stefanomerinoderui/bienal-backend:registro_votos
+    ports:
+      - "8006:80"
+  generadorQR:
+    build:
+      context: ./../ModuloVotYVal/ServicioQr
+      dockerfile: docker/Dockerfile
+      args:
+        EXPRESS_PORT: 80
+    image: stefanomerinoderui/bienal-backend:generadorQr
+    ports:
+      - "8007:80"
