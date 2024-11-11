@@ -27,4 +27,5 @@ jobs:
           docker compose -f docker/docker-compose.yml build
       # Push Docker Compose images
       - name: Push Docker Compose Images
+        run: |
           docker compose -f docker/docker-compose.yml push
