@@ -4,7 +4,7 @@ metadata:
   name: urls-internas
   namespace: bienal-backend
 data:
-  FRONTEND_URL: "http://frontend.example.com"
+  FRONTEND_URL: "https://bienal-front-end-viuu.vercel.app"
   API_GATEWAY_URL: "http://api-gateway.bienal-backend.svc.cluster.local"
   SERVICE_GESTION_ESCULTORES_URL: "http://gestion-escultores.bienal-backend.svc.cluster.local"
   SERVICE_GESTION_ESCULTURAS_URL: "http://gestion-esculturas.bienal-backend.svc.cluster.local"
