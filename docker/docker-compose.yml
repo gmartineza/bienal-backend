@@ -5,7 +5,7 @@ services:
       dockerfile: docker/Dockerfile
       args:
           EXPRESS_PORT: 80
-    image: stefanomerinoderui/bienal-backend:api_gateway
+    image: ${DOCKER_REPO_NAME}/bienal-backend:api_gateway
     ports:
       - "8001:80"
   gestion_escultores:
@@ -14,7 +14,7 @@ services:
       dockerfile: docker/Dockerfile
       args:
         EXPRESS_PORT: 80
-    image: stefanomerinoderui/bienal-backend:gestion_escultores
+    image: ${DOCKER_REPO_NAME}/bienal-backend:gestion_escultores
     ports:
       - "8002:80"
   gestion_esculturas:
@@ -23,7 +23,7 @@ services:
       dockerfile: docker/Dockerfile
       args:
         EXPRESS_PORT: 80
-    image: stefanomerinoderui/bienal-backend:gestion_esculturas
+    image: ${DOCKER_REPO_NAME}/bienal-backend:gestion_esculturas
     ports:
       - "8003:80"
   gestion_eventos:
@@ -32,7 +32,7 @@ services:
       dockerfile: docker/Dockerfile
       args:
         EXPRESS_PORT: 80
-    image: stefanomerinoderui/bienal-backend:gestion_eventos
+    image: ${DOCKER_REPO_NAME}/bienal-backend:gestion_eventos
     ports:
       - "8004:80"
   autenticacion:
@@ -41,7 +41,7 @@ services:
       dockerfile: docker/Dockerfile
       args:
         EXPRESS_PORT: 80
-    image: stefanomerinoderui/bienal-backend:autenticacion
+    image: ${DOCKER_REPO_NAME}/bienal-backend:autenticacion
     ports:
       - "8005:80"
   registro_votos:
@@ -50,7 +50,7 @@ services:
       dockerfile: docker/Dockerfile
       args:
         EXPRESS_PORT: 80
-    image: stefanomerinoderui/bienal-backend:registro_votos
+    image: ${DOCKER_REPO_NAME}/bienal-backend:registro_votos
     ports:
       - "8006:80"
   generadorQR:
@@ -59,6 +59,6 @@ services:
       dockerfile: docker/Dockerfile
       args:
         EXPRESS_PORT: 80
-    image: stefanomerinoderui/bienal-backend:generadorQr
+    image: ${DOCKER_REPO_NAME}/bienal-backend:generadorQr
     ports:
       - "8007:80"
