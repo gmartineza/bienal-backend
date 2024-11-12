@@ -24,8 +24,10 @@ jobs:
       # Build Docker Compose images
       - name: Build Docker Compose Images
         run: |
+          DOCKER_REPO_NAME=stefanomerinoderui
           docker compose -f docker/docker-compose.yml build
       # Push Docker Compose images
       - name: Push Docker Compose Images
         run: |
+          DOCKER_REPO_NAME=stefanomerinoderui
           docker compose -f docker/docker-compose.yml push
