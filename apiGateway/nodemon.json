@@ -1,4 +1,7 @@
 {
-    "watch": ["./","./config"],
-    "ext": "js,json,yml,env"
+    "watch": [".env","./config"],
+    "ext": "js,json,yml,env",
+    "events": {
+      "start": "clear"
+    }
 }

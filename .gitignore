@@ -7,3 +7,5 @@ error.log
 *.crt
 *.key
 *.pem
+#Servicio autenticacion
+frontend-bienal-firebase-adminsdk-rih0d-6aefe6927f.json
