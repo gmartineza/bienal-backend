@@ -1,7 +1,7 @@
 name: Build and Push Docker Compose Images
 
 on:
-  push:
+  pull_request:
     branches:
       - main
 
