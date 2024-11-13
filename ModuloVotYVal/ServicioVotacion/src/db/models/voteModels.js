@@ -1,3 +1,4 @@
+// src/db/models/voteModels.js
 const mongoose = require('mongoose');
 
 const voteSchema = new mongoose.Schema({
@@ -10,8 +11,9 @@ const voteSchema = new mongoose.Schema({
     required: true 
   },
   eventId: { 
-    type: Number, 
-    required: true 
+    type: String, 
+    required: true, 
+    enum: ["marmol", "madera", "piedra"] 
   },
   score: { 
     type: Number, 
@@ -25,7 +27,6 @@ const voteSchema = new mongoose.Schema({
   }
 });
 
-// Para garantizar que un usuario pueda votar solo una vez por escultor en un evento específico
 voteSchema.index({ userId: 1, sculptorId: 1, eventId: 1 }, { unique: true });
 
 module.exports = mongoose.model('Vote', voteSchema);

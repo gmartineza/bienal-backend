@@ -1,3 +1,4 @@
+// src/api/repository/voteRepository.js
 const Vote = require('../../db/models/voteModels');
 
 const findVoteByUserAndSculptorAndEvent = (userId, sculptorId, eventId) => {
