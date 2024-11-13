@@ -4,8 +4,9 @@ https:
   port: ${HTTPS_PORT:-443}  # El puerto 443 por defecto
   tls:
     "bienal-backend.ddns.net":
-      key: ${SSL_KEY_PATH}  # Ruta a la clave privada
-      cert: ${SSL_CERTIFICATE_PATH}  # Ruta al certificado SSL
+      # El archivo por defecto se usa para que funcione aunque no se encuentre certificado
+      key: ${SSL_KEY_PATH:-./package.json}  # Ruta a la clave privada
+      cert: ${SSL_CERTIFICATE_PATH:-./package.json}  # Ruta al certificado SSL   
 
 # Uncomment admin section if you need to configure the admin interface
 # admin:
