@@ -45,8 +45,8 @@
         <label for="userId">User ID:</label>
         <input type="number" id="userId" name="userId" required>
 
-        <label for="sculptureId">Sculpture ID:</label>
-        <input type="number" id="sculptureId" name="sculptureId" required>
+        <label for="sculptorId">Sculptor ID:</label>
+        <input type="number" id="sculptorId" name="sculptorId" required>
 
         <label for="eventId">Event ID:</label>
         <input type="number" id="eventId" name="eventId" required>
@@ -64,7 +64,7 @@
             event.preventDefault(); // Evitar que el formulario se envíe de forma tradicional
 
             const userId = document.getElementById('userId').value;
-            const sculptureId = document.getElementById('sculptureId').value;
+            const sculptorId = document.getElementById('sculptorId').value;
             const eventId = document.getElementById('eventId').value;
             const score = document.getElementById('score').value;
 
@@ -76,7 +76,7 @@
                 },
                 body: JSON.stringify({ 
                     userId: parseInt(userId), 
-                    sculptureId: parseInt(sculptureId), 
+                    sculptorId: parseInt(sculptorId), 
                     eventId: parseInt(eventId), // Incluye el eventId en la solicitud
                     score: parseInt(score) 
                 }),
