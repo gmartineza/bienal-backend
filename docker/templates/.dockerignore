@@ -1,0 +1,5 @@
+# Ignorar archivos sensibles
+*.env
+credentials/
+node_modules/
+.git/

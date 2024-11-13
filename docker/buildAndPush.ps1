@@ -1,3 +1,4 @@
+$env:DOCKER_REPO_NAME="stefanomerinoderui"
 $deleteBuildCache = Read-Host "Do you want to delete the docker build cache? (y/N)"
 # Ask the user if they want to push the images
 $pushImages = Read-Host "Do you want to push all the built images to Docker Hub? (y/N)"
