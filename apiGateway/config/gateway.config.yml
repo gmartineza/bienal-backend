@@ -9,13 +9,13 @@ http:
 apiEndpoints: # Endpoints are set by every services
   gestion_escultores:
     paths: "/api/sculptors*"
-    methods: ["GET", "PUT", "POST", "DELETE"]
+    methods: ["GET", "PUT", "POST", "DELETE", "OPTIONS"]
   gestion_esculturas:
     paths: "/api/sculptures*"
-    methods: ["GET", "PUT", "POST", "DELETE"]
+    methods: ["GET", "PUT", "POST", "DELETE", "OPTIONS"]
   gestion_eventos:
     paths: "/api/events*"
-    methods: ["GET", "PUT", "POST", "DELETE"]
+    methods: ["GET", "PUT", "POST", "DELETE", "OPTIONS"]
   autenticacion:
     paths: "/api/autentication*"
   registro_votos:
@@ -127,7 +127,6 @@ pipelines:
           - action:
               serviceEndpoint: generador_qr
               changeOrigin: true
-
 #  default:
 #    apiEndpoints:
 #      - api

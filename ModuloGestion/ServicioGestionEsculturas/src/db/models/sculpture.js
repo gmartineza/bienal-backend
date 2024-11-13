@@ -10,9 +10,9 @@ const EsculturaSchema = new mongoose.Schema({
   description: { type: String, required: true },
   creation_date: { type: Date, required: true },         
   sculptor: { type: mongoose.Schema.Types.ObjectId, ref: 'Sculptor'},
-  imagenesPre: [{ type: String }],
-  imagenesDurante: [{ type: String }],
-  imagenesPost: [{ type: String }],
+  imagenPre: { type: String },
+  imagenDurante: { type: String },
+  imagenPost: { type: String },
 }, { timestamps: true }); 
 
 module.exports = mongoose.model('Sculpture', EsculturaSchema);

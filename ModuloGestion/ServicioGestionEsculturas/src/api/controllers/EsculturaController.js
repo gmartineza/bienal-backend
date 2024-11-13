@@ -17,9 +17,8 @@ const cloudinary = require('../../config/cloudinary');
 const crearEscultura = async (req, res) => {
   try {
     const { body, files } = req;
-    let imagenesPre = [];
-    let imagenesDurante = [];
-    let imagenesPost = [];
+    console.log("Archivos recibidos:", files);
+    console.log("Datos recibidos:", body);
 
     const subirImagen = (file) => {
       return new Promise((resolve, reject) => {
@@ -34,35 +33,17 @@ const crearEscultura = async (req, res) => {
       });
     };
 
-    if (files) {
-      if (files.imagenesPre) {
-        for (const file of files.imagenesPre) {
-          imagenesPre.push(await subirImagen(file));
-        }
-      }
-      if (files.imagenesDurante) {
-        for (const file of files.imagenesDurante) {
-          imagenesDurante.push(await subirImagen(file));
-        }
-      }
-      if (files.imagenesPost) {
-        for (const file of files.imagenesPost) {
-          imagenesPost.push(await subirImagen(file));
-        }
-      }
-    }
-    const nombreEscultura = await esculturaService.obtenerEsculturasPorNombre(body.name);
-    if (nombreEscultura.length > 0) {
-      return res.status(500).json({ error: 'Error al crear la Escultura: Nombre Repetido de la escultura' });
-    }
-    const nuevaEscultura = await esculturaService.crearEscultura(body, imagenesPre, imagenesDurante, imagenesPost);
+    let imagenPre = files?.imagenPre ? await subirImagen(files.imagenPre[0]) : "";
+    let imagenDurante = files?.imagenDurante ? await subirImagen(files.imagenDurante[0]) : "";
+    let imagenPost = files?.imagenPost ? await subirImagen(files.imagenPost[0]) : "";
+
+    const nuevaEscultura = await esculturaService.crearEscultura(body, imagenPre, imagenDurante, imagenPost);
     res.status(201).json(nuevaEscultura);
   } catch (error) {
-    console.error('Error en actualizarEscultura:', error);  // Agrega el error completo a la consola
+    console.error('Error al crear la escultura:', error);
     res.status(500).json({ error: 'Error al crear la escultura: ' + error.message });
   }
 };
-
 
 /**
  * Obtiene todas las esculturas de la base de datos.
@@ -111,11 +92,6 @@ const actualizarEscultura = async (req, res) => {
   try {
     const { id } = req.params;
     const { body, files } = req;
-    const { imagenesAEliminarPre = [], imagenesAEliminarDurante = [], imagenesAEliminarPost = [] } = body;
-
-    let nuevasImagenesPre = [];
-    let nuevasImagenesDurante = [];
-    let nuevasImagenesPost = [];
 
     const subirImagen = (file) => {
       return new Promise((resolve, reject) => {
@@ -130,37 +106,22 @@ const actualizarEscultura = async (req, res) => {
       });
     };
 
-    if (files) {
-      if (files.imagenesPre) {
-        for (const file of files.imagenesPre) {
-          nuevasImagenesPre.push(await subirImagen(file));
-        }
-      }
-      if (files.imagenesDurante) {
-        for (const file of files.imagenesDurante) {
-          nuevasImagenesDurante.push(await subirImagen(file));
-        }
-      }
-      if (files.imagenesPost) {
-        for (const file of files.imagenesPost) {
-          nuevasImagenesPost.push(await subirImagen(file));
-        }
-      }
-    }
+    // Subir nuevas imágenes solo si están presentes en la solicitud
+    let nuevaImagenPre = files?.imagenPre ? await subirImagen(files.imagenPre[0]) : "";
+    let nuevaImagenDurante = files?.imagenDurante ? await subirImagen(files.imagenDurante[0]) : "";
+    let nuevaImagenPost = files?.imagenPost ? await subirImagen(files.imagenPost[0]) : "";
 
     const esculturaActualizada = await esculturaService.actualizarEscultura(
       id,
       body,
-      nuevasImagenesPre,
-      nuevasImagenesDurante,
-      nuevasImagenesPost,
-      imagenesAEliminarPre,
-      imagenesAEliminarDurante,
-      imagenesAEliminarPost
+      nuevaImagenPre,
+      nuevaImagenDurante,
+      nuevaImagenPost
     );
 
     res.status(200).json(esculturaActualizada);
   } catch (error) {
+    console.error('Error al actualizar la escultura:', error);
     res.status(500).json({ mensaje: 'Error al actualizar la escultura' });
   }
 };
