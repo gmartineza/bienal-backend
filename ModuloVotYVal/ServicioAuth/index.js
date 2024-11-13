@@ -9,9 +9,10 @@ const PORT = process.env.PORT || 3000
 
 // Configuración de CORS directamente en index.js
 const corsOptions = {
-    origin: process.env.FRONTEND_URL, // Frontend permitido
-    credentials: true, // Permitir el uso de cookies
+    origin: process.env.FRONTEND_URL||'http://localhost:5173', // Permite el frontend en localhost:5173
+    credentials: true, // Permite el uso de cookies y credenciales
 };
+
 
 // Middlewares
 app.use(express.json());
