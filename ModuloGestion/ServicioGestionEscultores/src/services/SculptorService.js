@@ -50,7 +50,7 @@ const getAllSculptors = async () => {
  */
 const getSculptorById = async (id) => {
   try {
-    const sculptor = await Sculptor.findById(id).populate('works');
+    const sculptor = await Sculptor.findById(id);
     if (!sculptor) {
       throw new Error('Escultor no encontrado');
     }
