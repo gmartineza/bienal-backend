@@ -33,6 +33,11 @@ spec:
             secretKeyRef:
               name: mongodb-uri    # Nombre del Secret
               key: MONGODB_URI   # Clave en el Secret
+        - name: FRONTEND_URL
+          valueFrom:
+            configMapKeyRef:
+              name: urls-internas
+              key: FRONTEND_URL
 ---
 apiVersion: v1
 kind: Service
