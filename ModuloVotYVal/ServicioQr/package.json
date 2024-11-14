@@ -4,9 +4,9 @@
   "main": "index.js",
   "type": "module",
   "scripts": {
-    "start": "node src/serverBuild.js",
-    "build": "npx babel src/index.js -o src/serverBuild.js",
-    "dev": "nodemon --env-file=.env src/index.js",
+    "start": "node serverBuild.js",
+    "build": "npx babel index.js -o serverBuild.js",
+    "dev": "nodemon --env-file=.env index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
