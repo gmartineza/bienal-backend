@@ -1,7 +1,6 @@
 // Importaciones
 const express = require('express');
 const mongoose = require('mongoose');
-const path = require('path');
 const voteRoutes = require('./api/routes/voteRoutes');
 
 // Crear una instancia de Express
@@ -12,26 +11,13 @@ app.use(express.json());
 
 // Conexión a MongoDB
 const uri = process.env.MONGODB_URI;
-if (!uri) {
-    console.error('Error: la variable MONGODB_URI no está definida en el archivo .env');
-    process.exit(1); // Finaliza la ejecución si la URI no está definida
-}
 
 mongoose.connect(uri)
     .then(() => console.log('Conectado a MongoDB'))
     .catch((error) => console.error('Error al conectar a MongoDB:', error));
 
-// Servir el archivo HTML en la ruta raíz
-app.use(express.static(path.join(__dirname, 'public')));
-
 // Rutas
 app.use('/api/votes', voteRoutes);
-
-// Redirige al formulario HTML al acceder a la raíz
-// Servir el archivo HTML de selección de eventos en la ruta raíz
-app.get('/', (req, res) => {
-    res.sendFile(path.join(__dirname, 'public', 'eventSelection.html'));
-});
 
 // Configuración del puerto
 const PORT = process.env.PORT || 3000;
