@@ -1,7 +1,7 @@
 name: Deploy to EKS
 
 on:
-  pull_request:
+  push:
     branches:
       - development  # O la rama que prefieras
 
@@ -23,15 +23,17 @@ jobs:
     # Build Docker Compose images
     - name: Build Docker Compose Images
       run: |
-        DOCKER_REPO_NAME=stefanomerinoderui/bienal-backend
-        DOCKER_TAG_EXTRA="development"
         docker compose -f docker/docker-compose.yml build
+      env:
+        DOCKER_REPO_NAME: "stefanomerinoderui/bienal-backend"
+        DOCKER_TAG_EXTRA: ""
     # Push Docker Compose images
     - name: Push Docker Compose Images
       run: |
-        DOCKER_REPO_NAME=stefanomerinoderui/bienal-backend
-        DOCKER_TAG_EXTRA="development"
         docker compose -f docker/docker-compose.yml push
+      env:
+          DOCKER_REPO_NAME: "stefanomerinoderui/bienal-backend"
+          DOCKER_TAG_EXTRA: ""
 
     - name: Configure AWS credentials
       uses: aws-actions/configure-aws-credentials@v3
