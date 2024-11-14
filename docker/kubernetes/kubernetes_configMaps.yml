@@ -11,4 +11,5 @@ data:
   SERVICE_GESTION_EVENTOS_URL: "http://gestion-eventos.bienal-backend.svc.cluster.local"
   SERVICE_REGISTRO_VOTOS_URL: "http://registro-votos.bienal-backend.svc.cluster.local"
   SERVICE_GENERADOR_QR_URL: "http://generador-qr.bienal-backend.svc.cluster.local"
-  SERVICE_AUTENTICACION_URL: "http://autenticacion.bienal-backend.svc.cluster.local"
+  SERVICE_AUTORIZACION_URL: "http://autorizacion.bienal-backend.svc.cluster.local"
+  SERVICE_BUSCADOR_URL: "http://buscador.bienal-backend.svc.cluster.local"
