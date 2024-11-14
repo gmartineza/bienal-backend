@@ -5,7 +5,7 @@ services:
       dockerfile: docker/Dockerfile
       args:
           EXPRESS_PORT: 80
-    image: ${DOCKER_REPO_NAME}/bienal-backend:api_gateway${DOCKER_TAG_EXTRA}
+    image: ${DOCKER_REPO_NAME}:api_gateway${DOCKER_TAG_EXTRA}
     ports:
       - "8001:80"
   gestion_escultores:
@@ -14,7 +14,7 @@ services:
       dockerfile: docker/Dockerfile
       args:
         EXPRESS_PORT: 80
-    image: ${DOCKER_REPO_NAME}/bienal-backend:gestion_escultores${DOCKER_TAG_EXTRA}
+    image: ${DOCKER_REPO_NAME}:gestion_escultores${DOCKER_TAG_EXTRA}
     ports:
       - "8002:80"
   gestion_esculturas:
@@ -23,7 +23,7 @@ services:
       dockerfile: docker/Dockerfile
       args:
         EXPRESS_PORT: 80
-    image: ${DOCKER_REPO_NAME}/bienal-backend:gestion_esculturas${DOCKER_TAG_EXTRA}
+    image: ${DOCKER_REPO_NAME}:gestion_esculturas${DOCKER_TAG_EXTRA}
     ports:
       - "8003:80"
   gestion_eventos:
@@ -32,7 +32,7 @@ services:
       dockerfile: docker/Dockerfile
       args:
         EXPRESS_PORT: 80
-    image: ${DOCKER_REPO_NAME}/bienal-backend:gestion_eventos${DOCKER_TAG_EXTRA}
+    image: ${DOCKER_REPO_NAME}:gestion_eventos${DOCKER_TAG_EXTRA}
     ports:
       - "8004:80"
   autorizacion:
@@ -41,7 +41,7 @@ services:
       dockerfile: docker/Dockerfile
       args:
         EXPRESS_PORT: 80
-    image: ${DOCKER_REPO_NAME}/bienal-backend:autorizacion${DOCKER_TAG_EXTRA}
+    image: ${DOCKER_REPO_NAME}:autorizacion${DOCKER_TAG_EXTRA}
     ports:
       - "8005:80"
   registro_votos:
@@ -50,7 +50,7 @@ services:
       dockerfile: docker/Dockerfile
       args:
         EXPRESS_PORT: 80
-    image: ${DOCKER_REPO_NAME}/bienal-backend:registro_votos${DOCKER_TAG_EXTRA}
+    image: ${DOCKER_REPO_NAME}:registro_votos${DOCKER_TAG_EXTRA}
     ports:
       - "8006:80"
   generadorQR:
@@ -59,6 +59,6 @@ services:
       dockerfile: docker/Dockerfile
       args:
         EXPRESS_PORT: 80
-    image: ${DOCKER_REPO_NAME}/bienal-backend:generadorQr${DOCKER_TAG_EXTRA}
+    image: ${DOCKER_REPO_NAME}:generadorQr${DOCKER_TAG_EXTRA}
     ports:
       - "8007:80"
