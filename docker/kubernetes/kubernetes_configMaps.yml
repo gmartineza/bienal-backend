@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: urls-internas
+  namespace: bienal-backend
+data:
+  FRONTEND_URL: "https://bienal-front-end-viuu.vercel.app"
+  API_GATEWAY_URL: "http://api-gateway.bienal-backend.svc.cluster.local"
+  SERVICE_GESTION_ESCULTORES_URL: "http://gestion-escultores.bienal-backend.svc.cluster.local"
+  SERVICE_GESTION_ESCULTURAS_URL: "http://gestion-esculturas.bienal-backend.svc.cluster.local"
+  SERVICE_GESTION_EVENTOS_URL: "http://gestion-eventos.bienal-backend.svc.cluster.local"
+  SERVICE_REGISTRO_VOTOS_URL: "http://registro-votos.bienal-backend.svc.cluster.local"
+  SERVICE_GENERADOR_QR_URL: "http://generador-qr.bienal-backend.svc.cluster.local"
+  SERVICE_AUTENTICACION_URL: "http://autenticacion.bienal-backend.svc.cluster.local"

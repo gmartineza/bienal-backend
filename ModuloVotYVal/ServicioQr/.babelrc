@@ -1,0 +1,13 @@
+{
+  "presets": [
+    [
+      "@babel/preset-env",
+      {
+        "targets": "> 0.25%, not dead", // Transpila solo para navegadores con más del 0.25% de uso y no obsoletos.
+        "useBuiltIns": "usage", // Solo incluye los polyfills necesarios.
+        "corejs": 3, // Especifica la versión de core-js para los polyfills.
+        "modules": false // Indica a Babel que mantenga el formato de módulos ESM.
+      }
+    ]
+  ]
+}

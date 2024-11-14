@@ -4,6 +4,9 @@
   "main": "index.js",
   "type": "module",
   "scripts": {
+    "start": "node src/serverBuild.js",
+    "build": "npx babel src/index.js -o src/serverBuild.js",
+    "dev": "nodemon --env-file=.env src/index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
@@ -17,6 +20,16 @@
     "jsonwebtoken": "^9.0.2",
     "qrcode": "^1.5.4",
     "servicio-auth": "file:",
-    "submoduloauth": "file:"
+    "submoduloauth": "file:",
+    "uuid": "^11.0.3"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.25.9",
+    "@babel/core": "^7.26.0",
+    "@babel/preset-env": "^7.26.0",
+    "nodemon": "^3.1.7"
+  },
+  "engines": {
+    "node": "20.x"
   }
 }
