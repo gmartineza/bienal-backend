@@ -3,8 +3,8 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "start": "node src/serverBuild.js",
-    "build": "npx babel src/index.js -o src/serverBuild.js",
+    "start": "node serverBuild.js",
+    "build": "npx babel index.js -o serverBuild.js",
     "test": "jest",
     "dev": "node --env-file=.env index.js"
   },

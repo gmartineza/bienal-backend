@@ -24,10 +24,14 @@ jobs:
       # Build Docker Compose images
       - name: Build Docker Compose Images
         run: |
-          DOCKER_REPO_NAME=stefanomerinoderui
           docker compose -f docker/docker-compose.yml build
+        env:
+            DOCKER_REPO_NAME: "stefanomerinoderui/bienal-backend"
+            DOCKER_TAG_EXTRA: ""
       # Push Docker Compose images
       - name: Push Docker Compose Images
         run: |
-          DOCKER_REPO_NAME=stefanomerinoderui
           docker compose -f docker/docker-compose.yml push
+        env:
+            DOCKER_REPO_NAME: "stefanomerinoderui/bienal-backend"
+            DOCKER_TAG_EXTRA: ""

@@ -20,7 +20,7 @@ export const generateQR = async (req, res) => {
 };
 
 export const verifyToken = (req, res) => {
-  const { token, numeroevento, numeroescultor } = req.params;
+  const { numeroevento, numeroescultor, token } = req.params;
   try {
     const decoded = jwt.verify(token, SECRET_KEY);
 
