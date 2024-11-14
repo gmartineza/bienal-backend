@@ -83,6 +83,11 @@ spec:
             configMapKeyRef:
               name: urls-internas
               key: SERVICE_AUTENTICACION_URL
+        - name: SERVICE_BUSCADOR_URL
+          valueFrom:
+            configMapKeyRef:
+              name: urls-internas
+              key: SERVICE_BUSCADOR_URL
         - name: SSL_KEY_PATH
           value: "/etc/ssl/certs/private.key"
         - name: SSL_CERTIFICATE_PATH
