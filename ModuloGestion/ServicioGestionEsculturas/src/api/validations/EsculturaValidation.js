@@ -16,9 +16,9 @@ const crearEsculturaSchema = {
     description: Joi.string().required(),
     creation_date: Joi.date().required(),
     sculptor: Joi.objectId().optional(),
-    imagenesPre: Joi.array().items(Joi.string().uri()).optional(),
-    imagenesDurante: Joi.array().items(Joi.string().uri()).optional(),
-    imagenesPost: Joi.array().items(Joi.string().uri()).optional(),
+    imagenPre: Joi.string().optional(),
+    imagenDurante: Joi.string().optional(),
+    imagenPost: Joi.string().optional(),
   }),
 };
 
@@ -45,12 +45,9 @@ const actualizarEsculturaSchema = {
     description: Joi.string().optional(),
     creation_date: Joi.date().optional(),
     sculptor: Joi.objectId().optional(),
-    imagenesPre: Joi.array().items(Joi.string().uri()).optional(),
-    imagenesDurante: Joi.array().items(Joi.string().uri()).optional(),
-    imagenesPost: Joi.array().items(Joi.string().uri()).optional(),
-    imagenesAEliminarPre: Joi.array().items(Joi.string().uri()).optional(),
-    imagenesAEliminarDurante: Joi.array().items(Joi.string().uri()).optional(),
-    imagenesAEliminarPost: Joi.array().items(Joi.string().uri()).optional(),
+    imagenPre: Joi.string().optional(),
+    imagenDurante: Joi.string().optional(),
+    imagenPost: Joi.string().optional(),
   }),
 };
 
