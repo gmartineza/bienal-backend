@@ -11,22 +11,22 @@ const Escultura = require('../db/models/sculpture');
  * Crea una nueva escultura en la base de datos.
  * 
  * @param {Object} data - Objeto con los datos necesarios para crear la escultura.
- * @param {string[]} [imagenesPre=[]] - Array opcional de URLs de imágenes previas a la creación.
- * @param {string[]} [imagenesDurante=[]] - Array opcional de URLs de imágenes durante la creación.
- * @param {string[]} [imagenesPost=[]] - Array opcional de URLs de imágenes después de la creación.
+ * @param {string} [imagenPre=""] - URL opcional de la imagen previa a la creación.
+ * @param {string} [imagenDurante=""] - URL opcional de la imagen durante la creación.
+ * @param {string} [imagenPost=""] - URL opcional de la imagen después de la creación.
  * @returns {Promise<Object>} - Retorna el objeto de la escultura creada.
  * @throws {Error} - Lanza un error si ocurre un problema al crear la escultura en la base de datos.
  */
-const crearEscultura = async (data, imagenesPre = [], imagenesDurante = [], imagenesPost = []) => {
+const crearEscultura = async (data, imagenPre = "", imagenDurante = "", imagenPost = "") => {
   try {
     const esculturaData = {
       name: data.name,
       description: data.description,
       creation_date: data.creation_date,
       sculptor: data.sculptor,
-      imagenesPre,
-      imagenesDurante,
-      imagenesPost
+      imagenPre,
+      imagenDurante,
+      imagenPost
     };
 
     const nuevaEscultura = new Escultura(esculturaData);
@@ -70,52 +70,43 @@ const obtenerEsculturaPorId = async (id) => {
 
 
 /**
- * Actualiza una escultura en la base de datos, permitiendo la eliminación y adición de imágenes.
+ * Actualiza una escultura en la base de datos.
  * 
  * @param {string} id - ID de la escultura a actualizar.
  * @param {Object} data - Datos de la escultura a actualizar.
- * @param {string[]} [nuevasImagenesPre=[]] - URLs de nuevas imágenes previas a la creación.
- * @param {string[]} [nuevasImagenesDurante=[]] - URLs de nuevas imágenes durante la creación.
- * @param {string[]} [nuevasImagenesPost=[]] - URLs de nuevas imágenes posteriores a la creación.
- * @param {string[]} [imagenesAEliminarPre=[]] - URLs de imágenes previas a eliminar.
- * @param {string[]} [imagenesAEliminarDurante=[]] - URLs de imágenes durante la creación a eliminar.
- * @param {string[]} [imagenesAEliminarPost=[]] - URLs de imágenes posteriores a eliminar.
+ * @param {string} [nuevaImagenPre=""] - Nueva URL para la imagen previa a la creación.
+ * @param {string} [nuevaImagenDurante=""] - Nueva URL para la imagen durante la creación.
+ * @param {string} [nuevaImagenPost=""] - Nueva URL para la imagen posterior a la creación.
  * @returns {Promise<Object|null>} - Retorna la escultura actualizada o `null` si no se encuentra.
  * @throws {Error} - Lanza un error si ocurre un problema al actualizar la escultura.
  */
 const actualizarEscultura = async (
   id,
   data,
-  nuevasImagenesPre = [],
-  nuevasImagenesDurante = [],
-  nuevasImagenesPost = [],
-  imagenesAEliminarPre = [],
-  imagenesAEliminarDurante = [],
-  imagenesAEliminarPost = []
+  nuevaImagenPre = "",
+  nuevaImagenDurante = "",
+  nuevaImagenPost = ""
 ) => {
   try {
     const escultura = await Escultura.findById(id);
-    if (!escultura){
+    if (!escultura) {
       throw new Error('Escultura no encontrada');
     }
 
     escultura.name = data.name || escultura.name;
-    escultura.description = data.description || escultura.description
+    escultura.description = data.description || escultura.description;
     escultura.creation_date = data.creation_date || escultura.creation_date;
     escultura.sculptor = data.sculptor || escultura.sculptor;
 
-    if (imagenesAEliminarPre.length > 0) {
-      escultura.imagenesPre = escultura.imagenesPre.filter(img => !imagenesAEliminarPre.includes(img));
+    if (nuevaImagenPre) {
+      escultura.imagenPre = nuevaImagenPre;
     }
-    if (imagenesAEliminarDurante.length > 0) {
-      escultura.imagenesDurante = escultura.imagenesDurante.filter(img => !imagenesAEliminarDurante.includes(img));
+    if (nuevaImagenDurante) {
+      escultura.imagenDurante = nuevaImagenDurante;
     }
-    if (imagenesAEliminarPost.length > 0) {
-      escultura.imagenesPost = escultura.imagenesPost.filter(img => !imagenesAEliminarPost.includes(img));
+    if (nuevaImagenPost) {
+      escultura.imagenPost = nuevaImagenPost;
     }
-    escultura.imagenesPre.push(...nuevasImagenesPre);
-    escultura.imagenesDurante.push(...nuevasImagenesDurante);
-    escultura.imagenesPost.push(...nuevasImagenesPost);
 
     return await escultura.save();
   } catch (error) {
