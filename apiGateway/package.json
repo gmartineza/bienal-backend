@@ -11,6 +11,7 @@
   "version": "1.0.0",
   "main": "server.js",
   "dependencies": {
+    "bienal-api_gateway": "file:",
     "express-gateway": "^1.16.11"
   },
   "type": "commonjs",
