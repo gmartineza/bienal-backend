@@ -5,7 +5,7 @@ const dotenv = require('dotenv');
 const path = require('path');
 const voteRoutes = require('./api/routes/voteRoutes');
 
-// Configuración de variables de entorno
+// Configuración de variables de entorno.
 dotenv.config();
 
 // Crear una instancia de Express
@@ -32,8 +32,9 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/api/votes', voteRoutes);
 
 // Redirige al formulario HTML al acceder a la raíz
+// Servir el archivo HTML de selección de eventos en la ruta raíz
 app.get('/', (req, res) => {
-    res.sendFile(path.join(__dirname, 'public', 'test.html'));
+    res.sendFile(path.join(__dirname, 'public', 'eventSelection.html'));
 });
 
 // Configuración del puerto

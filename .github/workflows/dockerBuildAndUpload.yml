@@ -21,8 +21,17 @@ jobs:
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_PASSWORD }}
 
-      # Build and push Docker Compose images
-      - name: Build and Push Docker Compose Images
+      # Build Docker Compose images
+      - name: Build Docker Compose Images
         run: |
           docker compose -f docker/docker-compose.yml build
+        env:
+            DOCKER_REPO_NAME: "stefanomerinoderui/bienal-backend"
+            DOCKER_TAG_EXTRA: ""
+      # Push Docker Compose images
+      - name: Push Docker Compose Images
+        run: |
           docker compose -f docker/docker-compose.yml push
+        env:
+            DOCKER_REPO_NAME: "stefanomerinoderui/bienal-backend"
+            DOCKER_TAG_EXTRA: ""

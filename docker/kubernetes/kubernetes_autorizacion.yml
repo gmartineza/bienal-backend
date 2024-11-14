@@ -1,0 +1,63 @@
+--- # Generador Qr
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: autorizacion
+  namespace: bienal-backend
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: autorizacion
+  template:
+    metadata:
+      labels:
+        app: autorizacion
+    spec:
+      containers:
+      - name: autorizacion-container
+        image: stefanomerinoderui/bienal-backend:autorizacion
+        imagePullPolicy: IfNotPresent
+        volumeMounts:
+          - name: firebase-key
+            mountPath: "/etc/firebase"  # Donde se montarán los certificados
+        resources:
+          requests:
+            memory: "128Mi"
+            cpu: "100m"
+          limits:
+            memory: "256Mi"
+            cpu: "500m"
+        env:
+        - name: NODE_ENV
+          value: "production"
+        - name: MONGODB_URI
+          valueFrom:
+            secretKeyRef:
+              name: mongodb-uri    # Nombre del Secret
+              key: MONGODB_URI   # Clave en el Secret
+        - name: FRONTEND_URL
+          valueFrom:
+            configMapKeyRef:
+              name: urls-internas
+              key: FRONTEND_URL
+        - name: FIREBASE_KEY_PATH
+          value: "/etc/firebase/firebase-key.json"
+      volumes:
+        - name: firebase-key
+          secret:
+            secretName: firebase-key
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: autorizacion
+  namespace: bienal-backend
+spec:
+  selector:
+    app: autorizacion
+  ports:
+  - protocol: TCP
+    port: 80
+    targetPort: 80
+  type: ClusterIP  # Permite que el tráfico de salida sea accesible desde el cluster
