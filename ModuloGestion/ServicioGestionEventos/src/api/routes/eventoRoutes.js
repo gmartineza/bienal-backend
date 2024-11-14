@@ -23,7 +23,7 @@ const {
  * @middleware upload.single('imagen'), celebrate(crearEventoSchema)
  * @access Público
  */
-router.post('/createEvent', upload.single('images'), celebrate(crearEventoSchema), eventoController.crearEvento);
+router.post('/createEvent', upload.single('images'), celebrate(crearEventoSchema),eventoController.verifyTokenProxy,eventoController.verifyAdminProxy, eventoController.crearEvento);
 
 /**
  * @route GET /api/eventos

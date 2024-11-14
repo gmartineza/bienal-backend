@@ -234,8 +234,51 @@ async function obtenerEventosFuturos(req, res) {
     res.status(500).json({ error: 'Error al obtener los eventos futuros: ' + error.message });
   }
 }
+// Middleware para validar el token usando el microservicio de autenticación
+const verifyTokenProxy = async (req, res, next) => {
+  const token = req.cookies.authToken;
+
+  if (!token) {
+      return res.status(401).json({ message: 'Token no proporcionado en la cookie' });
+  }
+
+  try {
+      const response = await axios.post(process.env.AUTH_SERVICE_URL+"/api/auth/authenticate", {}, {
+          headers: { Cookie: `authToken=${token}` },
+      });
+
+      req.user = response.data.user;
+      next();
+  } catch (error) {
+      console.error("Error al validar el token a través del microservicio:", error.message);
+      return res.status(403).json({ message: 'Token inválido o expirado, vuelva a iniciar sesión' });
+  }
+};
+
+// Middleware para validar si el usuario es administrador usando el microservicio de autenticación
+const verifyAdminProxy = async (req, res, next) => {
+  const token = req.cookies.authToken;
+
+  if (!token) {
+      return res.status(401).json({ message: 'Token no proporcionado en la cookie' });
+  }
+
+  try {
+      const response = await axios.post(process.env.AUTH_SERVICE_URL+"/api/auth/authenticateAdmin", {}, {
+          headers: { Cookie: `authToken=${token}` },
+      });
+
+      req.user = response.data.user;
+      next();
+  } catch (error) {
+      console.error("Acceso denegado a través del microservicio:", error.message);
+      return res.status(403).json({ message: 'Acceso denegado. Solo los administradores pueden acceder a esta ruta.' });
+  }
+};
 
 module.exports = {
+  verifyAdminProxy,
+  verifyTokenProxy,
   crearEvento,
   obtenerEventosPasados,
   obtenerEventoActual,
