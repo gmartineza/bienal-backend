@@ -1,23 +1,23 @@
---- # Registro de votos
+--- # Buscador
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: registro-votos
+  name: buscador
   namespace: bienal-backend
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: registro-votos
+      app: buscador
   template:
     metadata:
       labels:
-        app: registro-votos
+        app: buscador
     spec:
       containers:
-      - name: registro-votos-container
-        image: stefanomerinoderui/bienal-backend:registro_votos
-        imagePullPolicy: IfNotPresent
+      - name: buscador-container
+        image: stefanomerinoderui/bienal-backend:buscador
+        imagePullPolicy: Always
         resources:
           requests:
             memory: "128Mi"
@@ -26,6 +26,8 @@ spec:
             memory: "256Mi"
             cpu: "500m"
         env:
+        - name: PORT
+          value: "80"
         - name: NODE_ENV
           value: "production"
         - name: MONGODB_URI
@@ -33,20 +35,15 @@ spec:
             secretKeyRef:
               name: mongodb-uri    # Nombre del Secret
               key: MONGODB_URI   # Clave en el Secret
-        - name: FRONTEND_URL
-          valueFrom:
-            configMapKeyRef:
-              name: urls-internas
-              key: FRONTEND_URL
 ---
 apiVersion: v1
 kind: Service
 metadata:
-  name: registro-votos
+  name: buscador
   namespace: bienal-backend
 spec:
   selector:
-    app: registro-votos
+    app: buscador
   ports:
   - protocol: TCP
     port: 80

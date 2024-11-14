@@ -6,10 +6,11 @@
  * @module SculptorService
  */
 const Sculptor = require('../db/models/sculptor');
+const Sculpture = require('../db/models/sculptureModelCopy');
 
 /**
- * Crea un nuevo escultor en la base de datos.
- * 
+ * Crea un nuevo escultor y actualiza el campo `sculptor` en cada escultura en `works`.
+ *
  * @param {Object} sculptorData - Objeto con los datos necesarios para crear el escultor.
  * @returns {Promise<Object>} - Retorna el objeto del escultor creado.
  * @throws {Error} - Lanza un error si ocurre un problema al crear el escultor en la base de datos.
@@ -18,6 +19,15 @@ const createSculptor = async (sculptorData) => {
   try {
     const sculptor = new Sculptor(sculptorData);
     await sculptor.save();
+
+    // Actualizar el campo `sculptor` en cada escultura en `works`
+    if (sculptorData.works && sculptorData.works.length > 0) {
+      await Sculpture.updateMany(
+        { _id: { $in: sculptorData.works } },
+        { sculptor: sculptor._id }
+      );
+    }
+
     return sculptor;
   } catch (error) {
     throw new Error(`Error al crear el escultor: ${error.message}`);
@@ -62,8 +72,7 @@ const getSculptorById = async (id) => {
 
 
 /**
- * Actualiza un escultor específico por su ID en la base de datos.
- * Maneja la adición y eliminación de esculturas en el campo `works`.
+ * Actualiza un escultor específico y el campo `sculptor` en cada escultura en `works`.
  * 
  * @param {string} id - El ID del escultor a actualizar.
  * @param {Object} updateData - Objeto con los datos actualizados del escultor.
@@ -72,13 +81,33 @@ const getSculptorById = async (id) => {
  */
 const updateSculptorById = async (id, updateData) => {
   try {
+    // Actualizar el escultor
     const updatedSculptor = await Sculptor.findByIdAndUpdate(id, updateData, { new: true });
+
+    // Si no se encuentra el escultor, retornar null
+    if (!updatedSculptor) {
+      return null;
+    }
+
+    const works = updateData.works || [];
+
+    // 1. Limpiar el campo `sculptor` solo en las esculturas que tienen el `sculptor` igual al ID actual y no están en `works`
+    await Sculpture.updateMany(
+      { _id: { $nin: works }, sculptor: id },
+      { $unset: { sculptor: "" } } // Remueve el campo `sculptor` de esculturas que no están en `works`
+    );
+
+    // 2. Asignar el campo `sculptor` en las esculturas presentes en `works`
+    await Sculpture.updateMany(
+      { _id: { $in: works } },
+      { sculptor: id } // Asigna el ID del escultor a cada escultura en `works`
+    );
+
     return updatedSculptor;
   } catch (error) {
     throw new Error(`Error al actualizar el escultor: ${error.message}`);
   }
 };
-
 
 /**
  * Elimina un escultor de la base de datos por su ID.
