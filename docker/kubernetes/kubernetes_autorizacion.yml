@@ -17,7 +17,7 @@ spec:
       containers:
       - name: autorizacion-container
         image: stefanomerinoderui/bienal-backend:autorizacion
-        imagePullPolicy: Always
+        imagePullPolicy: IfNotPresent
         volumeMounts:
           - name: firebase-key
             mountPath: "/etc/firebase"  # Donde se montarán los certificados
