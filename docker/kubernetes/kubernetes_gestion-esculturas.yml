@@ -17,7 +17,7 @@ spec:
       containers:
       - name: gestion-esculturas-container
         image: stefanomerinoderui/bienal-backend:gestion_esculturas
-        imagePullPolicy: Always
+        imagePullPolicy: IfNotPresent
         resources:
           requests:
             memory: "128Mi"

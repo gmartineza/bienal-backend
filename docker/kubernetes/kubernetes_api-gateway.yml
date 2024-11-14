@@ -17,7 +17,7 @@ spec:
       containers:
       - name: api-gateway-container
         image: stefanomerinoderui/bienal-backend:api_gateway
-        imagePullPolicy: Always
+        imagePullPolicy: IfNotPresent
         volumeMounts:
           - name: ssl-certificates
             mountPath: "/etc/ssl/certs"  # Donde se montarán los certificados
