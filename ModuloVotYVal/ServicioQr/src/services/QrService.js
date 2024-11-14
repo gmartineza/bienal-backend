@@ -1,6 +1,6 @@
 // src/services/qrService.js
 
-export const generateUniqueUrl = (token, numeroevento, numeroescultor) => {
+export const generateUniqueUrl = (numeroevento, numeroescultor, token) => {
   const baseUrl = process.env.FRONTEND_URL;
-  return `${baseUrl}/vote/?numeroevento=${numeroevento}/numeroescultor=${numeroescultor}/token=${token}`;
+  return `${baseUrl}/vote/${numeroevento}/${numeroescultor}/${token}`;
 };

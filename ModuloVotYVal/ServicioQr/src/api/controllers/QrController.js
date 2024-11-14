@@ -10,7 +10,7 @@ export const generateQR = async (req, res) => {
     const token = jwt.sign({ numeroevento, numeroescultor }, SECRET_KEY, { expiresIn: '60s' });
 
     console.log(`Nuevo token generado: ${token}`);
-    const uniqueUrl = generateUniqueUrl(token, numeroevento, numeroescultor);
+    const uniqueUrl = generateUniqueUrl(numeroevento, numeroescultor, token);
     const qrCodeImage = await QRCode.toDataURL(uniqueUrl);
 
     res.json({ qrCodeImage, uniqueUrl });
