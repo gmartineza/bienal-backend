@@ -23,5 +23,4 @@ app.use('/api/votes', voteRoutes);
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
     console.log(`Servidor escuchando en el puerto ${PORT}`);
-    console.log(`Visita http://localhost:${PORT}/ para registrar un voto`);
 });
