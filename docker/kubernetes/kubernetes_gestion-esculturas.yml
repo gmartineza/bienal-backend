@@ -1,0 +1,64 @@
+--- # Gestion esculturas
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: gestion-esculturas
+  namespace: bienal-backend
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: gestion-esculturas
+  template:
+    metadata:
+      labels:
+        app: gestion-esculturas
+    spec:
+      containers:
+      - name: gestion-esculturas-container
+        image: stefanomerinoderui/bienal-backend:gestion_esculturas
+        imagePullPolicy: Always
+        resources:
+          requests:
+            memory: "128Mi"
+            cpu: "100m"
+          limits:
+            memory: "256Mi"
+            cpu: "500m"
+        env:
+        - name: NODE_ENV
+          value: "production"
+        - name: MONGODB_URI
+          valueFrom:
+            secretKeyRef:
+              name: mongodb-uri    # Nombre del Secret
+              key: MONGODB_URI   # Clave en el Secret
+        - name: CLOUDINARY_CLOUD_NAME
+          valueFrom:
+            secretKeyRef:
+              name: cloudinary-apikeys-esculturas  # Nombre del Secret
+              key: CLOUDINARY_CLOUD_NAME           # Clave en el Secret
+        - name: CLOUDINARY_API_KEY
+          valueFrom:
+            secretKeyRef:
+              name: cloudinary-apikeys-esculturas  # Nombre del Secret
+              key: CLOUDINARY_API_KEY           # Clave en el Secret
+        - name: CLOUDINARY_API_SECRET
+          valueFrom:
+            secretKeyRef:
+              name: cloudinary-apikeys-esculturas  # Nombre del Secret
+              key: CLOUDINARY_API_SECRET           # Clave en el Secret
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: gestion-esculturas
+  namespace: bienal-backend
+spec:
+  selector:
+    app: gestion-esculturas
+  ports:
+  - protocol: TCP
+    port: 80
+    targetPort: 80
+  type: ClusterIP  # Permite que el tráfico de salida sea accesible desde el cluster

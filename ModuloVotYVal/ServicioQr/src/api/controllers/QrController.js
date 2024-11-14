@@ -1,36 +1,35 @@
-import { generateQRCodeService, generateTokenService, validateTokenService } from '../../services/QrService.js';
-import { SECRET_KEY, TOKEN_EXPIRATION_TIME } from '../../config/QrConfig.js';
+// src/api/controllers/qrController.js
+import jwt from 'jsonwebtoken';
+import QRCode from 'qrcode';
+import { generateUniqueUrl } from '../../services/qrService.js';
+import { SECRET_KEY } from '../../config/corsConfig.js';
 
-let tokenIntervalId = null;
+export const generateQR = async (req, res) => {
+  try {
+    const { numeroevento, numeroescultor } = req.params;
+    const token = jwt.sign({ numeroevento, numeroescultor }, SECRET_KEY, { expiresIn: '60s' });
 
-// Genera un token y lo devuelve
-export function generateToken() {
-  return generateTokenService();
-}
+    console.log(`Nuevo token generado: ${token}`);
+    const uniqueUrl = generateUniqueUrl(token, numeroevento, numeroescultor);
+    const qrCodeImage = await QRCode.toDataURL(uniqueUrl);
 
-// Genera el código QR usando el token y datos adicionales
-export async function generateQRCode(token, eventNumber, sculptorNumber) {
-  return await generateQRCodeService(token, eventNumber, sculptorNumber);
-}
-
-// Valida el token
-export async function validateQRToken(token) {
-  return await validateTokenService(token);
-}
-
-// Inicia el intervalo de regeneración de tokens
-export function startTokenInterval() {
-  tokenIntervalId = setInterval(() => {
-    const newToken = generateToken();
-    console.log(`Nuevo token generado: ${newToken}`);
-  }, TOKEN_EXPIRATION_TIME * 1000);
-}
-
-// Detiene el intervalo de regeneración de tokens
-export function stopTokenInterval() {
-  if (tokenIntervalId) {
-    clearInterval(tokenIntervalId);
-    tokenIntervalId = null;
-    console.log('Intervalo de regeneración de tokens detenido');
+    res.json({ qrCodeImage, uniqueUrl });
+  } catch (error) {
+    res.status(500).json({ error: 'Error generating QR code' });
   }
-}
+};
+
+export const verifyToken = (req, res) => {
+  const { token, numeroevento, numeroescultor } = req.params;
+  try {
+    const decoded = jwt.verify(token, SECRET_KEY);
+
+    if (decoded.numeroevento == numeroevento && decoded.numeroescultor == numeroescultor) {
+      res.json({ message: 'QR code is valid', event: numeroevento, sculptor: numeroescultor });
+    } else {
+      res.status(401).json({ error: 'Invalid QR code' });
+    }
+  } catch (error) {
+    res.status(401).json({ error: 'QR code expired or invalid' });
+  }
+};
