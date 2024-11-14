@@ -21,7 +21,7 @@ const {
  * @middleware upload.fields(), celebrate(crearEsculturaSchema)
  * @access Público
  */
-router.post('/createSculpture', upload.fields([{ name: 'imagenesPre' }, { name: 'imagenesDurante' }, { name: 'imagenesPost' }]),
+router.post('/createSculpture', upload.fields([{ name: 'imagenPre' }, { name: 'imagenDurante' }, { name: 'imagenPost' }]),
   celebrate(crearEsculturaSchema), esculturaController.crearEscultura);
 
 /**
@@ -38,7 +38,7 @@ router.get('/getAllSculptures', esculturaController.obtenerEsculturas);
  * @middleware upload.fields(), celebrate(actualizarEsculturaSchema)
  * @access Público
 */
-router.put('/update/:id', upload.fields([{ name: 'imagenesPre' }, { name: 'imagenesDurante' }, { name: 'imagenesPost' }]), 
+router.put('/update/:id', upload.fields([{ name: 'imagenPre' }, { name: 'imagenDurante' }, { name: 'imagenPost' }]), 
 celebrate(actualizarEsculturaSchema), esculturaController.actualizarEscultura);
 
 /**
