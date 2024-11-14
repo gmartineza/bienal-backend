@@ -5,54 +5,23 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Formulario de Votación</title>
     <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 20px;
-        }
-        h1 {
-            color: #333;
-        }
-        label {
-            display: block;
-            margin-top: 10px;
-        }
-        input {
-            padding: 5px;
-            width: 200px;
-            margin-bottom: 10px;
-        }
-        button {
-            padding: 10px 15px;
-            background-color: #28a745;
-            color: white;
-            border: none;
-            cursor: pointer;
-        }
-        button:hover {
-            background-color: #218838;
-        }
-        #result {
-            margin-top: 20px;
-            border: 1px solid #ccc;
-            padding: 10px;
-            background-color: #f8f9fa;
-        }
+        /* Add CSS styling */
     </style>
 </head>
 <body>
     <h1>Formulario de Votación</h1>
     <form id="voteForm">
         <label for="userId">User ID:</label>
-        <input type="number" id="userId" name="userId" required>
+        <input type="text" id="userId" name="userId" required> <!-- Changed input type to text -->
 
         <label for="sculptorId">Sculptor ID:</label>
-        <input type="number" id="sculptorId" name="sculptorId" required>
+        <input type="text" id="sculptorId" name="sculptorId" required> <!-- Changed input type to text -->
 
         <label for="score">Score (1-5):</label>
         <input type="number" id="score" name="score" min="1" max="5" required>
 
         <input type="hidden" id="eventId" name="eventId"> <!-- Campo oculto para el tipo de evento -->
-        
+
         <button type="submit">Enviar Voto</button>
     </form>
 
@@ -69,8 +38,8 @@
         document.getElementById('voteForm').addEventListener('submit', async function(event) {
             event.preventDefault();
 
-            const userId = document.getElementById('userId').value;
-            const sculptorId = document.getElementById('sculptorId').value;
+            const userId = document.getElementById('userId').value; // No need to parse as string
+            const sculptorId = document.getElementById('sculptorId').value; // No need to parse as string
             const score = document.getElementById('score').value;
 
             const response = await fetch('http://localhost:3000/api/votes/vote', {
@@ -78,11 +47,11 @@
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify({ 
-                    userId: parseInt(userId), 
-                    sculptorId: parseInt(sculptorId), 
-                    eventId: eventId, // Enviar el tipo de evento desde el campo oculto
-                    score: parseInt(score) 
+                body: JSON.stringify({
+                    userId: userId,
+                    sculptorId: sculptorId,
+                    eventId: eventId,
+                    score: parseInt(score)
                 }),
             });
 
