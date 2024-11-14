@@ -19,7 +19,7 @@ connectDB();
 
 app.use(cors({
   origin: process.env.FRONTEND_URL, // URL FRONT
-  credentials: true // Permitir cookies y encabezados de autenticación
+  credentials: false // Permitir cookies y encabezados de autenticación
 }));
 
 app.use(express.json());
