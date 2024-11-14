@@ -13,7 +13,6 @@ const voteSchema = new mongoose.Schema({
   eventId: {
     type: String,
     required: true,
-    enum: ["marmol", "madera", "piedra"]
   },
   score: {
     type: Number,

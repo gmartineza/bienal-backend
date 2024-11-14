@@ -2,15 +2,12 @@
 const Vote = require('../../db/models/voteModels');
 
 const createVote = async (req, res) => {
+    console.log(req.body);
     try {
         const { userId, sculptorId, eventId, score } = req.body;
 
         if (score < 1 || score > 5) {
             return res.status(400).json({ error: "La puntuación debe estar entre 1 y 5" });
-        }
-
-        if (!["marmol", "madera", "piedra"].includes(eventId)) {
-            return res.status(400).json({ error: "Tipo de evento inválido" });
         }
 
         const existingVote = await Vote.findOne({ userId, sculptorId, eventId });
