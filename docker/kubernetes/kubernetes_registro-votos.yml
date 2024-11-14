@@ -17,7 +17,7 @@ spec:
       containers:
       - name: registro-votos-container
         image: stefanomerinoderui/bienal-backend:registro_votos
-        imagePullPolicy: Always
+        imagePullPolicy: IfNotPresent
         resources:
           requests:
             memory: "128Mi"

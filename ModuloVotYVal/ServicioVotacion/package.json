@@ -1,8 +1,9 @@
 {
   "dependencies": {
-    "dotenv": "^16.4.5",
+    "cors": "^2.8.5",
     "express": "^4.21.1",
     "express-validator": "^7.2.0",
+    "mongoose": "^8.8.1",
     "statuses": "^2.0.1",
     "toidentifier": "^1.0.1",
     "tr46": "^4.1.1",
@@ -15,8 +16,9 @@
   },
   "scripts": {
     "start": "node serverBuild.js",
-    "build": "npx babel src/index.js -o serverBuild.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "build": "npx babel src/index.js -o src/serverBuild.js",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "node --env-file=.env src/index.js"
   },
   "keywords": [],
   "author": "",
