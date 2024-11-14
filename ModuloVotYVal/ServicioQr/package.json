@@ -20,7 +20,8 @@
     "jsonwebtoken": "^9.0.2",
     "qrcode": "^1.5.4",
     "servicio-auth": "file:",
-    "submoduloauth": "file:"
+    "submoduloauth": "file:",
+    "uuid": "^11.0.3"
   },
   "devDependencies": {
     "@babel/cli": "^7.25.9",

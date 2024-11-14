@@ -11,8 +11,7 @@
   "version": "1.0.0",
   "main": "server.js",
   "dependencies": {
-    "@kubernetes/client-node": "^0.22.2",
-    "axios": "^1.7.7",
+    "bienal-api_gateway": "file:",
     "express-gateway": "^1.16.11"
   },
   "type": "commonjs",
