@@ -16,13 +16,16 @@ const sculptorService = require('../../services/SculptorService');
  */
 const createSculptor = async (req, res) => {
   try {
+    // Procesamos `works` para eliminar duplicados si es un array
+    const uniqueWorks = Array.isArray(req.body.works) ? Array.from(new Set(req.body.works)) : req.body.works;
+
     const sculptorData = {
       name: `${req.body.name || ''} ${req.body.lastName || ''}`.trim(),
       country: req.body.country,
       biography: req.body.biography,
       contactInfo: req.body.contactInfo,
       profileImage: req.file ? req.file.path : null,
-      works: req.body.works,
+      works: uniqueWorks, // Usamos el array sin duplicados
     };
 
     const sculptor = await sculptorService.createSculptor(sculptorData);
@@ -81,29 +84,23 @@ const getSculptorById = async (req, res) => {
 const updateSculptorById = async (req, res) => {
   try {
     const { id } = req.params;
-    const { works } = req.body;
+
+    // Si `works` no es un array, conviértelo en un array.
+    let works = req.body.works;
+    if (typeof works === 'string') {
+      works = [works];
+    }
 
     const updateData = {
       name: `${req.body.name || ''} ${req.body.lastName || ''}`.trim(),
       country: req.body.country,
       biography: req.body.biography,
       contactInfo: req.body.contactInfo,
+      works: works,
     };
 
     if (req.file) {
       updateData.profileImage = req.file.path;
-    }
-
-    if (works) {
-      const { worksToAdd, worksToRemove } = works;
-
-      if (worksToAdd) {
-        updateData.$addToSet = { works: { $each: worksToAdd } };
-      }
-
-      if (worksToRemove) {
-        updateData.$pull = { works: { $in: worksToRemove } };
-      }
     }
 
     const updatedSculptor = await sculptorService.updateSculptorById(id, updateData);
