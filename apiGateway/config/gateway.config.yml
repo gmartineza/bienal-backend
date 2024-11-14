@@ -51,7 +51,7 @@ serviceEndpoints:
   generador_qr:
     url: ${SERVICE_GENERADOR_QR_URL}
   buscador:
-    url: ${SERVICE_BUSCADOR}
+    url: ${SERVICE_BUSCADOR_URL}
 #  staticfile_service:
 #    url: "http://localhost:8080"
 
