@@ -48,3 +48,10 @@ services:
       args:
         EXPRESS_PORT: 80
     image: ${DOCKER_REPO_NAME}:generadorQr${DOCKER_TAG_EXTRA}
+  buscador:
+    build:
+      context: ./../ServicioBusqueda
+      dockerfile: docker/Dockerfile
+      args:
+        EXPRESS_PORT: 80
+    image: ${DOCKER_REPO_NAME}:buscador${DOCKER_TAG_EXTRA}

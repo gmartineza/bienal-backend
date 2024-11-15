@@ -90,6 +90,6 @@ router.get('/:id', celebrate(idSchema), eventoController.obtenerEventoPorId);
  * @middleware upload.array('imagenes'), celebrate(actualizarEventoSchema)
  * @access Público
  */
-router.put('/update/:id', upload.array('images'), celebrate(actualizarEventoSchema), eventoController.actualizarEvento);
+router.put('/update/:id', upload.array('image'), celebrate(actualizarEventoSchema), eventoController.actualizarEvento);
 
 module.exports = router;

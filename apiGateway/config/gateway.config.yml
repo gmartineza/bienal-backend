@@ -23,17 +23,15 @@ apiEndpoints: # Endpoints are set by every services
   gestion_eventos:
     paths: "/api/events*"
     methods: ["GET", "PUT", "POST", "DELETE", "OPTIONS"]
-  autenticacion:
-    paths: "/api/autentication*"
   registro_votos:
     paths: "/api/votes*"
-    methods: ["POST"]
+    methods: ["POST","OPTIONS"]
   generador_qr:
     paths: "/api/qr*"
-    methods: ["GET"]
+    methods: ["GET", "OPTIONS"]
   buscador:
     paths: "/api/search*"
-    methods: ["POST"]
+    methods: ["POST", "OPTIONS"]
 #  staticfile_service:
 #    host: '*'
 
@@ -44,8 +42,6 @@ serviceEndpoints:
     url: ${SERVICE_GESTION_ESCULTURAS_URL}
   gestion_eventos:
     url: ${SERVICE_GESTION_EVENTOS_URL}
-  autenticacion:
-    url: ${SERVICE_AUTENTICACION_URL}
   registro_votos:
     url: ${SERVICE_REGISTRO_VOTOS_URL}
   generador_qr:
@@ -105,35 +101,24 @@ pipelines:
               serviceEndpoint: gestion_eventos
               changeOrigin: true
 
-  autenticacionPipeline:
-    apiEndpoints:
-      - autenticacion
-    policies:
-      - cors:
-          - action:
-              origin: ${FRONTEND_URL}
-              methods: ["GET", "PUT", "POST", "DELETE", "OPTIONS"]
-              headers: ["Content-Type", "Authorization"]
-              credentials: true
-      - proxy:
-          - action:
-              serviceEndpoint: autenticacion
-              changeOrigin: true
-
   registroVotosPipeline:
     apiEndpoints:
       - registro_votos
     policies:
-      - proxy:
       - cors:
           - action:
               origin: ${FRONTEND_URL}
-              methods: ["GET", "PUT", "POST", "DELETE", "OPTIONS"]
+              methods: ["POST", "OPTIONS"]
               headers: ["Content-Type", "Authorization"]
               credentials: true
           - action:
               serviceEndpoint: registro_votos
               changeOrigin: true
+      - proxy:
+        - action:
+                serviceEndpoint: registro_votos
+                changeOrigin: true
+
 
   generadorQrPipeline:
     apiEndpoints:
@@ -142,7 +127,7 @@ pipelines:
       - cors:
           - action:
               origin: ${FRONTEND_URL}
-              methods: ["GET", "PUT", "POST", "DELETE", "OPTIONS"]
+              methods: ["GET", "OPTIONS"]
               headers: ["Content-Type", "Authorization"]
               credentials: true
       - proxy:
@@ -157,7 +142,7 @@ pipelines:
       - cors:
           - action:
               origin: ${FRONTEND_URL}
-              methods: ["POST"]
+              methods: ["POST", "OPTIONS"]
               headers: ["Content-Type", "Authorization"]
               credentials: true
       - proxy:
