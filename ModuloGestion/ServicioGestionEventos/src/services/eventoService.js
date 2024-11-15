@@ -26,11 +26,10 @@ async function crearEvento(data, imageUrl = null) {
       location: data.location,
       theme: data.theme || null,
       sculptors: data.sculptors || [],
-      images: imageUrl ? [imageUrl] : data.images || [],
+      image: imageUrl || data.image || null, // Ahora solo una imagen
     };
 
     const nuevoEvento = new Evento(eventoData);
-
     return await nuevoEvento.save();
   } catch (error) {
     throw new Error(`Error al crear el evento: ${error.message}`);
@@ -117,15 +116,11 @@ const obtenerEventosPorRango = async (inicio, fin) => {
  *
  * @param {string} id - El ID del evento a actualizar.
  * @param {Object} data - Objeto con los datos actualizados del evento.
- * @param {Array<string>} [nuevasImagenes=[]] - Array de URLs de nuevas imágenes a agregar al evento.
- * @param {Array<string>} [imagenesAEliminar=[]] - Array de URLs de imágenes que se deben eliminar del evento.
- * @param {Array<string>} [escultoresAAgregar=[]] - Array de IDs de escultores que se deben agregar al evento.
- * @param {Array<string>} [escultoresAEliminar=[]] - Array de IDs de escultores que se deben eliminar del evento.
+ * @param {string} [nuevaImagen] - Nueva imagen que reempla la imagen anterior del evento.
  * @returns {Promise<Object>} - Retorna el objeto del evento actualizado.
  * @throws {Error} - Lanza un error si el evento no se encuentra o si ocurre un problema al actualizar.
  */
-const actualizarEvento = async (id, data, nuevasImagenes = [], imagenesAEliminar = [], 
-  escultoresAAgregar = [], escultoresAEliminar = []) => {
+const actualizarEvento = async (id, data, nuevaImagen = null) => {
   try {
     const evento = await Evento.findById(id);
     if (!evento) {
@@ -139,34 +134,17 @@ const actualizarEvento = async (id, data, nuevasImagenes = [], imagenesAEliminar
     evento.location = data.location || evento.location;
     evento.theme = data.theme || evento.theme;
 
-    if (escultoresAEliminar.length > 0) {
-      evento.sculptors = evento.sculptors.filter(
-        sculptorId => !escultoresAEliminar.includes(sculptorId.toString())
-      );
-    }
-
-    escultoresAAgregar.forEach((idEscultor) => {
-      if (!evento.sculptors.includes(idEscultor)) {
-        evento.sculptors.push(idEscultor);
-      }
-    });
-
-    if (imagenesAEliminar.length > 0) {
-      evento.images = evento.images.filter(img => !imagenesAEliminar.includes(img));
-    }
-
-    if (nuevasImagenes.length > 0) {
-      evento.images.push(...nuevasImagenes);
+    // Si hay una nueva imagen, reemplazamos la existente
+    if (nuevaImagen) {
+      evento.image = nuevaImagen;
     }
 
     await evento.save();
     return evento;
   } catch (error) {
-    console.error('Error en el servicio de actualizar evento:', error);
-    throw new Error('No se pudo actualizar el evento');
+    throw new Error('No se pudo actualizar el evento: ' + error.message);
   }
 };
-
 
 /**
  * Busca eventos cuyo nombre coincida parcial o completamente con el nombre proporcionado,
@@ -202,7 +180,7 @@ async function obtenerEventoActual() {
     const eventoActual = await Evento.findOne({
       date_inicio: { $lte: today },
       date_fin: { $gte: today },
-    }).select('name description images');
+    }).select('name description image');
     
     return eventoActual;
   } catch (error) {
@@ -226,7 +204,7 @@ async function obtenerEventosPasados() {
     const eventosPasados = await Evento.find({ 
       date_inicio: { $lt: today },
       date_fin: { $lt: today }
-    }).select('name description images');
+    }).select('name description image');
 
     return eventosPasados;
   } catch (error) {
@@ -250,7 +228,7 @@ async function obtenerEventosFuturos() {
     const eventosFuturos = await Evento.find({ 
       date_inicio: { $gt: today },
       date_fin: { $gt: today }
-    }).select('name description images');
+    }).select('name description image');
 
     return eventosFuturos;
   } catch (error) {

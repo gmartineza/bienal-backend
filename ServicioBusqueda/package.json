@@ -15,7 +15,8 @@
     "celebrate": "^15.0.3",
     "express": "^4.21.1",
     "joi": "^17.13.3",
-    "mongoose": "^8.8.1"
+    "mongoose": "^8.8.1",
+    "serviciobusqueda": "file:"
   },
   "devDependencies": {
     "jsdoc": "^4.0.4",

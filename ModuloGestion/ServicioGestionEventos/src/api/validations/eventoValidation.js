@@ -20,7 +20,7 @@ const crearEventoSchema = {
     location: Joi.string().required(),
     theme: Joi.string().optional(),
     sculptors: Joi.array().items(Joi.objectId()).optional(),
-    images: Joi.array().items(Joi.string().optional()),
+    image: Joi.string().optional(),
   }),
 };
 
@@ -61,10 +61,7 @@ const actualizarEventoSchema = {
     location: Joi.string().optional(),
     theme: Joi.string().optional(),
     sculptors: Joi.array().items(Joi.objectId()).optional(),
-    images: Joi.array().items(Joi.string().optional()),
-    imagenesAEliminar: Joi.array().items(Joi.string()).optional(),
-    escultoresAAgregar: Joi.array().items(Joi.objectId()).optional(),
-    escultoresAEliminar: Joi.array().items(Joi.objectId()).optional()
+    image: Joi.string().optional(),
   }),
 };
 
