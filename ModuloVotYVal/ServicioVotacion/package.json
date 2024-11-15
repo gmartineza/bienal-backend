@@ -15,7 +15,7 @@
     "whatwg-url": "^13.0.0"
   },
   "scripts": {
-    "start": "node serverBuild.js",
+    "start": "node src/serverBuild.js",
     "build": "npx babel src/index.js -o src/serverBuild.js",
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "node --env-file=.env src/index.js"

@@ -23,6 +23,8 @@ In this directory, you will find the configuration for the Kubernetes deployment
     - CLOUDINARY_API_SECRET
 - firebase-key:
     - file: firebase-key.json
+- qr-secret-key:
+    - SECRET_KEY
 
 - noip-auth: Auth to update dns
     - NOIP_USER
