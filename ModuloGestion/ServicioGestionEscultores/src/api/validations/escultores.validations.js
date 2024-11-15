@@ -37,10 +37,7 @@ const updateSculptorValidation = celebrate({
       phone: Joi.string().optional(),
     }).optional(),
     profileImage: Joi.string().optional(),
-    works: Joi.object({
-      worksToAdd: Joi.array().items(Joi.string()).optional(),
-      worksToRemove: Joi.array().items(Joi.string()).optional(),
-    }).optional(),
+    works: Joi.array().items(Joi.string()).optional(),
   }),
   [Segments.PARAMS]: Joi.object().keys({
     id: Joi.string().required(),

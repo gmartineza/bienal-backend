@@ -13,7 +13,7 @@ const EventoSchema = new mongoose.Schema({
   location: { type: String, required: true },
   theme: { type: String },
   sculptors: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Sculptor' }],
-  images: [{ type: String }],
+  image: { type: String },
 }, { timestamps: true });
 
 module.exports = mongoose.model('Evento', EventoSchema);

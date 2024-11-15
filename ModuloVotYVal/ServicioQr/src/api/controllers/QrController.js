@@ -20,11 +20,11 @@ export const generateQR = async (req, res) => {
 };
 
 export const verifyToken = (req, res) => {
-  const { numeroevento, numeroescultor, token } = req.params;
+  const { token, numeroevento, numeroescultor } = req.params;
   try {
     const decoded = jwt.verify(token, SECRET_KEY);
 
-    if (decoded.numeroevento == numeroevento && decoded.numeroescultor == numeroescultor) {
+    if (decoded.numeroevento === numeroevento && decoded.numeroescultor === numeroescultor) {
       res.json({ message: 'QR code is valid', event: numeroevento, sculptor: numeroescultor });
     } else {
       res.status(401).json({ error: 'Invalid QR code' });
