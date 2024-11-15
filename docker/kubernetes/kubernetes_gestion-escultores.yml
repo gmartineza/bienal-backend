@@ -17,7 +17,7 @@ spec:
       containers:
       - name: gestion-escultores-container
         image: stefanomerinoderui/bienal-backend:gestion_escultores
-        imagePullPolicy: IfNotPresent
+        imagePullPolicy: Always
         resources:
           requests:
             memory: "128Mi"

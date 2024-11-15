@@ -1,7 +1,7 @@
 // src/api/controllers/qrController.js
 import jwt from 'jsonwebtoken';
 import QRCode from 'qrcode';
-import { generateUniqueUrl } from '../../services/qrService.js';
+import { generateUniqueUrl } from '../../services/QrService.js';
 import { SECRET_KEY } from '../../config/corsConfig.js';
 
 export const generateQR = async (req, res) => {

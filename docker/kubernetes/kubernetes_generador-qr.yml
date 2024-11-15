@@ -17,7 +17,7 @@ spec:
       containers:
       - name: generador-qr-container
         image: stefanomerinoderui/bienal-backend:generadorQr
-        imagePullPolicy: IfNotPresent
+        imagePullPolicy: Always
         resources:
           requests:
             memory: "128Mi"
