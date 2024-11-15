@@ -105,7 +105,6 @@ pipelines:
     apiEndpoints:
       - registro_votos
     policies:
-      - proxy:
       - cors:
           - action:
               origin: ${FRONTEND_URL}
@@ -115,6 +114,11 @@ pipelines:
           - action:
               serviceEndpoint: registro_votos
               changeOrigin: true
+      - proxy:
+        - action:
+                serviceEndpoint: registro_votos
+                changeOrigin: true
+
 
   generadorQrPipeline:
     apiEndpoints:
@@ -123,7 +127,7 @@ pipelines:
       - cors:
           - action:
               origin: ${FRONTEND_URL}
-              methods: ["GET", "PUT", "POST", "DELETE", "OPTIONS"]
+              methods: ["GET", "OPTIONS"]
               headers: ["Content-Type", "Authorization"]
               credentials: true
       - proxy:
@@ -138,7 +142,7 @@ pipelines:
       - cors:
           - action:
               origin: ${FRONTEND_URL}
-              methods: ["POST"]
+              methods: ["POST", "OPTIONS"]
               headers: ["Content-Type", "Authorization"]
               credentials: true
       - proxy:
