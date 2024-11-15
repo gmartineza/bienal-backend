@@ -17,7 +17,7 @@ spec:
       containers:
       - name: gestion-eventos-container
         image: stefanomerinoderui/bienal-backend:gestion_eventos
-        imagePullPolicy: IfNotPresent
+        imagePullPolicy: Always
         resources:
           requests:
             memory: "128Mi"
