@@ -5,6 +5,6 @@ import { generateQR, verifyToken } from '../controllers/qrController.js';
 const router = express.Router();
 
 router.get('/generate-qr/:numeroevento/:numeroescultor', generateQR);
-router.get('/:numeroevento/:numeroescultor/:token', verifyToken);
+router.get('/verify-token/:token/:numeroevento/:numeroescultor', verifyToken);
 
 export default router;
