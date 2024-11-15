@@ -14,46 +14,51 @@ const cloudinary = require('../../config/cloudinary');
  * @param {Object} req - Objeto de solicitud HTTP.
  * @param {Object} res - Objeto de respuesta HTTP.
  */
-async function crearEvento(req, res) {
+/**
+ * Crea un nuevo evento en la base de datos, incluyendo una imagen opcional subida a Cloudinary.
+ * @param {Object} req - Objeto de solicitud HTTP.
+ * @param {Object} res - Objeto de respuesta HTTP.
+ */
+const crearEvento = async (req, res) => {
   try {
     const { body, file } = req;
-    let imageUrl = null;
+
+    // Función para subir una imagen a Cloudinary
+    const subirImagen = (file) => {
+      return new Promise((resolve, reject) => {
+        const stream = cloudinary.uploader.upload_stream(
+          { folder: 'eventos', format: 'webp' },
+          (error, result) => {
+            if (result) resolve(result.secure_url);
+            else reject(error);
+          }
+        );
+        stream.end(file.buffer);
+      });
+    };
 
     // Subir la imagen si existe
+    let imageUrl = "";
     if (file) {
-      const streamUpload = (buffer) => {
-        return new Promise((resolve, reject) => {
-          const stream = cloudinary.uploader.upload_stream(
-            { folder: 'eventos', format: 'webp' },
-            (error, result) => {
-              if (result) resolve(result);
-              else reject(error);
-            }
-          );
-          stream.end(buffer);
-        });
-      };
-      const result = await streamUpload(file.buffer);
-      imageUrl = result.secure_url;
+      imageUrl = await subirImagen(file); // Subimos la única imagen proporcionada
     }
 
     // Asegurar que `sculptors` sea único
     const uniqueSculptors = Array.isArray(body.sculptors)
-      ? Array.from(new Set(body.sculptors))
-      : [body.sculptors];
+      ? Array.from(new Set(body.sculptors)) // Eliminar duplicados
+      : [body.sculptors]; // Si es un solo escultor, lo convierte en un array
 
     // Actualizar `body` con la lista única de `sculptors`
     const updatedBody = { ...body, sculptors: uniqueSculptors };
 
-    // Crear el evento utilizando el servicio
+    // Llama a la función de servicio `crearEvento`
     const nuevoEvento = await eventoService.crearEvento(updatedBody, imageUrl);
     res.status(201).json(nuevoEvento);
   } catch (error) {
     console.error('Error al crear el evento:', error);
     res.status(500).json({ error: 'Error al crear el evento: ' + error.message });
   }
-}
-
+};
 
 
 /**
