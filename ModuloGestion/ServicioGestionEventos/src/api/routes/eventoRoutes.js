@@ -23,7 +23,7 @@ const {
  * @middleware upload.single('imagen'), celebrate(crearEventoSchema)
  * @access Público
  */
-router.post('/createEvent', upload.single('images'), celebrate(crearEventoSchema), eventoController.crearEvento);
+router.post('/createEvent', upload.single('image'), celebrate(crearEventoSchema), eventoController.crearEvento);
 
 /**
  * @route GET /api/eventos
@@ -90,6 +90,6 @@ router.get('/:id', celebrate(idSchema), eventoController.obtenerEventoPorId);
  * @middleware upload.array('imagenes'), celebrate(actualizarEventoSchema)
  * @access Público
  */
-router.put('/update/:id', upload.array('images'), celebrate(actualizarEventoSchema), eventoController.actualizarEvento);
+router.put('/update/:id', upload.array('image'), celebrate(actualizarEventoSchema), eventoController.actualizarEvento);
 
 module.exports = router;
