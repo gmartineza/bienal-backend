@@ -16,8 +16,9 @@ const Evento = require('../db/models/Event');
  * @returns {Promise<Object>} - Retorna el objeto del evento creado.
  * @throws {Error} - Lanza un error si ocurre un problema al crear el evento en la base de datos.
  */
-async function crearEvento(data, imageUrl = null) {
+async function crearEvento(data, imageUrl = "") {
   try {
+    // Crea el objeto con la información del evento
     const eventoData = {
       name: data.name,
       description: data.description,
@@ -26,9 +27,10 @@ async function crearEvento(data, imageUrl = null) {
       location: data.location,
       theme: data.theme || null,
       sculptors: data.sculptors || [],
-      image: imageUrl || data.image || null, // Ahora solo una imagen
+      image: imageUrl 
     };
 
+    // Crea y guarda el nuevo evento en la base de datos
     const nuevoEvento = new Evento(eventoData);
     return await nuevoEvento.save();
   } catch (error) {
