@@ -10,7 +10,7 @@ export const generateQR = async (req, res) => {
     const token = jwt.sign({ numeroevento, numeroescultor }, SECRET_KEY, { expiresIn: '60s' });
 
     console.log(`Nuevo token generado: ${token}`);
-    const uniqueUrl = generateUniqueUrl(numeroevento, numeroescultor, token);
+    const uniqueUrl = generateUniqueUrl(token, numeroevento, numeroescultor);
     const qrCodeImage = await QRCode.toDataURL(uniqueUrl);
 
     res.json({ qrCodeImage, uniqueUrl });
@@ -20,11 +20,11 @@ export const generateQR = async (req, res) => {
 };
 
 export const verifyToken = (req, res) => {
-  const { numeroevento, numeroescultor, token } = req.params;
+  const { token, numeroevento, numeroescultor } = req.params;
   try {
     const decoded = jwt.verify(token, SECRET_KEY);
 
-    if (decoded.numeroevento == numeroevento && decoded.numeroescultor == numeroescultor) {
+    if (decoded.numeroevento === numeroevento && decoded.numeroescultor === numeroescultor) {
       res.json({ message: 'QR code is valid', event: numeroevento, sculptor: numeroescultor });
     } else {
       res.status(401).json({ error: 'Invalid QR code' });
