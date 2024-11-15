@@ -17,7 +17,12 @@ spec:
       containers:
       - name: api-gateway-container
         image: stefanomerinoderui/bienal-backend:api_gateway
-        imagePullPolicy: IfNotPresent
+        imagePullPolicy: Always
+        ports:
+          - containerPort: 80
+            name: http
+          - containerPort: 443
+            name: https
         volumeMounts:
           - name: ssl-certificates
             mountPath: "/etc/ssl/certs"  # Donde se montarán los certificados
@@ -78,11 +83,6 @@ spec:
             configMapKeyRef:
               name: urls-internas
               key: SERVICE_GENERADOR_QR_URL
-        - name: SERVICE_AUTENTICACION_URL
-          valueFrom:
-            configMapKeyRef:
-              name: urls-internas
-              key: SERVICE_AUTENTICACION_URL
         - name: SERVICE_BUSCADOR_URL
           valueFrom:
             configMapKeyRef:
