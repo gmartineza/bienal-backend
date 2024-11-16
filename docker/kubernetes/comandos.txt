@@ -1,9 +1,10 @@
-kubectl get services --all-namespaces -o wide                           # muestra todos los servicios y sus ip´s
-kubectl get namespace                                                   # obtener namespaces
-kubectl config set-context --current --namespace=<nombre-del-namespace> # cambiar namespace
-kubectl get pods                                                        # obtener nombre de pods
-kubectl get deploy                                                      # obtener nombres de deploys
-kubectl rollout restart deployment <nombre-del-deploy>                  # reiniciar deploy para que use imagen nueva
+aws eks update-kubeconfig --region sa-east-1 --name Bienal_backend_development  # actualiza el cluster de aws
+kubectl get services --all-namespaces -o wide                                   # muestra todos los servicios y sus ip´s
+kubectl get namespace                                                           # obtener namespaces
+kubectl config set-context --current --namespace=<nombre-del-namespace>         # cambiar namespace
+kubectl get pods                                                                # obtener nombre de pods
+kubectl get deploy                                                              # obtener nombres de deploys
+kubectl rollout restart deployment <nombre-del-deploy>                          # reiniciar deploy para que use imagen nueva
 kubectl delete deploy votaciones
 
 kubectl create configmap <nombre-configmap> --from-literal=DB_HOST=localhost --from-literal=API_KEY=123456 # crear configmap

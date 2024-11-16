@@ -14,34 +14,46 @@ const cloudinary = require('../../config/cloudinary');
  * @param {Object} req - Objeto de solicitud HTTP.
  * @param {Object} res - Objeto de respuesta HTTP.
  */
-async function crearEvento(req, res) {
+const crearEvento = async (req, res) => {
   try {
     const { body, file } = req;
-    let imageUrl = null;
 
+    // Función para subir una imagen a Cloudinary
+    const subirImagen = (file) => {
+      return new Promise((resolve, reject) => {
+        const stream = cloudinary.uploader.upload_stream(
+          { folder: 'eventos', format: 'webp' },
+          (error, result) => {
+            if (result) resolve(result.secure_url);
+            else reject(error);
+          }
+        );
+        stream.end(file.buffer);
+      });
+    };
+
+    // Subir la imagen si existe
+    let imageUrl = "";
     if (file) {
-      const streamUpload = (buffer) => {
-        return new Promise((resolve, reject) => {
-          const stream = cloudinary.uploader.upload_stream(
-            { folder: 'eventos', format: 'webp' },
-            (error, result) => {
-              if (result) resolve(result);
-              else reject(error);
-            }
-          );
-          stream.end(buffer);
-        });
-      };
-      const result = await streamUpload(file.buffer);
-      imageUrl = result.secure_url;
+      imageUrl = await subirImagen(file); // Subimos la única imagen proporcionada
     }
 
-    const nuevoEvento = await eventoService.crearEvento(body, imageUrl);
+    // Asegurar que `sculptors` sea único
+    const uniqueSculptors = Array.isArray(body.sculptors)
+      ? Array.from(new Set(body.sculptors)) // Eliminar duplicados
+      : [body.sculptors]; // Si es un solo escultor, lo convierte en un array
+
+    // Actualizar `body` con la lista única de `sculptors`
+    const updatedBody = { ...body, sculptors: uniqueSculptors };
+
+    // Llama a la función de servicio `crearEvento`
+    const nuevoEvento = await eventoService.crearEvento(updatedBody, imageUrl);
     res.status(201).json(nuevoEvento);
   } catch (error) {
+    console.error('Error al crear el evento:', error);
     res.status(500).json({ error: 'Error al crear el evento: ' + error.message });
   }
-}
+};
 
 
 /**
@@ -138,15 +150,11 @@ const obtenerEventosPorRango = async (req, res) => {
 const actualizarEvento = async (req, res) => {
   try {
     const { id } = req.params;
-    const { body, files } = req;
-    let { imagenesAEliminar, escultoresAAgregar, escultoresAEliminar } = body;
-    if (typeof imagenesAEliminar === 'string') imagenesAEliminar = imagenesAEliminar.split(",");
-    if (typeof escultoresAAgregar === 'string') escultoresAAgregar = escultoresAAgregar.split(",");
-    if (typeof escultoresAEliminar === 'string') escultoresAEliminar = escultoresAEliminar.split(",");
+    const { body, file } = req;
 
-    let nuevasImagenes = [];
-    if (files && files.length > 0) {
-      const subirImagen = (file) => {
+    let nuevaImagen = null;
+    if (file) {
+      const subirImagen = (buffer) => {
         return new Promise((resolve, reject) => {
           const stream = cloudinary.uploader.upload_stream(
             { folder: 'eventos', format: 'webp' },
@@ -155,18 +163,17 @@ const actualizarEvento = async (req, res) => {
               else reject(error);
             }
           );
-          stream.end(file.buffer);
+          stream.end(buffer);
         });
       };
-      nuevasImagenes = await Promise.all(files.map(subirImagen));
+      const result = await subirImagen(file.buffer);
+      nuevaImagen = result;
     }
 
-    const eventoActualizado = await eventoService.actualizarEvento(
-      id, body, nuevasImagenes, imagenesAEliminar, escultoresAAgregar, escultoresAEliminar
-    );
+    const eventoActualizado = await eventoService.actualizarEvento(id, body, nuevaImagen);
     res.status(200).json(eventoActualizado);
   } catch (error) {
-    res.status(500).json({ mensaje: 'Error al actualizar el evento' });
+    res.status(500).json({ mensaje: 'Error al actualizar el evento: ' + error.message });
   }
 };
 
